@@ -1,0 +1,5 @@
+[user]
+	name = Julio Turolla
+	email = julio.turolla@gmail.com
+[core]
+	editor = /usr/local/bin/vim
