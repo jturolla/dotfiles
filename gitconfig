@@ -3,3 +3,4 @@
 	email = julio.turolla@gmail.com
 [core]
 	editor = /usr/local/bin/vim
+	excludesfile = ~/.gitignore

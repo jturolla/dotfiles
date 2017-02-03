@@ -51,3 +51,6 @@ set list listchars=tab:\ \ ,trail:·
 
 set nowrap       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
+
+let g:ctrlp_root_markers=['.ctrlp-root']
+let g:ctrlp_working_path_mode = 'ra'

@@ -12,3 +12,5 @@ alias .5='cd ../../../../../'
 alias .6='cd ../../../../../../'
 
 alias s='git status'
+
+alias dnsflush='sudo killall -HUP mDNSResponder'

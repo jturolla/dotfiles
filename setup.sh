@@ -7,4 +7,7 @@ ln -s ~/dotfiles/gitconfig    ~/.gitconfig
 ln -s ~/dotfiles/gitignore    ~/.gitignore
 ln -s ~/dotfiles/bash_profile ~/.bash_profile
 
-ln -sf ~/Dropbox/Downloads/Current/ ~/Downloads
+ln -s ~/Dropbox/Downloads/Current/ ~/Downloads
+ln -s ~/Dropbox/Home/lib           ~/lib
+ln -s ~/Dropbox/Home/config/       ~/config
+ln -s ~/Dropbox/Home/projects      ~/projects
