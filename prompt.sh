@@ -7,5 +7,6 @@ parse_git_branch() {
 user="\[$COLOR_YELLOW\]\u"
 path="\[$COLOR_LIGHT_CYAN\]\w"
 git="\[$COLOR_LIGHT_PURPLE\]\$(parse_git_branch)"
+prompt="\[$COLOR_NC\]\$ "
 
-export PS1="$user $path $git \[$COLOR_NC\]\$ " 
+export PS1="$user $path $git $prompt" 
