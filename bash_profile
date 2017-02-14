@@ -3,6 +3,7 @@
 . ~/dotfiles/colors.sh
 . ~/dotfiles/path.sh
 . ~/dotfiles/completion.sh
+. ~/dotfiles/android.sh
 
 export EDITOR='vim'
 export CLICOLOR='auto'

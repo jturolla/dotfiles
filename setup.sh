@@ -11,3 +11,5 @@ ln -s ~/Dropbox/Downloads/Current/ ~/Downloads
 ln -s ~/Dropbox/Home/lib           ~/lib
 ln -s ~/Dropbox/Home/config/       ~/config
 ln -s ~/Dropbox/Home/projects      ~/projects
+ln -s ~/lib/android/ ~/.android
+

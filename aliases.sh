@@ -12,5 +12,6 @@ alias .5='cd ../../../../../'
 alias .6='cd ../../../../../../'
 
 alias s='git status'
+alias reload!="source $HOME/dotfiles/bash_profile; echo 'Reloaded!'"
 
 alias dnsflush='sudo killall -HUP mDNSResponder'
