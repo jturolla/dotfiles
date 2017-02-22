@@ -10,3 +10,4 @@ export DOTFILES=$HOME/dotfiles
 . $DOTFILES/colors.sh
 . $DOTFILES/completion.sh
 . $DOTFILES/android.sh
+. $DOTFILES/lib/git-completion.bash

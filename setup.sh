@@ -13,3 +13,6 @@ ln -s ~/Dropbox/Home/config/       ~/config
 ln -s ~/Dropbox/Home/projects      ~/projects
 ln -s ~/lib/android/               ~/.android
 
+# install git completion
+curl -o ./lib/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+
