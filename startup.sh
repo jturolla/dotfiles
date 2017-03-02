@@ -3,7 +3,6 @@
 tmux start-server
 tmux attach-session -t ju 2> /dev/null | tmux new-session -d -s ju
 
-tmux new-window -t ju:1 -n cep.ninja 'cd ~/projects/cep'
 tmux new-window -t ju:2 -n parafuzo  'cd ~/projects/parafuzo/'
 tmux new-window -t ju:3 -n dotfiles  'cd ~/dotfiles'
 
