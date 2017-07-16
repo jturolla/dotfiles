@@ -11,6 +11,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'udalov/kotlin-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'elixir-lang/vim-elixir'
+Plugin 'avakhov/vim-yaml'
+Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -36,7 +38,7 @@ filetype plugin on
 filetype indent on
 
 " Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
+"set list listchars=tab:\ \ ,trail:·
 
 " Remove trailing whitespace on save
 fun! <SID>StripTrailingWhitespaces()
@@ -57,4 +59,7 @@ set linebreak
 " Ctrl-p
 let g:ctrlp_root_markers=['.ctrlp-root']
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|build'
+
+" NERDTree
+map <C-n> :NERDTreeToggle<CR>

@@ -6,6 +6,7 @@ ln -s ~/dotfiles/zshrc        ~/.zshrc
 ln -s ~/dotfiles/gitconfig    ~/.gitconfig
 ln -s ~/dotfiles/gitignore    ~/.gitignore
 ln -s ~/dotfiles/bash_profile ~/.bash_profile
+ln -s dotfiles/lessfilter .lessfilter
 
 ln -s ~/Dropbox/Downloads/Current/ ~/Downloads
 ln -s ~/Dropbox/Home/lib           ~/lib
