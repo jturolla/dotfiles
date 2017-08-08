@@ -10,3 +10,8 @@ export DOTFILES=$HOME/dotfiles
 . $DOTFILES/colors.sh
 . $DOTFILES/completion.sh
 . $DOTFILES/android.sh
+
+source $HOME/.nurc
+
+
+

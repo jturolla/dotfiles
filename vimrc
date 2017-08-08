@@ -12,7 +12,6 @@ Plugin 'udalov/kotlin-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'avakhov/vim-yaml'
-Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -62,4 +61,4 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|build'
 
 " NERDTree
-map <C-n> :NERDTreeToggle<CR>
+" map <C-n> :NERDTreeToggle<CR>
