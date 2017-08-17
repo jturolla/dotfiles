@@ -1,7 +1,6 @@
 [user]
 	name = Julio Turolla
-	email = julio.turolla@gmail.com
+	email = julio.turolla@nubank.com.br
 [core]
-	editor = /usr/local/bin/vim
 	excludesfile = ~/.gitignore
 	autocrlf = input
