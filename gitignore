@@ -1,3 +1,6 @@
 *.DS_Store
 .ctrlp-root
-*.swp 
+*.swp
+~/dev/nu/deploy/docker-compose.yml
+.idea/
+*.iml

@@ -46,6 +46,7 @@ fun! <SID>StripTrailingWhitespaces()
   let l = line(".")
   let c = col(".")
   %s/\s\+$//e
+	:silent! %s#\($\n\s*\)\+\%$##
   call cursor(l, c)
 endfun
 
@@ -60,12 +61,10 @@ set linebreak
 " Ctrl-p
 let g:ctrlp_root_markers=['.ctrlp-root']
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|build'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\'
 
 " NERDTree
 " map <C-n> :NERDTreeToggle<CR>
 
 "Plugin 'luochen1990/rainbow'
 let g:rainbow_active = 1
-
-

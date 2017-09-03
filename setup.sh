@@ -19,3 +19,5 @@ brew install reattach-to-user-namespace
 
 #apple configs
 defaults write -g ApplePressAndHoldEnabled -bool false
+defaults write NSGlobalDomain KeyRepeat -int 0.02
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
