@@ -30,6 +30,8 @@ set tabstop=2
 set expandtab
 set number
 set noswapfile
+set nowrap
+set linebreak
 
 " Auto indent pasted text
 nnoremap p p=`]<C-o>
@@ -45,26 +47,17 @@ filetype indent on
 fun! <SID>StripTrailingWhitespaces()
   let l = line(".")
   let c = col(".")
-  %s/\s\+$//e
+  :silent! %s/\s\+$//e
 	:silent! %s#\($\n\s*\)\+\%$##
   call cursor(l, c)
 endfun
 
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-"Don't wrap lines
-set nowrap
-
-"Wrap lines at convenient points
-set linebreak
-
 " Ctrl-p
 let g:ctrlp_root_markers=['.ctrlp-root']
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\'
 
-" NERDTree
-" map <C-n> :NERDTreeToggle<CR>
-
-"Plugin 'luochen1990/rainbow'
+" Rainbow parenthesis
 let g:rainbow_active = 1
