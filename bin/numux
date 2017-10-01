@@ -1,0 +1,13 @@
+#!/bin/bash
+
+project_path=~/dev/nu/$1
+
+if [ "$1" == "dotfiles" ]
+then
+  project_path=~/dotfiles
+fi
+
+tmux new-window -c $project_path -n $1
+tmux split-window -v -c $project_path
+tmux resize-pane -D 20
+tmux split-window -h -c $project_path

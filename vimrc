@@ -13,6 +13,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'avakhov/vim-yaml'
 Plugin 'luochen1990/rainbow'
+Plugin 'tpope/vim-fireplace'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

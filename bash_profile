@@ -8,7 +8,6 @@ export DOTFILES=$HOME/dotfiles
 . $DOTFILES/aliases.sh
 . $DOTFILES/colors.sh
 . $DOTFILES/completion.sh
+. $DOTFILES/docker-aliases.sh
 
 source $HOME/.nurc
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
