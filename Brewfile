@@ -1,68 +1,46 @@
-adns
-aspcud
-autoconf
-automake
-awscli
-camlp4
-clasp
-cmatrix
-coreutils
-dcraw
-findutils
-freetype
-gawk
-gettext
-glib
-gmp
-gnu-sed
-gnupg
-gnupg@1.4
-gnutls
-grep
-gringo
-htop
-icu4c
-imagemagick
-jasper
-jpeg
-jq
-libassuan
-libevent
-libffi
-libgcrypt
-libgpg-error
-libksba
-libpng
-libtasn1
-libtiff
-libtool
-libunistring
-libusb
-libyaml
-little-cms2
-lumo
-mpfr
-nettle
-node
-npth
-ocaml
-ocamlbuild
-oniguruma
-openssl
-openssl@1.1
-p11-kit
-pcre
-pinentry
-pkg-config
-postgresql
-rbenv
-readline
-reattach-to-user-namespace
-ruby-build
-s3cmd
-the_silver_searcher
-tmux
-tree
-ufraw
-wget
-xz
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "caskroom/cask"
+
+brew "automake"
+brew "awscli"
+brew "cmatrix"
+brew "coreutils"
+brew "findutils"
+brew "gawk"
+brew "gettext"
+brew "git"
+brew "gnu-sed"
+brew "gnupg"
+brew "gnupg@1.4"
+brew "grep"
+brew "htop"
+brew "icu4c"
+brew "jq"
+brew "libyaml"
+brew "lumo"
+brew "neovim"
+brew "node"
+brew "postgresql"
+brew "reattach-to-user-namespace"
+brew "s3cmd"
+brew "terraform"
+brew "the_silver_searcher"
+brew "tmux"
+brew "tree"
+brew "wget"
+
+cask "alfred"
+cask "calibre"
+cask "dash"
+cask "docker"
+cask "google-chrome"
+cask "intellij-idea"
+cask "iterm2"
+cask "little-snitch"
+cask "malwarebytes"
+cask "slack"
+cask "sublime-text"
+cask "transmission"
+cask "tunnelblick"
+cask "virtualbox"
