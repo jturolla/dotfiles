@@ -1,13 +1,13 @@
 #!/bin/bash
 
-export DOTFILES=$HOME/dotfiles
+export DOTFILES=$HOME/dev/jturolla/dotfiles
 
 . $DOTFILES/env.sh
-. $DOTFILES/prompt.sh
 . $DOTFILES/path.sh
+. $DOTFILES/prompt.sh
 . $DOTFILES/aliases.sh
 . $DOTFILES/colors.sh
 . $DOTFILES/completion.sh
 . $DOTFILES/docker-aliases.sh
 
-source $HOME/.nurc
+. $HOME/.nurc

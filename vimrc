@@ -9,7 +9,7 @@ call vundle#begin()
   Plugin 'kien/ctrlp.vim'
   let g:ctrlp_root_markers=['.ctrlp-root']
   let g:ctrlp_working_path_mode = 'ra'
-  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|target\|'
+  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\'
 
   Plugin 'godlygeek/tabular'
 
