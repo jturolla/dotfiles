@@ -1,11 +1,6 @@
 #!/bin/bash
 
-project_path=~/dev/nu/$1
-
-if [ "$1" == "dotfiles" ]
-then
-  project_path=~/dotfiles
-fi
+project_path=~/dev/$1
 
 tmux new-window -c $project_path -n $1
 tmux split-window -v -c $project_path

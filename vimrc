@@ -1,25 +1,72 @@
-" Vundle
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible
+filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
+
 call vundle#begin()
+  Plugin 'VundleVim/Vundle.vim'
 
-" Vundle Plugins
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'udalov/kotlin-vim'
-Plugin 'godlygeek/tabular'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'avakhov/vim-yaml'
-Plugin 'luochen1990/rainbow'
-Plugin 'tpope/vim-fireplace'
+  Plugin 'kien/ctrlp.vim'
+  let g:ctrlp_root_markers=['.ctrlp-root']
+  let g:ctrlp_working_path_mode = 'ra'
+  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|target\|'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+  Plugin 'godlygeek/tabular'
 
-" Configs
+  Plugin 'avakhov/vim-yaml'
+
+  Plugin 'tpope/vim-fireplace'
+
+  Plugin 'flazz/vim-colorschemes'
+
+  Plugin 'junegunn/rainbow_parentheses.vim'
+  let g:rainbow_active = 1
+  let g:rainbow#colors = {
+  \   'dark': [
+  \     ['yellow',  'orange1'     ],
+  \     ['green',   'yellow1'     ],
+  \     ['cyan',    'greenyellow' ],
+  \     ['magenta', 'green1'      ],
+  \     ['red',     'springgreen1'],
+  \     ['yellow',  'cyan1'       ],
+  \     ['green',   'slateblue1'  ],
+  \     ['cyan',    'magenta1'    ],
+  \     ['magenta', 'purple1'     ]
+  \   ],
+  \   'light': [
+  \     ['yellow',  'orange1'     ],
+  \     ['green',   'yellow1'     ],
+  \     ['cyan',    'greenyellow' ],
+  \     ['magenta', 'green1'      ],
+  \     ['red',     'springgreen1'],
+  \     ['yellow',  'cyan1'       ],
+  \     ['green',   'slateblue1'  ],
+  \     ['cyan',    'magenta1'    ],
+  \     ['magenta', 'purple1'     ]
+  \   ]
+  \ }
+  augroup rainbow_lisp
+    autocmd!
+    autocmd FileType lisp,clojure,scheme RainbowParentheses
+  augroup END
+
+  Plugin 'terryma/vim-smooth-scroll'
+  set scroll=15
+  noremap <silent> <C-U> :call smooth_scroll#up(&scroll, 12, 1)<CR>
+  noremap <silent> <C-D> :call smooth_scroll#down(&scroll, 12, 1)<CR>
+  noremap <silent> <C-B> :call smooth_scroll#up(&scroll*2, 12, 4)<CR>
+  noremap <silent> <C-F> :call smooth_scroll#down(&scroll*2, 12, 4)<CR>
+
+  Plugin 'tpope/vim-surround'
+
+  Plugin 'vim-airline/vim-airline'
+  Plugin 'vim-airline/vim-airline-themes'
+  let g:airline_theme='badwolf'
+
+call vundle#end()
+
+filetype plugin indent on
+
 syntax on
 
 set autoindent
@@ -33,18 +80,16 @@ set number
 set noswapfile
 set nowrap
 set linebreak
+set noincsearch
 
-" Auto indent pasted text
+colorscheme busybee
+
 nnoremap p p=`]<C-o>
 nnoremap P P=`]<C-o>
 
 filetype plugin on
 filetype indent on
 
-" Display tabs and trailing spaces visually
-"set list listchars=tab:>- ,trail:·
-
-" Remove trailing whitespace on save
 fun! <SID>StripTrailingWhitespaces()
   let l = line(".")
   let c = col(".")
@@ -55,10 +100,6 @@ endfun
 
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" Ctrl-p
-let g:ctrlp_root_markers=['.ctrlp-root']
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\'
-
-" Rainbow parenthesis
-let g:rainbow_active = 1
+if !has('nvim')
+  set ttymouse=xterm2
+endif
