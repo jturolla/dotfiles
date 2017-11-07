@@ -8,4 +8,10 @@ user="\[$COLOR_YELLOW\]\u"
 path="\[$COLOR_LIGHT_CYAN\]\w"
 git="\[$COLOR_LIGHT_PURPLE\]\$(git_branch)"
 
-export PS1="$user $path$git \[$COLOR_NC\]\$ " 
+export PS1="$user $path$git \[$COLOR_NC\]\$ "
+
+# bash shared history {
+  export HISTCONTROL=ignoredups:erasedups
+  shopt -s histappend
+  export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+# }

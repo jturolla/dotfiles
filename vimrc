@@ -82,6 +82,8 @@ set nowrap
 set linebreak
 set noincsearch
 
+set textwidth=79
+
 colorscheme busybee
 
 nnoremap p p=`]<C-o>
