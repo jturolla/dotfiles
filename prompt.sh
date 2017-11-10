@@ -11,7 +11,7 @@ git="\[$COLOR_LIGHT_PURPLE\]\$(git_branch)"
 export PS1="$user $path$git \[$COLOR_NC\]\$ "
 
 # bash shared history {
-  export HISTCONTROL=ignoredups:erasedups
-  shopt -s histappend
-  export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+#  export HISTCONTROL=ignoredups:erasedups
+#  shopt -s histappend
+#  export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 # }
