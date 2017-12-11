@@ -10,5 +10,6 @@ brew bundle
 defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 0.02
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
+defaults write -g com.apple.mouse.scaling -float 10.0
 
 ./link.sh

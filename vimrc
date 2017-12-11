@@ -63,6 +63,7 @@ call vundle#begin()
   Plugin 'vim-airline/vim-airline-themes'
   let g:airline_theme='badwolf'
 
+  Plugin 'fatih/vim-hclfmt'
 call vundle#end()
 
 filetype plugin indent on
