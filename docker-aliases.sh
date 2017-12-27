@@ -11,5 +11,3 @@ function docker-ruby {
     -e PAGER='busybox cat' \
     --entrypoint /bin/bash $NU_RUBY_IMG
 }
-
-source ~/dev/jturolla/deq/deq.sh

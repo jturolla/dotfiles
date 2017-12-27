@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export DOTFILES=$HOME/dev/jturolla/dotfiles
+export DOTFILES=$HOME/dev/dotfiles
 
 . $DOTFILES/env.sh
 . $DOTFILES/path.sh
