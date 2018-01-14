@@ -5,3 +5,4 @@ ln -s $DOTFILES/vimrc        ~/.vimrc
 ln -s $DOTFILES/gitconfig    ~/.gitconfig
 ln -s $DOTFILES/gitignore    ~/.gitignore
 ln -s $DOTFILES/bash_profile ~/.bash_profile
+ln -s $DOTFILES/nvimrc       ~/.config/nvim/init.vim

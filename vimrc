@@ -5,19 +5,17 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
   Plugin 'VundleVim/Vundle.vim'
+  Plugin 'godlygeek/tabular'
+  Plugin 'avakhov/vim-yaml'
+  Plugin 'tpope/vim-fireplace'
+  Plugin 'tpope/vim-surround'
+  Plugin 'flazz/vim-colorschemes'
+  Plugin 'fatih/vim-hclfmt'
 
   Plugin 'kien/ctrlp.vim'
   let g:ctrlp_root_markers=['.ctrlp-root']
   let g:ctrlp_working_path_mode = 'ra'
-  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\'
-
-  Plugin 'godlygeek/tabular'
-
-  Plugin 'avakhov/vim-yaml'
-
-  Plugin 'tpope/vim-fireplace'
-
-  Plugin 'flazz/vim-colorschemes'
+  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|Target'
 
   Plugin 'junegunn/rainbow_parentheses.vim'
   let g:rainbow_active = 1
@@ -57,13 +55,10 @@ call vundle#begin()
   noremap <silent> <C-B> :call smooth_scroll#up(&scroll*2, 12, 4)<CR>
   noremap <silent> <C-F> :call smooth_scroll#down(&scroll*2, 12, 4)<CR>
 
-  Plugin 'tpope/vim-surround'
-
   Plugin 'vim-airline/vim-airline'
   Plugin 'vim-airline/vim-airline-themes'
   let g:airline_theme='badwolf'
 
-  Plugin 'fatih/vim-hclfmt'
 call vundle#end()
 
 filetype plugin indent on
