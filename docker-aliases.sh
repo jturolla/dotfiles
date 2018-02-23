@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function docker-ruby {
+  echo $*;
   docker run --rm \
     -ti \
     -v $PWD:/project \
@@ -9,5 +10,6 @@ function docker-ruby {
     -e AWS_SECRET_ACCESS_KEY \
     -e NU_DEPLOY_DEBUG \
     -e PAGER='busybox cat' \
+    $* \
     --entrypoint /bin/bash $NU_RUBY_IMG
 }
