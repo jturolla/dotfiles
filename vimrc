@@ -58,7 +58,7 @@ call vundle#begin()
   Plugin 'vim-airline/vim-airline'
   Plugin 'vim-airline/vim-airline-themes'
   let g:airline_theme='badwolf'
-
+  Plugin 'fatih/vim-go'
 call vundle#end()
 
 filetype plugin indent on
@@ -80,6 +80,8 @@ set linebreak
 set noincsearch
 
 set textwidth=79
+
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 colorscheme busybee
 

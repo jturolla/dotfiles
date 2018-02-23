@@ -11,3 +11,5 @@ export DOTFILES=$HOME/dev/dotfiles
 . $DOTFILES/docker-aliases.sh
 
 . $HOME/.nurc
+
+source $DOTFILES/env.sh
