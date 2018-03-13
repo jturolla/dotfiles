@@ -21,3 +21,17 @@ alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %
 function nud {
   cd ~/dev/nu/$1
 }
+
+function switch-env {
+  if [ "$1" == "work" ]; then
+    git config --global user.name "$GIT_WORK_NAME"
+    git config --global user.email "$GIT_WORK_EMAIL"
+    echo "git changed to work."
+  fi
+
+  if [ "$1" == "personal" ]; then
+    git config --global user.name "$GIT_PERSONAL_NAME"
+    git config --global user.email "$GIT_PERSONAL_EMAIL"
+    echo "git changed to personal."
+  fi
+}
