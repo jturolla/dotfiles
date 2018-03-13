@@ -15,3 +15,5 @@ source $HOME/.env
 if [ -f ~/.nurc ]; then
   source $HOME/.nurc
 fi
+
+source /usr/local/etc/profile.d/z.sh
