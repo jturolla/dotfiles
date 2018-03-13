@@ -1,6 +1,6 @@
 [user]
 	name = Julio Turolla
-	email = julio.turolla@nubank.com.br
+	email = julio.turolla@gmail.com
 [core]
 	excludesfile = ~/.gitignore
 	autocrlf = input
@@ -15,4 +15,4 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-	required = true
+  required = true

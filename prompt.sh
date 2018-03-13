@@ -1,14 +1,27 @@
 #!/bin/bash
 
 git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+}
+
+git_emoji()  {
+  emoji="🐣"
+
+  if [ "$(git config user.email)" == "$GIT_WORK_EMAIL" ]; then
+    emoji="🍙"
+  fi
+
+  echo "$emoji "
+}
+
+git_prompt() {
+  echo "\[$COLOR_LIGHT_PURPLE\]\$(git_branch) @ \$(git_emoji)"
 }
 
 user="\[$COLOR_YELLOW\]\u"
 path="\[$COLOR_LIGHT_CYAN\]\w"
-git="\[$COLOR_LIGHT_PURPLE\]\$(git_branch)"
 
-export PS1="$user $path$git \[$COLOR_NC\]\$ "
+export PS1="$user $path$(git_prompt) \[$COLOR_NC\]\$ "
 
 # bash shared history {
 #  export HISTCONTROL=ignoredups:erasedups
