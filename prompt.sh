@@ -5,23 +5,20 @@ git_branch() {
 }
 
 git_emoji()  {
-  emoji="Personal"
+  emoji="$(yellow Personal)"
 
   if [ "$(git config user.email)" == "$GIT_WORK_EMAIL" ]; then
-    emoji="Nubank"
+    emoji="$(purple Nubank)"
   fi
 
   echo "$emoji "
 }
 
 git_prompt() {
-  echo "\[$COLOR_LIGHT_PURPLE\]\$(git_branch) @ \$(git_emoji)"
+  echo "\$(black $(git_branch)) $(black @) \$(git_emoji)"
 }
 
-user="\[$COLOR_YELLOW\]\u"
-path="\[$COLOR_LIGHT_CYAN\]\w"
-
-export PS1="$user $path$(git_prompt) \[$COLOR_NC\]\$ "
+export PS1="${green}\u${end} ${purple}\w${end} $(git_prompt) $ "
 
 # bash shared history {
 #  export HISTCONTROL=ignoredups:erasedups
