@@ -5,10 +5,10 @@ git_branch() {
 }
 
 git_emoji()  {
-  emoji="🐣"
+  emoji="Personal"
 
   if [ "$(git config user.email)" == "$GIT_WORK_EMAIL" ]; then
-    emoji="🍙"
+    emoji="Nubank"
   fi
 
   echo "$emoji "
