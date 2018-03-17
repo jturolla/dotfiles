@@ -10,11 +10,22 @@ git_commiter()  {
     return
   fi
 
-	echo "$(yellow Personal)"
+  echo "$(yellow Personal)"
 }
 
 git_prompt() {
   echo " \$(black $(git_branch)) $(black @) "
 }
 
-export PS1="${green}\u${end} ${purple}\w${end}$(git_prompt)\$(git_commiter) $ "
+prompt_command() {
+  local exit="$?"
+  PS1="${green}\u${end} ${purple}\w${end}$(git_prompt)\$(git_commiter)"
+
+  if [ $exit != 0 ]; then
+    PS1+=" (-> ${red}${exit}${end})"
+  fi
+
+  PS1+=" $ "
+}
+
+PROMPT_COMMAND=prompt_command # Func to gen PS1 after CMDs
