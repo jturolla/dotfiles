@@ -28,4 +28,4 @@ prompt_command() {
   PS1+=" $ "
 }
 
-PROMPT_COMMAND=prompt_command # Func to gen PS1 after CMDs
+PROMPT_COMMAND=prompt_command
