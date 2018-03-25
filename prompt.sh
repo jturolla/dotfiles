@@ -17,7 +17,7 @@ git_prompt() {
   echo " \$(black $(git_branch)) $(black @) "
 }
 
-prompt_command() {
+build_ps1() {
   local exit="$?"
   PS1="${green}\u${end} ${purple}\w${end}$(git_prompt)\$(git_commiter)"
 
@@ -26,6 +26,18 @@ prompt_command() {
   fi
 
   PS1+=" $ "
+}
+
+manage_history() {
+  shopt -s histappend
+  history -a
+  history -c
+  history -r
+}
+
+prompt_command() {
+  build_ps1
+  manage_history
 }
 
 PROMPT_COMMAND=prompt_command
