@@ -6,26 +6,31 @@ git_branch() {
 
 git_commiter()  {
   if [ "$(git config user.email)" == "$GIT_WORK_EMAIL" ]; then
-    echo "$(purple Nubank)"
+    echo "Nubank"
     return
   fi
 
-  echo "$(yellow Personal)"
+  echo "Personal"
 }
 
-git_prompt() {
-  echo " \$(black $(git_branch)) $(black @) "
+commiter_color() {
+  if [ "$(git config user.email)" == "$GIT_WORK_EMAIL" ]; then
+    echo -e "$purpleb"
+    return
+  fi
+
+  echo -e "$yellowb"
 }
 
 prompt_command() {
   local exit="$?"
-  PS1="${green}\u${end} ${purple}\w${end}$(git_prompt)\$(git_commiter)"
+  PS1="\[${red}\]\u \[${black}\]\w\$(git_branch) \[${green}\]@ \[\$(commiter_color)\]\$(git_commiter)\[$end\]"
 
   if [ $exit != 0 ]; then
-    PS1+=" (-> ${red}${exit}${end})"
+    PS1+=" (-> \[$red\]${exit}\[${end}\])"
   fi
 
-  PS1+=" $ "
+  PS1+=" \[${blackb}\]$\[$end\] "
 }
 
 PROMPT_COMMAND=prompt_command
