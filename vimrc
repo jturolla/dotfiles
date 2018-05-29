@@ -83,7 +83,7 @@ set textwidth=79
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
-colorscheme busybee
+colorscheme materialbox
 
 nnoremap p p=`]<C-o>
 nnoremap P P=`]<C-o>
@@ -100,6 +100,8 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+noremap <C-t> :CtrlP ~/dev/<CR>
 
 if !has('nvim')
   set ttymouse=xterm2

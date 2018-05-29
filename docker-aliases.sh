@@ -9,7 +9,11 @@ function docker-ruby {
     -e AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY \
     -e NU_DEPLOY_DEBUG \
+    -e NU_AUTH_TOKEN \
+    -e NU_GOCD_JSESSIONID \
     -e PAGER='busybox cat' \
     $* \
     --entrypoint /bin/bash $NU_RUBY_IMG
 }
+
+source ~/dev/jturolla/deq/deq.sh
