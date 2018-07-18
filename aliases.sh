@@ -18,6 +18,15 @@ alias dnsflush='sudo killall -HUP mDNSResponder'
 
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
+alias kms="nu k8s ctl --env staging --kcid monitoring -- "
+alias kmp="nu k8s ctl --env prod --kcid monitoringb -- "
+
+alias ks="nu k8s ctl --env staging -- "
+alias kp="nu k8s ctl --env prod -- "
+
+alias cm="git checkout master && git pull origin master && git checkout - && git rebase master"
+alias cmm="git commit -am "
+
 function nud {
   cd ~/dev/nu/$1
 }

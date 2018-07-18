@@ -101,7 +101,7 @@ endfun
 
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-noremap <C-t> :CtrlP ~/dev/<CR>
+"noremap <C-t> :CtrlP ~/dev/<CR>
 
 if !has('nvim')
   set ttymouse=xterm2

@@ -1,6 +1,6 @@
 [user]
 	name = Julio Turolla
-	email = julio.turolla@gmail.com
+	email = julio.turolla@nubank.com.br
 [core]
 	excludesfile = ~/.gitignore
 	autocrlf = input
