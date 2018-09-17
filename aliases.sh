@@ -26,6 +26,8 @@ alias kp="nu k8s ctl --env prod -- "
 
 alias cm="git checkout master && git pull origin master && git checkout - && git rebase master"
 alias cmm="git commit -am "
+alias gp="git push origin \$(git rev-parse --abbrev-ref HEAD)"
+alias pr="hub pull-request"
 
 function nud {
   cd ~/dev/nu/$1
@@ -42,5 +44,21 @@ function switch-env {
     git config --global user.name "$GIT_PERSONAL_NAME"
     git config --global user.email "$GIT_PERSONAL_EMAIL"
     echo "git changed to personal."
+  fi
+}
+
+function replace-all {
+  inside_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+
+  if [ "$inside_git_repo" ]; then
+    echo "inside git repo"
+    if [[ $(git diff --stat) != '' ]]; then
+      echo 'dirty'
+    else
+      echo "git is clean, replacing $1 -> $2"
+      grep -lr --exclude-dir=".git" -e "$1" . | xargs sed -i '' -e 's/$1/$2/g'
+    fi
+  else
+    echo "not in git repo"
   fi
 }

@@ -1,6 +1,7 @@
 [user]
 	name = Julio Turolla
 	email = julio.turolla@nubank.com.br
+	signingkey = julio.turolla@nubank.com.br
 [core]
 	excludesfile = ~/.gitignore
 	autocrlf = input
@@ -16,3 +17,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
   required = true
+[commit]
+	gpgsign = false

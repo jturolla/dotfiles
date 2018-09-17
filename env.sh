@@ -18,3 +18,6 @@ export LC_MONETARY="en_US.UTF-8"
 export LC_NUMERIC="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+
+export GPG_TTY=$(tty)
+export PINENTRY_USER_DATA="USE_CURSES=1"
