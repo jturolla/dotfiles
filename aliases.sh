@@ -56,7 +56,7 @@ function replace-all {
       echo 'dirty'
     else
       echo "git is clean, replacing $1 -> $2"
-      grep -lr --exclude-dir=".git" -e "$1" . | xargs sed -i '' -e 's/$1/$2/g'
+      grep -lr --exclude-dir=".git" -e "$1" . | xargs sed -i '' -e "s/$1/$2/g"
     fi
   else
     echo "not in git repo"
