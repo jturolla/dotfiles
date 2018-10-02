@@ -49,6 +49,8 @@ brew "tree"
 brew "watch"
 brew "wget"
 brew "moreutils"
+brew "skim"
+brew "ripgrep"
 
 cask "aerial"
 cask "alfred"

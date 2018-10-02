@@ -14,4 +14,8 @@ source $HOME/.env
 
 if [ -f ~/.nurc ]; then
   source $HOME/.nurc
+  export NUCLI_HOME="$HOME/dev/nu/nucli"
+  export NU_HOME="$HOME/dev/nu"
 fi
+
+source $HOME/dev/jturolla/deq/deq.sh

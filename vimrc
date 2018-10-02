@@ -13,6 +13,8 @@ call vundle#begin()
   Plugin 'fatih/vim-hclfmt'
 
   Plugin 'kien/ctrlp.vim'
+
+  set rtp+=~/.skim
   let g:ctrlp_root_markers=['.ctrlp-root']
   let g:ctrlp_working_path_mode = 'ra'
   let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|Target'
