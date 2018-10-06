@@ -1,91 +1,34 @@
-set nocompatible
-filetype off
+set history=5000
 
-set rtp+=~/.vim/bundle/Vundle.vim
+filetype plugin on
+filetype indent on
 
-call vundle#begin()
-  Plugin 'VundleVim/Vundle.vim'
-  Plugin 'godlygeek/tabular'
-  Plugin 'avakhov/vim-yaml'
-  Plugin 'tpope/vim-fireplace'
-  Plugin 'tpope/vim-surround'
-  Plugin 'flazz/vim-colorschemes'
-  Plugin 'fatih/vim-hclfmt'
+let mapleader = ","
 
-  Plugin 'kien/ctrlp.vim'
-
-  set rtp+=~/.skim
-  let g:ctrlp_root_markers=['.ctrlp-root']
-  let g:ctrlp_working_path_mode = 'ra'
-  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|Target'
-
-  Plugin 'junegunn/rainbow_parentheses.vim'
-  let g:rainbow_active = 1
-  let g:rainbow#colors = {
-  \   'dark': [
-  \     ['yellow',  'orange1'     ],
-  \     ['green',   'yellow1'     ],
-  \     ['cyan',    'greenyellow' ],
-  \     ['magenta', 'green1'      ],
-  \     ['red',     'springgreen1'],
-  \     ['yellow',  'cyan1'       ],
-  \     ['green',   'slateblue1'  ],
-  \     ['cyan',    'magenta1'    ],
-  \     ['magenta', 'purple1'     ]
-  \   ],
-  \   'light': [
-  \     ['yellow',  'orange1'     ],
-  \     ['green',   'yellow1'     ],
-  \     ['cyan',    'greenyellow' ],
-  \     ['magenta', 'green1'      ],
-  \     ['red',     'springgreen1'],
-  \     ['yellow',  'cyan1'       ],
-  \     ['green',   'slateblue1'  ],
-  \     ['cyan',    'magenta1'    ],
-  \     ['magenta', 'purple1'     ]
-  \   ]
-  \ }
-  augroup rainbow_lisp
-    autocmd!
-    autocmd FileType lisp,clojure,scheme RainbowParentheses
-  augroup END
-
-  Plugin 'terryma/vim-smooth-scroll'
-  set scroll=15
-  noremap <silent> <C-U> :call smooth_scroll#up(&scroll, 12, 1)<CR>
-  noremap <silent> <C-D> :call smooth_scroll#down(&scroll, 12, 1)<CR>
-  noremap <silent> <C-B> :call smooth_scroll#up(&scroll*2, 12, 4)<CR>
-  noremap <silent> <C-F> :call smooth_scroll#down(&scroll*2, 12, 4)<CR>
-
-  Plugin 'vim-airline/vim-airline'
-  Plugin 'vim-airline/vim-airline-themes'
-  let g:airline_theme='badwolf'
-  Plugin 'fatih/vim-go'
-call vundle#end()
-
-filetype plugin indent on
-
-syntax on
-
-set autoindent
-set smartindent
-set smarttab
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+set autoread
 set expandtab
-set number
-set relativenumber
-set noswapfile
-set nowrap
+set history=500
 set linebreak
 set noincsearch
-
+set noswapfile
+set nowrap
+set number
+set relativenumber
+set ruler
+set so=7
+set softtabstop=2
+set tabstop=2
 set textwidth=79
+set wildmenu
+set hid
+
+set wildignore=*.o,*~,*.pyc
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+
+nmap <leader>w :w!<cr>
+command W w !sudo tee % > /dev/null
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-
-colorscheme materialbox
 
 nnoremap p p=`]<C-o>
 nnoremap P P=`]<C-o>
@@ -102,9 +45,3 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
-noremap <C-t> :CtrlP ~/dev/<CR>
-
-if !has('nvim')
-  set ttymouse=xterm2
-endif
