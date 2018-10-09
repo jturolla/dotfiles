@@ -29,15 +29,20 @@ set smartcase
 set lazyredraw
 set showmatch
 set laststatus=2
+set undodir=~/.vim_undo_history
+set undofile
 syntax enable
+
+call plug#begin('~/.vim/plugged')
+ Plug 'mileszs/ack.vim'
+call plug#end()
+
+let g:ackprg = 'rg --vimgrep'
 
 colorscheme desert
 
 set wildignore=*.o,*~,*.pyc
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-
-nmap <leader>w :w!<cr>
-command W w !sudo tee % > /dev/null
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
@@ -58,15 +63,23 @@ fun! CleanWhitespace()
   call setreg('/', old_query)
 endfun
 
+fun! HasPaste()
+  if &paste
+    return 'PASTE '
+  endif
+  return ''
+endfunction
+
+
 autocmd BufWritePre * :call CleanWhitespace()
 
-" Quickly open a buffer for scribble
 map <leader>q :e ~/buffer<cr>
-
-" Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
-
-" Toggle paste mode on and off
+map <leader>x :e ~/buffer<cr>
 map <leader>pp :setlocal paste!<cr>
+nmap <leader>w :w!<cr>
+command! W w !sudo tee % > /dev/null
+map <leader>r :source ~/.vimrc<cr>
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
 
-set statusline=\%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+set statusline=\%{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
