@@ -3,6 +3,11 @@ set history=5000
 filetype plugin on
 filetype indent on
 
+call plug#begin('~/.vim/plugged')
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'godlygeek/tabular'
+call plug#end()
+
 let mapleader = ","
 
 set autoread
@@ -15,7 +20,6 @@ set noincsearch
 set noswapfile
 set nowrap
 set number
-set relativenumber
 set ruler
 set so=7
 set softtabstop=2
@@ -40,6 +44,7 @@ nmap <leader>w :w!<cr>
 command W w !sudo tee % > /dev/null
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd BufNewFile,BufRead *.md setlocal textwidth=79
 
 nnoremap p p=`]<C-o>
 nnoremap P P=`]<C-o>
@@ -60,13 +65,13 @@ endfun
 
 autocmd BufWritePre * :call CleanWhitespace()
 
-" Quickly open a buffer for scribble
 map <leader>q :e ~/buffer<cr>
-
-" Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
-
-" Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
+
+set grepprg=rg\ --color=never
+let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+let g:ctrlp_use_caching = 1
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_lazy_update = 1
 
 set statusline=\%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
