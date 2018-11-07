@@ -21,3 +21,4 @@ fi
 source $HOME/dev/jturolla/deq/deq.sh
 
 export PATH="$HOME/.cargo/bin:$PATH"
+eval "$(rbenv init -)"
