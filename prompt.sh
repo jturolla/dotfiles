@@ -24,7 +24,7 @@ commiter_color() {
 
 prompt_command() {
   local exit="$?"
-  PS1="\[${black}\]\u \[${black}\]\w\[${white}\]\$(git_branch) \[${green}\]@ \[\$(commiter_color)\]\$(git_commiter)\[$end\]"
+  PS1="\[${red}\]\u \[${lightblue}\]\w\[${blue}\]\$(git_branch) \[${green}\]@ \[\$(commiter_color)\]\$(git_commiter)\[$end\]"
 
   if [ $exit != 0 ]; then
     PS1+=" (-> \[$red\]${exit}\[${end}\])"

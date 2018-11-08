@@ -1,91 +1,50 @@
-set nocompatible
-filetype off
+set history=5000
 
-set rtp+=~/.vim/bundle/Vundle.vim
+filetype plugin on
+filetype indent on
 
-call vundle#begin()
-  Plugin 'VundleVim/Vundle.vim'
-  Plugin 'godlygeek/tabular'
-  Plugin 'avakhov/vim-yaml'
-  Plugin 'tpope/vim-fireplace'
-  Plugin 'tpope/vim-surround'
-  Plugin 'flazz/vim-colorschemes'
-  Plugin 'fatih/vim-hclfmt'
+call plug#begin('~/.vim/plugged')
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'godlygeek/tabular'
+call plug#end()
 
-  Plugin 'kien/ctrlp.vim'
+let mapleader = ","
 
-  set rtp+=~/.skim
-  let g:ctrlp_root_markers=['.ctrlp-root']
-  let g:ctrlp_working_path_mode = 'ra'
-  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|Target'
-
-  Plugin 'junegunn/rainbow_parentheses.vim'
-  let g:rainbow_active = 1
-  let g:rainbow#colors = {
-  \   'dark': [
-  \     ['yellow',  'orange1'     ],
-  \     ['green',   'yellow1'     ],
-  \     ['cyan',    'greenyellow' ],
-  \     ['magenta', 'green1'      ],
-  \     ['red',     'springgreen1'],
-  \     ['yellow',  'cyan1'       ],
-  \     ['green',   'slateblue1'  ],
-  \     ['cyan',    'magenta1'    ],
-  \     ['magenta', 'purple1'     ]
-  \   ],
-  \   'light': [
-  \     ['yellow',  'orange1'     ],
-  \     ['green',   'yellow1'     ],
-  \     ['cyan',    'greenyellow' ],
-  \     ['magenta', 'green1'      ],
-  \     ['red',     'springgreen1'],
-  \     ['yellow',  'cyan1'       ],
-  \     ['green',   'slateblue1'  ],
-  \     ['cyan',    'magenta1'    ],
-  \     ['magenta', 'purple1'     ]
-  \   ]
-  \ }
-  augroup rainbow_lisp
-    autocmd!
-    autocmd FileType lisp,clojure,scheme RainbowParentheses
-  augroup END
-
-  Plugin 'terryma/vim-smooth-scroll'
-  set scroll=15
-  noremap <silent> <C-U> :call smooth_scroll#up(&scroll, 12, 1)<CR>
-  noremap <silent> <C-D> :call smooth_scroll#down(&scroll, 12, 1)<CR>
-  noremap <silent> <C-B> :call smooth_scroll#up(&scroll*2, 12, 4)<CR>
-  noremap <silent> <C-F> :call smooth_scroll#down(&scroll*2, 12, 4)<CR>
-
-  Plugin 'vim-airline/vim-airline'
-  Plugin 'vim-airline/vim-airline-themes'
-  let g:airline_theme='badwolf'
-  Plugin 'fatih/vim-go'
-call vundle#end()
-
-filetype plugin indent on
-
-syntax on
-
+set autoread
 set autoindent
 set smartindent
-set smarttab
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
 set expandtab
-set number
-set relativenumber
-set noswapfile
-set nowrap
+set history=500
 set linebreak
 set noincsearch
-
+set noswapfile
+set nowrap
+set number
+set ruler
+set so=7
+set softtabstop=2
+set tabstop=2
+set shiftwidth=2
 set textwidth=79
+set wildmenu
+set hid
+set ignorecase
+set smartcase
+set lazyredraw
+set showmatch
+set laststatus=2
+syntax enable
+
+colorscheme desert
+
+set wildignore=*.o,*~,*.pyc
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+
+nmap <leader>w :w!<cr>
+command W w !sudo tee % > /dev/null
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-
-colorscheme materialbox
+autocmd BufNewFile,BufRead *.md setlocal textwidth=79
 
 nnoremap p p=`]<C-o>
 nnoremap P P=`]<C-o>
@@ -93,18 +52,26 @@ nnoremap P P=`]<C-o>
 filetype plugin on
 filetype indent on
 
-fun! <SID>StripTrailingWhitespaces()
-  let l = line(".")
-  let c = col(".")
-  :silent! %s/\s\+$//e
-	:silent! %s#\($\n\s*\)\+\%$##
-  call cursor(l, c)
+fun! CleanWhitespace()
+  let last_position= getpos(".")
+  let old_query = getreg("/")
+
+  silent! %s/\s\+$//g
+	silent! %s/\($\n\s*\)\+\%$//g
+
+  call setpos('.', last_position)
+  call setreg('/', old_query)
 endfun
 
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre * :call CleanWhitespace()
 
-noremap <C-t> :CtrlP ~/dev/<CR>
+map <leader>q :e ~/buffer<cr>
+map <leader>pp :setlocal paste!<cr>
 
-if !has('nvim')
-  set ttymouse=xterm2
-endif
+set grepprg=rg\ --color=never
+let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+let g:ctrlp_use_caching = 1
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_lazy_update = 1
+
+set statusline=\%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c

@@ -7,8 +7,9 @@ export LS_OPTS='--color=always'
 export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home'
 export JAVA_OPTS="-XX:-OmitStackTraceInFastThrow"
 
-export GOPATH="$HOME:$HOME/go"
+export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
+export GOROOT="/usr/local/opt/go/libexec"
 
 export LANG="en_US.UTF-8"
 export LC_COLLATE="en_US.UTF-8"
@@ -18,3 +19,5 @@ export LC_MONETARY="en_US.UTF-8"
 export LC_NUMERIC="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+
+export AWS_REGION="us-east-1"
