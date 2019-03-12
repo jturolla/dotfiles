@@ -18,6 +18,8 @@ alias dnsflush='sudo killall -HUP mDNSResponder'
 
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
+#alias ramdisk="diskutil erasevolume HFS+ 'ephemeral-ram-disk' `hdiutil attach -nomount ram://8388608`"
+
 function nud {
   cd ~/dev/nu/$1
 }
@@ -44,8 +46,8 @@ function switch-env {
 
 function gen-k8s-aliases {
   local prototype=$1
-  alias s${prototype}="nu k8s ctl $prototype  --"
-  alias ${prototype}="nu k8s ctl $prototype --env prod --"
+  alias s${prototype}="nu k8s ctl $prototype --stack-id $STAGING_STACK_ID --"
+  alias ${prototype}="nu k8s ctl $prototype --env prod --stack-id $STACK_ID --"
 }
 
 for proto in s0 s1 s2 s3 s4 s5 s6 global monitoring
@@ -54,20 +56,17 @@ do
 done
 
 function m() {
- nu k8s ctl monitoring --env prod --stack-id s -- $* -n monitoring
+ nu k8s ctl monitoring --env prod --stack-id $STACK_ID -- $* -n monitoring
 }
 
 function sm() {
-  nu k8s ctl monitoring --env staging -- $* -n monitoring
+  nu k8s ctl monitoring --env staging --stack-id $STAGING_STACK_ID -- $* -n monitoring
 }
 
-function k8s {
-  readonly env=$1
-  for proto in s1 s2 s3 s4 s5 s6 monitoring
-  do
-    nu k8s ctl $proto --env prod -- $* | while read line; do
-      if [[ "$line" =~ .*NAME.* ]]; then continue; fi
-      echo "$env/$proto/$line"
-    done
-  done
+function k8s() {
+  nu k8s ctl-sharded --env prod --stack-id $STACK_ID -- $*
+}
+
+function sk8s() {
+  nu k8s ctl-sharded --env staging --stack-id $STACK_ID -- $*
 }

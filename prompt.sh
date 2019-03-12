@@ -6,7 +6,7 @@ git_branch() {
 
 git_commiter()  {
   if [ "$(git config user.email)" == "$GIT_WORK_EMAIL" ]; then
-    echo "Nubank"
+    echo "Nubank(prod: $STACK_ID staging: $STAGING_STACK_ID)"
     return
   fi
 

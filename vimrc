@@ -6,6 +6,7 @@ filetype indent on
 call plug#begin('~/.vim/plugged')
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'godlygeek/tabular'
+Plug 'bhurlow/vim-parinfer'
 call plug#end()
 
 let mapleader = ","

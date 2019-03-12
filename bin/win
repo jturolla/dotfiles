@@ -3,7 +3,7 @@
 readonly dev_path=~/dev/nu
 readonly project_path=~/dev/$1
 
-tmux new-window -c $dev_path -n $1
+tmux new-window -c $project_path -n $1
 tmux split-window -v -c $project_path
 tmux resize-pane -D 20
 tmux split-window -h -c $project_path
