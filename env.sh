@@ -23,4 +23,4 @@ export LC_ALL="en_US.UTF-8"
 export AWS_REGION="us-east-1"
 
 export STACK_ID=${STACK_ID-t}
-export STAGING_STACK_ID=${STAGING_STACK_ID-f}
+export STAGING_STACK_ID=${STAGING_STACK_ID-j}
