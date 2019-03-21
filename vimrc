@@ -41,9 +41,6 @@ colorscheme desert
 set wildignore=*.o,*~,*.pyc
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 
-nmap <leader>w :w!<cr>
-command W w !sudo tee % > /dev/null
-
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd BufNewFile,BufRead *.md setlocal textwidth=79
 
