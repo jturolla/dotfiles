@@ -150,7 +150,6 @@ brew "ykman"
 # Tracks most-used directories to make cd smarter
 brew "z"
 # A shared cache tool for Carthage
-brew "blender/tap/rome"
 cask "aerial"
 cask "alfred"
 cask "android-studio"

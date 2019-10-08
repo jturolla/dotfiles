@@ -17,7 +17,7 @@ alias reload!="source ~/.bash_profile; echo 'Reloaded!'"
 alias dnsflush='sudo killall -HUP mDNSResponder'
 
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-
+alias git-sign="git rebase --exec 'git commit --amend --no-edit -n -S' -i master"
 #alias ramdisk="diskutil erasevolume HFS+ 'ephemeral-ram-disk' `hdiutil attach -nomount ram://8388608`"
 
 function nud {
@@ -46,11 +46,11 @@ function switch-env {
 
 function gen-k8s-aliases {
   local prototype=$1
-  alias s${prototype}="nu k8s ctl $prototype --stack-id $STAGING_STACK_ID --"
-  alias ${prototype}="nu k8s ctl $prototype --env prod --stack-id $STACK_ID --"
+  alias s${prototype}="nu k8s ctl $prototype --env staging --stack-id $(echo $STAGING_STACK_ID) --"
+  alias ${prototype}="nu k8s ctl $prototype --env prod --stack-id $(echo $STACK_ID) --"
 }
 
-for proto in s0 s1 s2 s3 s4 s5 s6 global monitoring
+for proto in s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 global monitoring
 do
   gen-k8s-aliases $proto
 done

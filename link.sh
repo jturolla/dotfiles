@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -exu pipefail
+
 ln -svf $DOTFILES/tmux.conf    ~/.tmux.conf
 ln -svf $DOTFILES/vimrc        ~/.vimrc
 ln -svf $DOTFILES/gitconfig    ~/.gitconfig

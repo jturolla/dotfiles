@@ -13,7 +13,5 @@ function docker-ruby {
     -e NU_GOCD_JSESSIONID \
     -e PAGER='busybox cat' \
     $* \
-    --entrypoint /bin/bash $NU_RUBY_IMG
+    --entrypoint /bin/bash quay.io/nubank/nudev-ruby:cc2289b
 }
-
-source ~/dev/jturolla/deq/deq.sh

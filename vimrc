@@ -7,6 +7,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'godlygeek/tabular'
 Plug 'bhurlow/vim-parinfer'
+Plug 'hashivim/vim-terraform'
+Plug 'mrk21/yaml-vim'
 call plug#end()
 
 let mapleader = ","
@@ -73,3 +75,6 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_lazy_update = 1
 
 set statusline=\%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
+let g:terraform_align=1
+let g:terraform_fold_sections=1

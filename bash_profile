@@ -8,7 +8,7 @@ source $DOTFILES/prompt.sh
 source $DOTFILES/aliases.sh
 source $DOTFILES/colors.sh
 source $DOTFILES/completion.sh
-source $DOTFILES/docker-aliases.sh
+#source $DOTFILES/docker-aliases.sh
 
 source $HOME/.env
 
@@ -21,3 +21,7 @@ fi
 source $HOME/dev/jturolla/deq/deq.sh
 
 eval "$(rbenv init -)"
+export GPG_TTY=$(tty)
+
+source /Users/ju/.nurc
+#source $NUCLI_HOME/aws-scripts/refresh-environment
