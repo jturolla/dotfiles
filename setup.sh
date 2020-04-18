@@ -7,24 +7,23 @@ function ask() {
   echo
 }
 
-ask "Is this a new computer?" "NEW_COMPUTER"
-
 ask "Is this a work computer?" "WORK_COMPUTER"
 echo "WORK_COMPUTER=$WORK_COMPUTER" >> ~/.env
 
-ask "What's $(whoami) main email address?" "EMAIL_ADDRESS"
+ask "What's $(whoami) email address?" "EMAIL_ADDRESS"
 echo "EMAIL_ADDRESS=$EMAIL_ADDRESS" >> ~/.env
 
 # setting up folders
-mkdir ~/dev
+mkdir -p ~/dev
 
 # link dotfiles
 ./link.sh
 
 # brew
 echo "Setting up homebrew..."
-sudo chown -R $(whoami):admin /usr/local
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+#sudo chown -R $(whoami):admin /usr/local
+
+#ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 echo "Installing applications (this may take a while)..."
 brew doctor
@@ -44,8 +43,10 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 defaults write -g com.apple.mouse.scaling -float 10.0
 
+ask "Gen rsa keys?" "GEN_KEY"
+
 # setting up secrets
-if [ "$NEW_COMPUTER" = "y"] ; then
+if [ "$GEN_KEY" = "y"] ; then
 	echo "keygen..."
 	ssh-keygen -t rsa -b 4096 -C "$EMAIL_ADDRESS"
   ssh-add -K ~/.ssh/id_rsa
