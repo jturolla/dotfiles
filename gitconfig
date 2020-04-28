@@ -21,3 +21,5 @@
 #	insteadOf = https://github.com/
 #commit]
 	gpgsign = true
+[commit]
+	gpgsign = false

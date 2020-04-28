@@ -46,11 +46,12 @@ function switch-env {
 
 function gen-k8s-aliases {
   local prototype=$1
+
   alias s${prototype}="nu k8s ctl $prototype --env staging --stack-id $(echo $STAGING_STACK_ID) --"
   alias ${prototype}="nu k8s ctl $prototype --env prod --stack-id $(echo $STACK_ID) --"
 }
 
-for proto in s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 global monitoring
+for proto in $(seq 1 99 | xargs -I @ echo s@;) global monitoring ds
 do
   gen-k8s-aliases $proto
 done
