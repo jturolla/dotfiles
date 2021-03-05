@@ -25,6 +25,10 @@ echo "Setting up homebrew..."
 
 #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+#set brew to all administrators
+sudo chgrp -R administrators $(brew --prefix)/* # give brew to admins
+sudo chmod -R g+w $(brew --prefix)/* # let group write
+
 echo "Installing applications (this may take a while)..."
 brew doctor
 brew bundle
