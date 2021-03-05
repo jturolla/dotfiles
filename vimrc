@@ -28,7 +28,7 @@ set so=7
 set softtabstop=2
 set tabstop=2
 set shiftwidth=2
-set textwidth=79
+"set textwidth=79
 set wildmenu
 set hid
 set ignorecase

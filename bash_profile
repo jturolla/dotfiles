@@ -25,3 +25,6 @@ export GPG_TTY=$(tty)
 
 source /Users/ju/.nurc
 #source $NUCLI_HOME/aws-scripts/refresh-environment
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+

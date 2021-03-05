@@ -71,3 +71,7 @@ function k8s() {
 function sk8s() {
   nu k8s ctl-sharded --env staging --stack-id $STACK_ID -- $*
 }
+
+function refresh-aws() {
+  nu aws credentials refresh
+}
