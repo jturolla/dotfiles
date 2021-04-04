@@ -39,8 +39,8 @@ ask "Enter git author and commiter name" "AUTHOR_NAME"
 ask "What's $(whoami) email address?" "EMAIL_ADDRESS"
 
 echo "export EMAIL=$EMAIL_ADDRESS" >> ~/.env
-echo "export GIT_AUTHOR_NAME=$AUTHOR_NAME" >> ~/.env
-echo "export GIT_COMMITER_NAME=$AUTHOR_NAME" >> ~/.env
+echo "export GIT_AUTHOR_NAME=\"$AUTHOR_NAME\"" >> ~/.env
+echo "export GIT_COMMITER_NAME=\"$AUTHOR_NAME\"" >> ~/.env
 echo "export GIT_AUTHOR_EMAIL=$EMAIL_ADDRESS" >> ~/.env
 echo "export GIT_COMMITER_EMAIL=$EMAIL_ADDRESS" >> ~/.env
 
