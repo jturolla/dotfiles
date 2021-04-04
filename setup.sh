@@ -7,8 +7,35 @@ function ask() {
   echo
 }
 
-ask "What's $(whoami) email address?" "EMAIL_ADDRESS"
+function setup_homebrew() {
+  echo "Setting up homebrew..."
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+  #set brew to all administrators
+  #sudo chgrp -R admin /usr/local/*
+  #sudo chmod -R g+w /usr/local/*
+
+  echo "Installing applications (this may take a while)..."
+  brew doctor
+  brew bundle
+  brew upgrade
+}
+
+function gen_keys() {
+  echo "Generating SSH keys"
+
+  ssh-keygen -t ed25519 -C "$EMAIL"
+
+  cat > ~/.ssh/config << EOF
+Host *
+AddKeysToAgent yes
+IdentityFile ~/.ssh/id_ed25519
+EOF
+
+  ssh-add ~/.ssh/id_ed25519
+}
+
+ask "What's $(whoami) email address?" "EMAIL_ADDRESS"
 echo "EMAIL=$EMAIL_ADDRESS" >> ~/.env
 
 # setting up folders
@@ -18,22 +45,13 @@ mkdir -p ~/.ssh
 # link dotfiles
 ./link.sh
 
-# brew
-echo "Setting up homebrew..."
-#sudo chown -R $(whoami):admin /usr/local
+xcode-select --install
 
-#ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+ask "Would you like to setup homebrew on this user?" "SETUP_HOMEBREW"
 
-#set brew to all administrators
-sudo chgrp -R administrators $(brew --prefix)/* # give brew to admins
-sudo chmod -R g+w $(brew --prefix)/* # let group write
-
-echo "Installing applications (this may take a while)..."
-#brew doctor
-#brew bundle
-#brew upgrade
-
-# vim
+if [ "$SETUP_HOMEBREW" = "y" ] ; then
+  setup_homebrew
+fi
 
 echo "Setting up vim: Plug...."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -48,20 +66,11 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 defaults write -g com.apple.mouse.scaling -float 10.0
 
-ask "Gen rsa keys? [y/n]" "GEN_KEY"
+ask "Gen ssh keys? [y/n]" "GEN_KEYS"
 
 # setting up secrets
-if [ "$GEN_KEY" = "y" ] ; then
-	echo "keygen..."
-
-	ssh-keygen -t ed25519 -C "$EMAIL"
-
-cat > ~/.ssh/config << EOF
-Host *
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_ed25519
-EOF
-          ssh-add ~/.ssh/id_ed25519
+if [ "$GEN_KEYS" = "y" ] ; then
+  gen_keys
 fi
 
 echo "All done."
