@@ -5,20 +5,10 @@ git_branch() {
 }
 
 git_commiter()  {
-  if [ "$(git config user.email)" == "$GIT_WORK_EMAIL" ]; then
-    echo "Nubank(prod: $STACK_ID staging: $STAGING_STACK_ID)"
-    return
-  fi
-
-  echo "Personal"
+  echo "as ${EMAIL}"
 }
 
 commiter_color() {
-  if [ "$(git config user.email)" == "$GIT_WORK_EMAIL" ]; then
-    echo -e "$purpleb"
-    return
-  fi
-
   echo -e "$blueb"
 }
 

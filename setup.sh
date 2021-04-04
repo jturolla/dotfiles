@@ -7,14 +7,13 @@ function ask() {
   echo
 }
 
-ask "Is this a work computer?" "WORK_COMPUTER"
-echo "WORK_COMPUTER=$WORK_COMPUTER" >> ~/.env
-
 ask "What's $(whoami) email address?" "EMAIL_ADDRESS"
-echo "EMAIL_ADDRESS=$EMAIL_ADDRESS" >> ~/.env
+
+echo "EMAIL=$EMAIL_ADDRESS" >> ~/.env
 
 # setting up folders
 mkdir -p ~/dev
+mkdir -p ~/.ssh
 
 # link dotfiles
 ./link.sh
@@ -30,13 +29,15 @@ sudo chgrp -R administrators $(brew --prefix)/* # give brew to admins
 sudo chmod -R g+w $(brew --prefix)/* # let group write
 
 echo "Installing applications (this may take a while)..."
-brew doctor
-brew bundle
-brew upgrade
+#brew doctor
+#brew bundle
+#brew upgrade
 
 # vim
-echo "Setting up vim: Vundle...."
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+echo "Setting up vim: Plug...."
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # apple configs
 echo "Applying apple configuration..."
@@ -47,13 +48,20 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 defaults write -g com.apple.mouse.scaling -float 10.0
 
-ask "Gen rsa keys?" "GEN_KEY"
+ask "Gen rsa keys? [y/n]" "GEN_KEY"
 
 # setting up secrets
-if [ "$GEN_KEY" = "y"] ; then
+if [ "$GEN_KEY" = "y" ] ; then
 	echo "keygen..."
-	ssh-keygen -t rsa -b 4096 -C "$EMAIL_ADDRESS"
-  ssh-add -K ~/.ssh/id_rsa
+
+	ssh-keygen -t ed25519 -C "$EMAIL"
+
+cat > ~/.ssh/config << EOF
+Host *
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519
+EOF
+          ssh-add ~/.ssh/id_ed25519
 fi
 
 echo "All done."
