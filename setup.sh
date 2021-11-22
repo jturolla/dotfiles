@@ -55,9 +55,24 @@ xcode-select --install
 
 ask "Would you like to setup homebrew on this user?" "SETUP_HOMEBREW"
 
+<<<<<<< HEAD
 if [ "$SETUP_HOMEBREW" = "y" ] ; then
   setup_homebrew
 fi
+=======
+#set brew to all administrators
+sudo chgrp -R administrators $(brew --prefix)/* # give brew to admins
+sudo chgrp -R administrators /usr/local/Cellar/*
+sudo chgrp -R administrators /usr/local/Cellar/
+sudo chmod -R g+w $(brew --prefix)/* # let group write
+sudo chmod -R g+w /usr/local/Cellar/*
+sudo chmod -R g+w /usr/local/Cellar/
+
+echo "Installing applications (this may take a while)..."
+brew doctor
+brew bundle
+brew upgrade
+>>>>>>> f6866d0 (this)
 
 echo "Setting up vim: Plug...."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
