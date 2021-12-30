@@ -25,3 +25,9 @@ source $HOME/dev/jturolla/deq/deq.sh
 
 eval "$(rbenv init -)"
 export GPG_TTY=$(tty)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/ju-personal/dev/google-cloud-sdk/google-cloud-sdk/path.bash.inc' ]; then . '/Users/ju-personal/dev/google-cloud-sdk/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/ju-personal/dev/google-cloud-sdk/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/ju-personal/dev/google-cloud-sdk/google-cloud-sdk/completion.bash.inc'; fi
