@@ -25,3 +25,6 @@
 	path = /Users/ju/.nugitconfig
 [init]
 	defaultBranch = main
+[user]
+	name = Julio Turolla
+	email = julio.turolla@nubank.com.br
