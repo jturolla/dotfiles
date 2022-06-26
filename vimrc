@@ -9,6 +9,7 @@ Plug 'godlygeek/tabular'
 Plug 'bhurlow/vim-parinfer'
 Plug 'hashivim/vim-terraform'
 Plug 'mrk21/yaml-vim'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 let mapleader = ","
@@ -69,7 +70,7 @@ map <leader>q :e ~/buffer<cr>
 map <leader>pp :setlocal paste!<cr>
 
 set grepprg=rg\ --color=never
-let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+let g:ctrlp_user_command = 'rg %s --files --color=never --hidden --glob "!.git"'
 let g:ctrlp_use_caching = 1
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_lazy_update = 1
@@ -78,3 +79,6 @@ set statusline=\%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\
 
 let g:terraform_align=1
 let g:terraform_fold_sections=1
+
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0#
+let g:indentLine_char = '⦙'

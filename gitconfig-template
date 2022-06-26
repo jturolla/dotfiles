@@ -1,0 +1,6 @@
+[user]
+  name = Name
+	email = email@email.com
+	signingkey = email@email.com
+[commit]
+	gpgsign = false
