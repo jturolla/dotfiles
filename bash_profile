@@ -9,25 +9,16 @@ source $DOTFILES/aliases.sh
 source $DOTFILES/colors.sh
 source $DOTFILES/completion.sh
 source $DOTFILES/history.sh
-#source $DOTFILES/docker-aliases.sh
 
+# Private Env
 source $HOME/.env
 
-if [ -f ~/.nurc ]; then
-  source $HOME/.nurc
-  export NU_HOME="$HOME/dev/nu"
-  export NUCLI_HOME="$NU_HOME/nucli"
-fi
-
+# Work related
 source $HOME/.nurc
 
-source $HOME/dev/jturolla/deq/deq.sh
-
 eval "$(rbenv init -)"
-export GPG_TTY=$(tty)
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/ju-personal/dev/google-cloud-sdk/google-cloud-sdk/path.bash.inc' ]; then . '/Users/ju-personal/dev/google-cloud-sdk/google-cloud-sdk/path.bash.inc'; fi
+# Setup fzf finder
+source ~/.fzf.bash
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/ju-personal/dev/google-cloud-sdk/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/ju-personal/dev/google-cloud-sdk/google-cloud-sdk/completion.bash.inc'; fi
+## The following lines should be empty... but sometimes a program writes here :)

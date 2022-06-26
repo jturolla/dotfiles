@@ -2,29 +2,19 @@
 	excludesfile = ~/.gitignore
 	autocrlf = input
 	pager = diff-so-fancy | less --tabs=4 -RFX
-;[gpg]
-;	program = gpg1
 [color]
 	ui = true
 [diff-so-fancy]
 	useUnicodeRuler = false
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-  required = true
-#2[url "ssh://git@github.com/"]
-#	insteadOf = https://github.com/
-#commit]
-	gpgsign = true
 [commit]
 	gpgsign = false
 [pull]
 	ff = only
+[includeIf "gitdir:/Users/ju/dev/"]
+  path = /Users/ju/.personalgitconfig
 [includeIf "gitdir:/Users/ju/dev/nu/"]
 	path = /Users/ju/.nugitconfig
 [init]
 	defaultBranch = main
-[user]
-	name = Julio Turolla
-	email = julio.turolla@nubank.com.br
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
