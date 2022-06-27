@@ -10,7 +10,7 @@ git_branch() {
 
 prompt_command() {
   local exit="$?"
-  PS1="\[${red}\]\u \[${lightblue}\]\w\[${redb}\]\$(git_branch) | \$(kubernetes_context)\[$end\]"
+  PS1="\[${red}\]\u \[${lightblue}\]\w\[${blueb}\]\$(git_branch) |\[${greenb}\] \$(kubernetes_context)\[$end\]"
 
   if [ $exit != 0 ]; then
     PS1+=" (-> \[$red\]${exit}\[${end}\])"
