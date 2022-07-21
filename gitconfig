@@ -10,10 +10,10 @@
 	gpgsign = false
 [pull]
 	ff = only
-[includeIf "gitdir:/Users/ju/dev/"]
-  path = /Users/ju/.personalgitconfig
-[includeIf "gitdir:/Users/ju/dev/nu/"]
-	path = /Users/ju/.nugitconfig
+[includeIf "gitdir:~/dev/"]
+  path = ~/.personalgitconfig
+[includeIf "gitdir:~/dev/nu/"]
+	path = ~/.nugitconfig
 [init]
 	defaultBranch = main
 [url "ssh://git@github.com/"]
