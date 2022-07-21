@@ -8,8 +8,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'godlygeek/tabular'
 Plug 'bhurlow/vim-parinfer'
 Plug 'hashivim/vim-terraform'
-Plug 'mrk21/yaml-vim'
-Plug 'Yggdroot/indentLine'
+"Plug 'mrk21/yaml-vim'
+"Plug 'Yggdroot/indentLine'
 call plug#end()
 
 let mapleader = ","
