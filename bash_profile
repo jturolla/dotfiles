@@ -10,15 +10,21 @@ source $DOTFILES/colors.sh
 source $DOTFILES/completion.sh
 source $DOTFILES/history.sh
 
+
 # Private Env
 source $HOME/.env
 
 # Work related
 source $HOME/.nurc
 
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 
 # Setup fzf finder
 source ~/.fzf.bash
+
+if [ "$(uname)" == "Darwin" ]; then
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  alias gsed=sed
+fi
 
 ## The following lines should be empty... but sometimes a program writes here :)
