@@ -10,6 +10,7 @@ Plug 'bhurlow/vim-parinfer'
 Plug 'hashivim/vim-terraform'
 Plug 'mrk21/yaml-vim'
 Plug 'Yggdroot/indentLine'
+Plug 'preservim/nerdtree'
 call plug#end()
 
 let mapleader = ","
@@ -82,3 +83,6 @@ let g:terraform_fold_sections=1
 
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0#
 let g:indentLine_char = '⦙'
+
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.git$', '\.idea$', '\.vscode$', '\.history$']
