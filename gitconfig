@@ -12,6 +12,8 @@
 	ff = only
 [includeIf "gitdir:/Users/ju/dev/"]
   path = /Users/ju/.personalgitconfig
+[includeIf "gitdir:/Users/ju/go/"]
+  path = /Users/ju/.personalgitconfig
 [includeIf "gitdir:/Users/ju/dev/nu/"]
 	path = /Users/ju/.nugitconfig
 [init]

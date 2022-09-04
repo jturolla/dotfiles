@@ -11,7 +11,6 @@ export JAVA_OPTS="-XX:-OmitStackTraceInFastThrow"
 
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/usr/local/opt/go@1.17/bin"
-export GOROOT="/usr/local/opt/go@1.17"
 
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 
