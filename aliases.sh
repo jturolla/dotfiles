@@ -17,5 +17,5 @@ alias pgit="GIT_SSH_COMMAND='ssh -i ~/.ssh/github.com-jturolla' git"
 alias ramdisk="diskutil erasevolume HFS+ 'ephemeral-ram-disk' `hdiutil attach -nomount ram://8388608`"
 
 function refresh-aws() {
-  nu aws credentials refresh
+  nu aws credentials refresh --maven-login
 }

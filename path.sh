@@ -10,4 +10,4 @@ export PATH="$PATH:$HOME/.cargo/bin"
 #export PATH="$PATH:$HOME/.pub-cache/bin"
 
 export PATH="$PATH:$GOPATH/bin"
-export PATH="$PATH:/usr/local/opt/go@1.17/bin"
+export PATH="$PATH:/usr/local/opt/go@1.18/bin"

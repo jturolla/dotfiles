@@ -76,7 +76,7 @@ let g:ctrlp_use_caching = 1
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_lazy_update = 1
 
-set statusline=\%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+set statusline=\%F%m%r%h\ %w
 
 let g:terraform_align=1
 let g:terraform_fold_sections=1
