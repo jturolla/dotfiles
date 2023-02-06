@@ -11,3 +11,5 @@ export PATH="$PATH:$HOME/.cargo/bin"
 
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:/usr/local/opt/go@1.18/bin"
+
+eval $(/opt/homebrew/bin/brew shellenv)

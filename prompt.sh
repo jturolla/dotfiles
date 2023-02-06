@@ -1,7 +1,7 @@
 #!/bin/bash
 
 kubernetes_context() {
-  kubectl config current-context
+  kubectl config current-context 2> /dev/null | gsed 's/.*\///'
 }
 
 git_branch() {
@@ -9,7 +9,7 @@ git_branch() {
 }
 
 kube_ns() {
-  kubens -c
+  kubens -c 2> /dev/null
 }
 
 prompt_command() {

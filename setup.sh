@@ -20,6 +20,9 @@ brew doctor
 brew bundle
 brew upgrade
 
+echo "Link openjdk.."
+sudo ln -sfn $(brew --prefix)/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+
 echo "Setting up vim: Plug...."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
