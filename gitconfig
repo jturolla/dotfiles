@@ -10,13 +10,16 @@
 	gpgsign = false
 [pull]
 	ff = only
-[includeIf "gitdir:/Users/ju/dev/"]
-  path = /Users/ju/.personalgitconfig
-[includeIf "gitdir:/Users/ju/go/"]
-  path = /Users/ju/.personalgitconfig
-[includeIf "gitdir:/Users/ju/dev/nu/"]
-	path = /Users/ju/.nugitconfig
+[includeIf "gitdir:~/dev/"]
+  path = ~/.personalgitconfig
+[includeIf "gitdir:~/go/"]
+  path = ~/.personalgitconfig
+[includeIf "gitdir:~/dev/nu/"]
+	path = ~/.nugitconfig
 [init]
 	defaultBranch = main
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[user]
+	name = Julio Turolla
+	email = julio.turolla@nubank.com.br

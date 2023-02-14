@@ -9,7 +9,7 @@ export LS_OPTS='--color=always'
 #export JAVA_HOME='/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home'
 export JAVA_OPTS="-XX:-OmitStackTraceInFastThrow"
 
-#export GOPATH="$HOME/go"
+export GOPATH="$HOME/go"
 export GOBIN="$HOME/usr/local/opt/go@1.17/bin"
 
 export ANDROID_HOME="$HOME/Library/Android/sdk"
