@@ -16,8 +16,6 @@ source $HOME/.env
 # Work related
 source $HOME/.nurc
 
-eval "$(rbenv init -)"
-
 # Setup fzf finder
 source ~/.fzf.bash
 
