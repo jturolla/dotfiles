@@ -1,25 +1,26 @@
 [core]
-	excludesfile = ~/.gitignore
-	autocrlf = input
-	pager = diff-so-fancy | less --tabs=4 -RFX
+  excludesfile = ~/.gitignore
+  autocrlf = input
+  pager = diff-so-fancy | less --tabs=4 -RFX
 [color]
-	ui = true
+  ui = true
 [diff-so-fancy]
-	useUnicodeRuler = false
+  useUnicodeRuler = false
 [commit]
-	gpgsign = false
+  gpgsign = true
 [pull]
-	ff = only
+  ff = only
 [includeIf "gitdir:~/dev/"]
   path = ~/.personalgitconfig
 [includeIf "gitdir:~/go/"]
   path = ~/.personalgitconfig
 [includeIf "gitdir:~/dev/nu/"]
-	path = ~/.nugitconfig
+  path = ~/.nugitconfig
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [url "git@github.com:"]
-	insteadOf = https://github.com/
-[user]
-	name = Julio Turolla
-	email = julio.turolla@nubank.com.br
+  insteadOf = https://github.com/
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
