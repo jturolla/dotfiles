@@ -11,6 +11,14 @@ module.exports = {
         finicky.matchDomains(/.*\.google.com/) // use helper function to match on domain only
       ],
       browser: "Google Chrome"
+    },
+    {
+      // Open google.com and *.google.com urls in Google Chrome
+      match: [
+        "nubank.com.br*", // match google.com urls
+        finicky.matchDomains(/.*\.nubank.com.br/) // use helper function to match on domain only
+      ],
+      browser: "Google Chrome"
     }
   ]
 }

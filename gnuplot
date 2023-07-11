@@ -8,3 +8,4 @@ set termoption linewidth 1.4
 set title font ", 20"
 set grid
 set colorsequence podo
+set datafile separator ","

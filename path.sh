@@ -12,4 +12,6 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:$HOME/usr/local/opt/go@1.17/bin"
 
+export PATH="$PATH:/Users/julio.turolla/dev/pulumi-kubernetes/bin"
+
 eval $(/opt/homebrew/bin/brew shellenv)
