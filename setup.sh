@@ -1,12 +1,16 @@
 #!/bin/bash
 
-set -euxo pipefail
+set -euo pipefail
 
 echo "Setting up environment..."
 
-echo "Instaling homebrew..."
-
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo "Checking if Homebrew is installed..."
+if ! command -v brew &> /dev/null; then
+      echo "Homebrew is not installed. Installing..."
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+      echo "Homebrew is already installed. Skipping installation."
+fi
 
 # setting up folders
 echo "Setting up folders..."
@@ -22,8 +26,13 @@ ln -svf $DOTFILES/gitignore    ~/.gitignore
 ln -svf $DOTFILES/bash_profile ~/.bash_profile
 ln -svf $DOTFILES/ideavimrc    ~/.ideavimrc
 ln -svf $DOTFILES/ssh_config   ~/.ssh/config
-
-xcode-select --install
+echo "Checking if Xcode Command Line Tools are installed..."
+if ! command -v xcode-select &> /dev/null; then
+      echo "Xcode Command Line Tools are not installed. Installing..."
+      xcode-select --install
+else
+      echo "Xcode Command Line Tools are already installed. Skipping installation."
+fi
 
 echo "Installing applications (this may take a while)..."
 brew doctor
