@@ -1,17 +1,21 @@
 #!/bin/bash
 
-if [ "$1" = "-h" ]; then
+set -euo pipefail 
+
+if [ -z "$1" && "$1" = "-h" ]; then
     echo "Usage: win <path>"
     exit 1
 fi
 
 if [ -z "$1" ]; then
-    readonly open_path=~/
+    readonly open_path="~/"
+    readonly win_name="new-window"
 else
     readonly open_path=~/dev/$1
+    readonly win_name="$1"
 fi
 
-tmux new-window -c $open_path -n $1
+tmux new-window -c $open_path -n $win_name
 tmux split-window -v -c $open_path
 tmux resize-pane -D 20
 tmux split-window -h -c $open_path

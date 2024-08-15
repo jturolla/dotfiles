@@ -1,6 +1,5 @@
 # Brew programs have precedence
-export PATH=""
-export PATH="$PATH/opt/homebrew/bin"
+export PATH="$PATH:/opt/homebrew/bin"
 export PATH="$PATH:/opt/homebrew/sbin"
 
 # Regular paths
