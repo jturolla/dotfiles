@@ -20,3 +20,6 @@
 	defaultBranch = main
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[user]
+	name = Julio Turolla
+	email = j@julioturolla.com

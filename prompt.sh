@@ -1,20 +1,20 @@
 #!/bin/bash
 
 kubernetes_context() {
-  kubectl config current-context
+  if command -v kubectl &> /dev/null && kubectl config current-context &> /dev/null; then
+    echo " k8s: $(kubectl config current-context) @ $(kubens -c)"
+  else
+    echo ""
+  fi
 }
 
 git_branch() {
   git branch 2> /dev/null | gsed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
 }
 
-kube_ns() {
-  kubens -c
-}
-
 prompt_command() {
   local exit="$?"
-  PS1="\[${red}\]\u \[${lightblue}\]\w\[${blueb}\]\$(git_branch) |\[${greenb}\] \$(kubernetes_context) @ \$(kube_ns) \[$end\]"
+  PS1="\[${red}\]\u \[${lightblue}\]\w\[${blueb}\]\$(git_branch)\[${greenb}\]\$(kubernetes_context)\[$end\]"
 
   if [ $exit != 0 ]; then
     PS1+=" (-> \[$red\]${exit}\[${end}\])"

@@ -1,9 +1,17 @@
 #!/bin/bash
 
-readonly dev_path=~/dev/nu
-readonly project_path=~/dev/$1
+if [ "$1" = "-h" ]; then
+    echo "Usage: win <path>"
+    exit 1
+fi
 
-tmux new-window -c $project_path -n $1
-tmux split-window -v -c $project_path
+if [ -z "$1" ]; then
+    readonly open_path=~/
+else
+    readonly open_path=~/dev/$1
+fi
+
+tmux new-window -c $open_path -n $1
+tmux split-window -v -c $open_path
 tmux resize-pane -D 20
-tmux split-window -h -c $project_path
+tmux split-window -h -c $open_path
