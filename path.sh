@@ -1,15 +1,17 @@
-# Brew programs have precedence
-export PATH="$PATH:/opt/homebrew/bin"
-export PATH="$PATH:/opt/homebrew/sbin"
+# Initialize the variable
+custom_paths=""
 
-# Regular paths
-export PATH="$PATH:/usr/local/sbin"
-export PATH="$PATH:/usr/local"
-
-# Dotfiles
-export PATH="$PATH:$DOTFILES/bin"
-export PATH="$PATH:$HOME/dev/nu/nucli"
+# Append each path to the variable
+custom_paths="/opt/homebrew/bin:$custom_paths"
+custom_paths="/opt/homebrew/sbin:$custom_paths"
+custom_paths="/usr/local/sbin:$custom_paths"
+custom_paths="/usr/local:$custom_paths"
+custom_paths="$DOTFILES/bin:$custom_paths"
+custom_paths="$HOME/dev/nu/nucli:$custom_paths"
 
 if command -v go &> /dev/null; then
-    export PATH="$PATH:$(go env GOPATH)/bin"
+    custom_paths="$(go env GOPATH)/bin:$custom_paths"
 fi
+
+# Postpend the variable in the final export statement
+export PATH="$custom_paths:$PATH"

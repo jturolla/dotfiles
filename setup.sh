@@ -26,8 +26,9 @@ ln -svf $DOTFILES/gitignore    ~/.gitignore
 ln -svf $DOTFILES/bash_profile ~/.bash_profile
 ln -svf $DOTFILES/ideavimrc    ~/.ideavimrc
 ln -svf $DOTFILES/ssh_config   ~/.ssh/config
+
 echo "Checking if Xcode Command Line Tools are installed..."
-if ! command -v xcode-select &> /dev/null; then
+if ! xcode-select -p &> /dev/null; then
       echo "Xcode Command Line Tools are not installed. Installing..."
       xcode-select --install
 else
@@ -36,27 +37,34 @@ fi
 
 echo "Installing applications (this may take a while)..."
 brew doctor
-brew bundle
+brew bundle || true
 brew upgrade
 
 echo "Setting up vim: Plug...."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+echo "Installing Vim plugins..."
+vim +PlugInstall +qall
 
 echo "Setting up Git..."
-cp gitconfig-template ~/.personalgitconfig
-cp gitconfig-template ~/.nugitconfig
+if [ ! -f ~/.personalgitconfig ]; then
+      cp gitconfig-template ~/.personalgitconfig
+fi
+if [ ! -f ~/.nugitconfig ]; then
+      cp gitconfig-template ~/.nugitconfig
+fi
 
 echo "TODO: edit ~/.personalgitconfig and ~/.nugitconfig with your information."
 
 # apple configs
-echo "Applying apple configuration..."
+echo "Applying apple Keyboard and Mouse configuration..."
 
 defaults write com.apple.dock persistent-apps x
 defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 defaults write -g com.apple.mouse.scaling -float 10.0
+
 
 echo "All done, reload the terminal and reboot your macbook for keyboard configurations to take effect."
