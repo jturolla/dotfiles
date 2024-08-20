@@ -19,3 +19,5 @@ export GPG_TTY="$(tty)"
 export PINENTRY_USER_DATA="USE_CURSES=1"
 
 export KUBECTL_EXTERNAL_DIFF="dyff between --color=on --omit-header --set-exit-code --output human --no-table-style"
+
+SSH_AUTH_SOCK=~/.1password/agent.sock

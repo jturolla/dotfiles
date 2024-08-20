@@ -36,7 +36,6 @@ ln -svf $DOTFILES/vimrc        ~/.vimrc
 ln -svf $DOTFILES/gitconfig    ~/.gitconfig
 ln -svf $DOTFILES/gitignore    ~/.gitignore
 ln -svf $DOTFILES/bash_profile ~/.bash_profile
-ln -svf $DOTFILES/ideavimrc    ~/.ideavimrc
 ln -svf $DOTFILES/ssh_config   ~/.ssh/config
 
 echo "Checking if Xcode Command Line Tools are installed..."
@@ -68,6 +67,11 @@ if [ ! -f ~/.nugitconfig ]; then
 fi
 
 echo "TODO: edit ~/.personalgitconfig and ~/.nugitconfig with your information."
+
+echo "Setting up 1password ssh agent..."
+
+mkdir -p ~/.1password
+ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
 
 # apple configs
 echo "Applying apple Keyboard and Mouse configuration..."
