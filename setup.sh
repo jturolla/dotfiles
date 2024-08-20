@@ -2,6 +2,14 @@
 
 set -euo pipefail
 
+echo "Checking current shell..."
+if [ "$SHELL" != "/bin/bash" ]; then
+      echo "Current shell is not bash. Changing shell to bash..."
+      chsh -s /bin/bash
+else
+      echo "Current shell is already bash. No need to change."
+fi
+
 echo "Setting up environment..."
 
 echo "Checking if Homebrew is installed..."
@@ -16,6 +24,10 @@ fi
 echo "Setting up folders..."
 mkdir -p ~/dev
 mkdir -p ~/.ssh
+touch ~/.env
+
+
+DOTFILES="$HOME/dev/dotfiles"
 
 # link dotfiles
 echo "Linking dotfiles..."
