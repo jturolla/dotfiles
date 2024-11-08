@@ -73,6 +73,8 @@
           pkgs.mtr
           pkgs.nmap
           pkgs.nload
+          pkgs.ldns # git is depending on it, but why?
+          pkgs.tcpdump
 
           # Image Tools
           pkgs.exiftool
