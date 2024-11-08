@@ -15,12 +15,30 @@
       environment.systemPackages =
         [ 
           # Core Basic Tools
+          # pkgs.bash already installed somewhere else
           pkgs.wget
           pkgs.git
           pkgs.jq
           pkgs.yq
           pkgs.rename
           pkgs.htop
+          pkgs.iftop
+          pkgs.less
+          pkgs.tree
+          pkgs.watch
+
+          # Languages
+          pkgs.nodejs
+          pkgs.perl
+          pkgs.go
+          pkgs.python3
+          pkgs.ruby
+          pkgs.cargo
+          
+          # Utils
+          pkgs.findutils # GNU find, locate, updatedb, and xargs
+          pkgs.coreutils # GNU core utilities
+          pkgs.moreutils  # Additional Unix utilities, eg. sponge
 
           # Vendor Services Tools
           pkgs.github-cli
@@ -28,10 +46,17 @@
           # Terminal Tools
           pkgs.reattach-to-user-namespace
           pkgs.fzf
-
+          pkgs.ripgrep
+          pkgs.tmux
+          
           # Editors
           pkgs.vim
           pkgs.neovim
+
+          # Text Tools
+          pkgs.diff-so-fancy
+          pkgs.colordiff
+          pkgs.diffutils
 
           # Container Tools
           pkgs.docker
@@ -41,6 +66,23 @@
           pkgs.kubectl
           pkgs.kubectx
           pkgs.kustomize
+          pkgs.ko
+
+          # Networking Tools
+          pkgs.ipcalc
+          pkgs.mtr
+          pkgs.nmap
+          pkgs.nload
+
+          # Image Tools
+          pkgs.exiftool
+          pkgs.imagemagick
+          pkgs.ffmpeg
+
+          # Fun & Reference
+          pkgs.cmatrix
+          pkgs.neofetch
+          pkgs.tldr
         ];
 
       # Auto upgrade nix package and the daemon service.
