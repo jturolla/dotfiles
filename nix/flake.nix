@@ -13,9 +13,36 @@
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
-        [ pkgs.vim
-          pkgs.neovim ];
-      
+        [ 
+          # Core Basic Tools
+          pkgs.wget
+          pkgs.git
+          pkgs.jq
+          pkgs.yq
+          pkgs.rename
+          pkgs.htop
+
+          # Vendor Services Tools
+          pkgs.github-cli
+
+          # Terminal Tools
+          pkgs.reattach-to-user-namespace
+          pkgs.fzf
+
+          # Editors
+          pkgs.vim
+          pkgs.neovim
+
+          # Container Tools
+          pkgs.docker
+          pkgs.colima # Docker VM, use `colima start` to start it.
+
+          # Kubernetes tools
+          pkgs.kubectl
+          pkgs.kubectx
+          pkgs.kustomize
+        ];
+
       # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
       nix.package = pkgs.nix;
