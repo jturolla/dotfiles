@@ -10,18 +10,7 @@ brew "glib"
 brew "clojure"
 brew "colordiff"
 
-brew "gobject-introspection"
-brew "gawk"
-brew "gd"
-brew "git-lfs"
-brew "gnu-indent"
-brew "gnu-sed"
-brew "gnu-tar"
-brew "gnu-typist"
-brew "gnu-which"
-brew "go"
-brew "grep"
-brew "htop"
+
 brew "iftop"
 brew "python"
 
@@ -45,10 +34,10 @@ brew "xmlstarlet"
 
 brew "z"
 brew "homeport/tap/dyff"
-brew "perl"
+
 cask "1password"
 cask "1password-cli"
-cask "docker"
+
 cask "firefox"
 cask "iterm2"
 cask "spotify"

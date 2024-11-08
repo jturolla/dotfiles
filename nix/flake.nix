@@ -22,7 +22,6 @@
           pkgs.yq
           pkgs.rename
           pkgs.htop
-          pkgs.iftop
           pkgs.less
           pkgs.tree
           pkgs.watch
@@ -34,6 +33,7 @@
           pkgs.python3
           pkgs.ruby
           pkgs.cargo
+          pkgs.clojure
           
           # Utils
           pkgs.findutils # GNU find, locate, updatedb, and xargs
@@ -75,6 +75,7 @@
           pkgs.nload
           pkgs.ldns # git is depending on it, but why?
           pkgs.tcpdump
+          pkgs.iftop
 
           # Image Tools
           pkgs.exiftool
