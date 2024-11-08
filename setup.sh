@@ -31,12 +31,14 @@ DOTFILES="$HOME/dev/dotfiles"
 
 # link dotfiles
 echo "Linking dotfiles..."
-ln -svf $DOTFILES/tmux.conf    ~/.tmux.conf
-ln -svf $DOTFILES/vimrc        ~/.vimrc
-ln -svf $DOTFILES/gitconfig    ~/.gitconfig
-ln -svf $DOTFILES/gitignore    ~/.gitignore
-ln -svf $DOTFILES/bash_profile ~/.bash_profile
-ln -svf $DOTFILES/ssh_config   ~/.ssh/config
+ln -svf $DOTFILES/tmux.conf     ~/.tmux.conf
+ln -svf $DOTFILES/vimrc         ~/.vimrc
+ln -svf $DOTFILES/gitconfig     ~/.gitconfig
+ln -svf $DOTFILES/gitignore     ~/.gitignore
+ln -svf $DOTFILES/bash_profile  ~/.bash_profile
+ln -svf $DOTFILES/ssh_config    ~/.ssh/config
+ln -svf $DOTFILES/nix/flake.nix ~/.config/nix-darwin/flake.nix
+
 
 echo "Checking if Xcode Command Line Tools are installed..."
 if ! xcode-select -p &> /dev/null; then
