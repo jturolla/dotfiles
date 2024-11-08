@@ -14,11 +14,11 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [ pkgs.vim
-        ];
-
+          pkgs.neovim ];
+      
       # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
-      # nix.package = pkgs.nix;
+      nix.package = pkgs.nix;
 
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
@@ -40,11 +40,11 @@
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."simple" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."Julios-MacBook-Pro" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."simple".pkgs;
+    darwinPackages = self.darwinConfigurations."Julios-MacBook-Pro".pkgs;
   };
 }
