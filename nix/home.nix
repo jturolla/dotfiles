@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "jturolla";
-  home.homeDirectory = "/Users/jturolla";
+  home.homeDirectory = lib.mkForce("/Users/jturolla");
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

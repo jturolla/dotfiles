@@ -96,6 +96,46 @@
           pkgs.slack
         ];
 
+      homebrew = {
+        enable = true;
+
+        brews = [
+          "deno"
+          "mas"
+          "youtube-dl"
+        ];
+
+        casks = [
+          # apps
+          "arc"
+          "bartender"
+          "beeper"
+          "chatgpt"
+          "discord"
+          "iina"
+          "intellij-idea"
+          "iterm2"
+          "istat-menus"
+          "logseq"
+          "raycast"
+          "roam-research"
+          "slack"
+          "spotify"
+          "the-unarchiver"
+          "visual-studio-code"
+        ];
+
+        masApps = {
+          "Parcel" = 639968404;
+          "Things 3" = 904280696;
+          "Yoink" = 457622435;
+        };
+
+        onActivation.cleanup = "zap";
+        onActivation.autoUpdate = true;
+        onActivation.upgrade = true;
+      };
+
       # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
       nix.package = pkgs.nix;
@@ -131,7 +171,17 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."ju-mb-air" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+      modules = [ configuration
+        home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.jturolla = import ./home.nix;
+
+            # Optionally, use home-manager.extraSpecialArgs to pass
+            # arguments to home.nix
+          }
+      ];
     };
 
     # Expose the package set, including overlays, for convenience.
