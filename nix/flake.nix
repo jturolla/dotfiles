@@ -86,11 +86,17 @@
           pkgs.cmatrix
           pkgs.neofetch
           pkgs.tldr
+
+          # Apps
+          pkgs.slack
         ];
 
       # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
       nix.package = pkgs.nix;
+
+      # Allow installing unfree packages (like Slack)
+      nixpkgs.config.allowUnfree = true;
 
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
@@ -107,6 +113,13 @@
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
+
+      #81 defaults write com.apple.dock persistent-apps x
+      #82 defaults write -g ApplePressAndHoldEnabled -bool false
+      #83 defaults write NSGlobalDomain KeyRepeat -int 1
+      #84 defaults write NSGlobalDomain InitialKeyRepeat -int 12
+      #85 defaults write -g com.apple.mouse.scaling -float 10.0
+
     };
   in
   {
