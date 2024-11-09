@@ -37,8 +37,9 @@ ln -svf $DOTFILES/gitconfig     ~/.gitconfig
 ln -svf $DOTFILES/gitignore     ~/.gitignore
 ln -svf $DOTFILES/bash_profile  ~/.bash_profile
 ln -svf $DOTFILES/ssh_config    ~/.ssh/config
-ln -svf $DOTFILES/nix/flake.nix ~/.config/nix-darwin/flake.nix
 
+ln -svf $DOTFILES/nix/flake.nix ~/.config/nix-darwin/flake.nix
+ln -svf $DOTFILES/nix/home.nix  ~/.config/home-manager/home.nix
 
 echo "Checking if Xcode Command Line Tools are installed..."
 if ! xcode-select -p &> /dev/null; then

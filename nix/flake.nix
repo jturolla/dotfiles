@@ -5,15 +5,20 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Home Manager
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, ...}:
   let
     configuration = { pkgs, ... }: {
+
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
-        [ 
+        [
           # Core Basic Tools
           # pkgs.bash already installed somewhere else
           pkgs.wget
@@ -34,7 +39,7 @@
           pkgs.ruby
           pkgs.cargo
           pkgs.clojure
-          
+
           # Utils
           pkgs.findutils # GNU find, locate, updatedb, and xargs
           pkgs.coreutils # GNU core utilities
@@ -48,7 +53,7 @@
           pkgs.fzf
           pkgs.ripgrep
           pkgs.tmux
-          
+
           # Editors
           pkgs.vim
           pkgs.neovim
@@ -125,11 +130,11 @@
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."Julios-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."ju-mb-air" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."Julios-MacBook-Pro".pkgs;
+    darwinPackages = self.darwinConfigurations."ju-mb-air".pkgs;
   };
 }

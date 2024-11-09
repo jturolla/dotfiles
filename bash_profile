@@ -16,4 +16,8 @@ source $HOME/.env
 # Work related
 source $HOME/.nurc
 
+# Nix home manager?
+source /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+
+
 ## The following lines should be empty... but sometimes a program writes here :)
