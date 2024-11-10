@@ -101,39 +101,48 @@
 
         brews = [
           "deno"
+          "gnu-sed"
           "mas"
-          "youtube-dl"
         ];
 
         casks = [
           # apps
-          "arc"
-          "bartender"
-          "beeper"
-          "chatgpt"
-          "discord"
-          "iina"
-          "intellij-idea"
-          "iterm2"
-          "istat-menus"
-          "logseq"
-          "raycast"
-          "roam-research"
-          "slack"
-          "spotify"
-          "the-unarchiver"
           "visual-studio-code"
+          "spotify"
+          "iterm2"
         ];
 
         masApps = {
-          "Parcel" = 639968404;
           "Things 3" = 904280696;
-          "Yoink" = 457622435;
         };
 
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
         onActivation.upgrade = true;
+      };
+
+      system.defaults = {
+        dock.persistent-apps = [
+          "/Applications/Arc.app"
+          "/Applications/Things3.app"
+          "/System/Applications/Notes.app"
+          "/Applications/Visual Studio Code.app"
+          "/Applications/iTerm.app"
+          "/System/Applications/System Settings.app"
+        ];
+
+        # TODO: Set the mouse cursor size
+
+        # disable hold for accent characters
+        NSGlobalDomain.ApplePressAndHoldEnabled = false;
+
+        NSGlobalDomain.AppleInterfaceStyle = "Dark";
+
+        # key repeat initial delay
+        NSGlobalDomain.InitialKeyRepeat = 12;
+
+        # key repeat speed
+        NSGlobalDomain.KeyRepeat = 1;
       };
 
       # Auto upgrade nix package and the daemon service.
@@ -159,11 +168,6 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
 
-      #81 defaults write com.apple.dock persistent-apps x
-      #82 defaults write -g ApplePressAndHoldEnabled -bool false
-      #83 defaults write NSGlobalDomain KeyRepeat -int 1
-      #84 defaults write NSGlobalDomain InitialKeyRepeat -int 12
-      #85 defaults write -g com.apple.mouse.scaling -float 10.0
 
     };
   in
