@@ -15,12 +15,12 @@
   let
     configuration = { pkgs, ... }: {
 
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
+      # Enable nix-command and flakes experimental features
+      nix.settings.experimental-features = "nix-command flakes";
+
       environment.systemPackages =
         [
           # Core Basic Tools
-          # pkgs.bash already installed somewhere else
           pkgs.wget
           pkgs.git
           pkgs.jq
@@ -41,8 +41,8 @@
           pkgs.clojure
 
           # Utils
-          pkgs.findutils # GNU find, locate, updatedb, and xargs
-          pkgs.coreutils # GNU core utilities
+          pkgs.findutils  # GNU find, locate, updatedb, and xargs
+          pkgs.coreutils  # GNU core utilities
           pkgs.moreutils  # Additional Unix utilities, eg. sponge
 
           # Vendor Services Tools
@@ -103,6 +103,7 @@
           "deno"
           "gnu-sed"
           "mas"
+          "pam-reattach"
         ];
 
         casks = [
@@ -131,7 +132,7 @@
           "/System/Applications/System Settings.app"
         ];
 
-        # TODO: Set the mouse cursor size
+        # TODO: Accessibility - Set the mouse cursor size
 
         # disable hold for accent characters
         NSGlobalDomain.ApplePressAndHoldEnabled = false;
@@ -152,9 +153,6 @@
       # Allow installing unfree packages (like Slack)
       nixpkgs.config.allowUnfree = true;
 
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
       # Enable alternative shell support in nix-darwin.
       programs.bash.enable = true;
 
@@ -168,6 +166,9 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
 
+      # TODO: Enable sudo with touchid and tmux
+      # https://github.com/fabianishere/pam_reattach/blob/master/include/reattach.h
+      # sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local
 
     };
   in
@@ -180,7 +181,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.jturolla = import ./home.nix;
+            home-manager.users.jturolla = import ./hosts/ju-mb-air-m3.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix

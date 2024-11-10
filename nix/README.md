@@ -19,3 +19,13 @@ Locking the nix flake:
 ```
 nix flake lock
 ```
+
+
+# Home Manager
+
+Install home manager standalone:
+```
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+```
