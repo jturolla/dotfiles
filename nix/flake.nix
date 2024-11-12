@@ -136,6 +136,8 @@
           "/Applications/iTerm.app"
           "/System/Applications/System Settings.app"
         ];
+        
+        dock.autohide = true;
 
         # TODO: Accessibility - Set the mouse cursor size
 
