@@ -116,6 +116,7 @@
           "iterm2"
           "1password"
           "arc"
+          "zoom"
         ];
 
         masApps = {
