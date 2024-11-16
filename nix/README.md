@@ -20,7 +20,6 @@ Locking the nix flake:
 nix flake lock
 ```
 
-
 # Home Manager
 
 Install home manager standalone:

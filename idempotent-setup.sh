@@ -14,6 +14,7 @@ fi
 echo "Setting up folders..."
 mkdir -p ~/dev
 mkdir -p ~/.ssh
+mkdir -p ~/Desktop/Screenshots
 touch ~/.env
 
 DOTFILES="$HOME/dev/dotfiles"
@@ -43,7 +44,7 @@ else
 fi
 
 echo "Setting up vim: Plug...."
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 echo "Installing Vim plugins..."
@@ -61,7 +62,12 @@ vim +PlugInstall +qall
 
 echo "Setting up 1password ssh agent..."
 mkdir -p ~/.1password
-ln -s "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ~/.1password/agent.sock
+if [ ! -L ~/.1password/agent.sock ]; then
+      ln -s "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ~/.1password/agent.sock
+      echo "1password ssh agent link created."
+else
+      echo "1password ssh agent link already exists. Skipping."
+fi
 
 echo "Done with idempotent setup."
 

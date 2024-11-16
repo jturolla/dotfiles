@@ -19,7 +19,7 @@
     configuration = { pkgs, ... }: {
 
       # Enable nix-command and flakes experimental features
-      nix.settings.experimental-features = "nix-command flakes";
+      nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
       environment.systemPackages =
         [
@@ -173,7 +173,7 @@
             askForPasswordDelay = 0;
           };
           "com.apple.screencapture" = {
-            location = "~/Desktop";
+            location = "~/Desktop/Screenshots";
             type = "png";
           };
           "com.apple.AdLib" = {
@@ -229,9 +229,11 @@
       # sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local
 
       system.activationScripts = {
-        idempotentSetup = {
+        extraUserActivation = {
           text = ''
-            ./$DOTFILES/idempotent-setup.sh
+            echo "Extra user activation script..."
+            "$DOTFILES"/idempotent-setup.sh
+            echo "Extra user activation script... done"
           '';
           target = "rebuild";
         };
