@@ -118,6 +118,7 @@
           "1password"
           "arc"
           "zoom"
+          "raycast"
         ];
 
         masApps = {
