@@ -107,6 +107,7 @@
           "gnu-sed"
           "mas"
           "pam-reattach"
+          "bash"
         ];
 
         casks = [
@@ -137,22 +138,23 @@
           "/Applications/iTerm.app"
           "/System/Applications/System Settings.app"
         ];
-        
+
         dock.autohide = true;
 
         # TODO: Accessibility - Set the mouse cursor size
 
         # disable hold for accent characters
         NSGlobalDomain.ApplePressAndHoldEnabled = false;
-
         NSGlobalDomain.AppleInterfaceStyle = "Dark";
 
         # key repeat initial delay
         NSGlobalDomain.InitialKeyRepeat = 12;
-
         # key repeat speed
         NSGlobalDomain.KeyRepeat = 1;
       };
+
+      system.keyboard.enableKeyMapping = true;
+      system.keyboard.remapCapsLockToControl = true;
 
       # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
@@ -163,6 +165,7 @@
 
       # Enable alternative shell support in nix-darwin.
       programs.bash.enable = true;
+      programs.bash.completion.enable = true;
 
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -178,16 +181,27 @@
       # https://github.com/fabianishere/pam_reattach/blob/master/include/reattach.h
       # sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local
 
+      system.activationScripts = {
+        idempotentSetup = {
+          text = ''
+            echo "Running my custom activation script..."
+            # Add your commands here
+            echo "Initialization complete!"
+          '';
+          target = "rebuild";
+        };
+      };
+
     };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."ju-mb-air" = nix-darwin.lib.darwinSystem {
-      modules = [ 
+      modules = [
         # The configuration from above
         configuration
-        
+
         # Homebrew
         nix-homebrew.darwinModules.nix-homebrew
         {
@@ -202,13 +216,13 @@
             user = "jturolla";
           };
         }
-       
+
         # Home Manager
         home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.jturolla = import ./hosts/ju-mb-air-m3.nix;
+            home-manager.users.jturolla = import ./hosts/ju-mb-air.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
