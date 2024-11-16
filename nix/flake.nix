@@ -184,9 +184,7 @@
       system.activationScripts = {
         idempotentSetup = {
           text = ''
-            echo "Running my custom activation script..."
-            # Add your commands here
-            echo "Initialization complete!"
+            ./$DOTFILES/idempotent-setup.sh
           '';
           target = "rebuild";
         };

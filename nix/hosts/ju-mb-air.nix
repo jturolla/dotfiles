@@ -1,13 +1,17 @@
 { self, config, pkgs, lib, ... }:
-let 
+let
   username = "jturolla";
-in 
+in
 {
   imports = [];
 
   home = {
     inherit username;
     homeDirectory = lib.mkForce("/Users/${username}");
+
+    sessionVariables = {
+      DOTFILES = "$HOME/dev/dotfiles";
+    };
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -23,26 +27,3 @@ in
  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
-
-
-
-# { pkgs, config, self, ... }:
-# let
-#   username = "username";
-# in
-# {
-#   imports = [
-#     ../../home-manager/common.nix
-#     ../../configurations/overlays.nix
-#     ../../home-manager/programs/zsh.nix
-#   ];
-
-#   home = {
-#     inherit username;
-#     homeDirectory = "/home/${username}";
-#     sessionVariables = {
-#       DOTFILES = "$HOME/.dotfiles";
-#       NIXOS_OZONE_WL = "1";
-#     };
-#   };
-# }
