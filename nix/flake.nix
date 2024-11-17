@@ -21,6 +21,10 @@
       # Enable nix-command and flakes experimental features
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+      environment.variables = {
+        EDITOR = "vim";
+      }
+
       environment.systemPackages =
         [
           # Core Basic Tools
@@ -119,6 +123,7 @@
           "arc"
           "zoom"
           "raycast"
+          "steam"
         ];
 
         masApps = {
