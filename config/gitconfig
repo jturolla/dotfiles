@@ -7,7 +7,7 @@
 [diff-so-fancy]
 	useUnicodeRuler = false
 [commit]
-	gpgsign = false
+	gpgsign = true
 [pull]
 	ff = only
 [includeIf "gitdir:/Users/ju/dev/"]
@@ -23,3 +23,8 @@
 [user]
 	name = Julio Turolla
 	email = j@julioturolla.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOygqBXsiyhWrEVz04hCCwJIsn7GD4PrL59GILWXqzrF
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
