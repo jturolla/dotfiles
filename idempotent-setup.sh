@@ -27,20 +27,34 @@ ln -svf $DOTFILES/config/gitconfig     ~/.gitconfig
 ln -svf $DOTFILES/config/gitignore     ~/.gitignore
 ln -svf $DOTFILES/config/bash_profile  ~/.bash_profile
 ln -svf $DOTFILES/config/ssh_config    ~/.ssh/config
-ln -svf $DOTFILES/nix/flake.nix ~/.config/nix-darwin/flake.nix
 
-echo "Checking if Xcode Command Line Tools are installed..."
-if ! xcode-select -p &> /dev/null; then
-      echo "Xcode Command Line Tools are not installed. Installing..."
-      xcode-select --install
-else
-      echo "Xcode Command Line Tools are already installed. Skipping installation."
-fi
-if ! /usr/bin/pgrep oahd &> /dev/null; then
-      echo "Rosetta is not installed. Installing..."
-      softwareupdate --install-rosetta --agree-to-license
-else
-      echo "Rosetta is already installed. Skipping installation."
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Setting up macOS..."
+    mkdir -p ~/.config/nix-darwin
+    ln -svf $DOTFILES/nix/flake.nix ~/.config/nix-darwin/flake.nix
+
+    echo "Checking if Xcode Command Line Tools are installed..."
+    if ! xcode-select -p &> /dev/null; then
+          echo "Xcode Command Line Tools are not installed. Installing..."
+          xcode-select --install
+    else
+          echo "Xcode Command Line Tools are already installed. Skipping installation."
+    fi
+    if ! /usr/bin/pgrep oahd &> /dev/null; then
+          echo "Rosetta is not installed. Installing..."
+          softwareupdate --install-rosetta --agree-to-license
+    else
+          echo "Rosetta is already installed. Skipping installation."
+    fi
+
+    echo "Setting up 1password ssh agent..."
+    mkdir -p ~/.1password
+    if [ ! -L ~/.1password/agent.sock ]; then
+          ln -s "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ~/.1password/agent.sock
+          echo "1password ssh agent link created."
+    else
+          echo "1password ssh agent link already exists. Skipping."
+    fi
 fi
 
 echo "Setting up vim: Plug...."
@@ -60,14 +74,4 @@ vim +PlugInstall +qall
 
 # echo "TODO: edit ~/.personalgitconfig and ~/.nugitconfig with your information."
 
-echo "Setting up 1password ssh agent..."
-mkdir -p ~/.1password
-if [ ! -L ~/.1password/agent.sock ]; then
-      ln -s "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ~/.1password/agent.sock
-      echo "1password ssh agent link created."
-else
-      echo "1password ssh agent link already exists. Skipping."
-fi
-
 echo "Done with idempotent setup."
-
