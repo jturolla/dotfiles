@@ -28,6 +28,23 @@ ln -svf $DOTFILES/config/gitignore     ~/.gitignore
 ln -svf $DOTFILES/config/bash_profile  ~/.bash_profile
 ln -svf $DOTFILES/config/ssh_config    ~/.ssh/config
 
+echo "Downloading authorized keys from GitHub user jturolla..."
+curl -sfLo ~/.ssh/authorized_keys https://github.com/jturolla.keys
+echo "Authorized keys downloaded and added."
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+      echo "Setting up SSH server on Linux..."
+      if ! systemctl is-active --quiet ssh; then
+            echo "SSH server is not active. Installing, enabling, and starting SSH server..."
+            sudo apt-get update
+            sudo apt-get install -y openssh-server
+            sudo systemctl enable ssh
+            sudo systemctl start ssh
+      else
+            echo "SSH server is already active. Skipping."
+      fi
+fi
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Setting up macOS..."
     mkdir -p ~/.config/nix-darwin
