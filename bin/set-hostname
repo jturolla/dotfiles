@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <new-hostname>"
+    exit 1
+fi
+
+NEW_HOSTNAME=$1
+
+# Check if the script is running on macOS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Setting hostname on macOS..."
+    sudo scutil --set HostName "$NEW_HOSTNAME"
+    sudo scutil --set LocalHostName "$NEW_HOSTNAME"
+    sudo scutil --set ComputerName "$NEW_HOSTNAME"
+    dscacheutil -flushcache
+    echo "Hostname set to $NEW_HOSTNAME on macOS."
+else
+    echo "Setting hostname on Linux..."
+    sudo hostnamectl set-hostname "$NEW_HOSTNAME"
+    echo "127.0.1.1 $NEW_HOSTNAME" | sudo tee -a /etc/hosts
+    echo "Hostname set to $NEW_HOSTNAME on Linux."
+fi
