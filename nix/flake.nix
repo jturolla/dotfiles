@@ -14,9 +14,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  imports = [
-    ./hosts/ju-mb-air.nix
-  ];
+  # imports = [
+  #   ./hosts/ju-mb-air.nix
+  # ];
 
   # Multi host examples:
   # https://github.com/Baitinq/nixos-config/blob/master/flake.nix
@@ -283,6 +283,39 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.jturolla = import ./hosts/ju-mb-air.nix;
+
+            # Optionally, use home-manager.extraSpecialArgs to pass
+            # arguments to home.nix
+          }
+      ];
+    };
+
+    darwinConfigurations."ju-nu-m1pro15" = nix-darwin.lib.darwinSystem {
+      modules = [
+        # The configuration from above
+        configuration
+
+        # Homebrew
+        nix-homebrew.darwinModules.nix-homebrew
+        {
+          nix-homebrew = {
+            # Install Homebrew under the default prefix
+            enable = true;
+
+            # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
+            enableRosetta = true;
+
+            # User owning the Homebrew prefix
+            user = "julio.turolla";
+          };
+        }
+
+        # Home Manager
+        home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users."julio.turolla" = import ./hosts/ju-nu-m1pro15.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix

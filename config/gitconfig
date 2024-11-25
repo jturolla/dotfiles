@@ -22,7 +22,7 @@
 	insteadOf = https://github.com/
 [user]
 	name = Julio Turolla
-	email = j@julioturolla.com
+	email = j+ju-nu-m1pro15@julioturolla.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOygqBXsiyhWrEVz04hCCwJIsn7GD4PrL59GILWXqzrF
 [gpg]
 	format = ssh
