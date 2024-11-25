@@ -1,5 +1,5 @@
 {
-  description = "Julio's Darwin system flake";
+  description = "Julio's Multihost System Configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -13,6 +13,13 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
+
+  imports = [
+    ./hosts/ju-mb-air.nix
+  ];
+
+  # Multi host examples:
+  # https://github.com/Baitinq/nixos-config/blob/master/flake.nix
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, home-manager, ...}:
   let

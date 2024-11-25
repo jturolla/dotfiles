@@ -81,14 +81,34 @@ curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
 echo "Installing Vim plugins..."
 vim +PlugInstall +qall
 
-# echo "Setting up Git..."
-# if [ ! -f ~/.personalgitconfig ]; then
-#       cp templates/gitconfig-template ~/.personalgitconfig
-# fi
-# if [ ! -f ~/.nugitconfig ]; then
-#       cp templates/gitconfig-template ~/.nugitconfig
-# fi
+echo "Setting up Git Default User..."
+git config --global user.name "Julio Turolla"
+git config --global user.email "j+$(hostname)@julioturolla.com"
 
-# echo "TODO: edit ~/.personalgitconfig and ~/.nugitconfig with your information."
+if [ ! -f ~/.personalgitconfig ]; then
+    cp templates/gitconfig-template ~/.personalgitconfig
+fi
+if [ ! -f ~/.nugitconfig ]; then
+    cp templates/gitconfig-template ~/.nugitconfig
+fi
+
+echo "TODO: edit ~/.personalgitconfig and ~/.nugitconfig with your information."
+
+
+# Use --interactive for this settings to be asked
+if [[ "$-" == *i* ]]; then
+      read -p "Enter your personal email address: " personal_email
+      read -p "Enter your personal name: " personal_name
+      read -p "Enter your work email address: " work_email
+      read -p "Enter your work name: " work_name
+
+      echo "[user]" > ~/.personalgitconfig
+      echo "    name = $personal_name" >> ~/.personalgitconfig
+      echo "    email = $personal_email" >> ~/.personalgitconfig
+
+      echo "[user]" > ~/.nugitconfig
+      echo "    name = $work_name" >> ~/.nugitconfig
+      echo "    email = $work_email" >> ~/.nugitconfig
+fi
 
 echo "Done with idempotent setup."
