@@ -30,7 +30,7 @@
 
       environment.variables = {
         EDITOR = "vim";
-      }
+      };
 
       environment.systemPackages =
         [
