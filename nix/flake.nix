@@ -23,6 +23,9 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, home-manager, ...}:
   let
+    imports = [
+      ./apple.nix
+    ];
     configuration = { pkgs, ... }: {
 
       # Enable nix-command and flakes experimental features
@@ -123,18 +126,18 @@
 
         casks = [
           # apps
-          "visual-studio-code"
-          "spotify"
-          "iterm2"
-          "1password"
-          "arc"
-          "zoom"
-          "raycast"
-          "steam"
+          # "visual-studio-code"
+          # "spotify"
+          # "iterm2"
+          # "1password"
+          # "arc"
+          # "zoom"
+          # "raycast"
+          # "steam"
         ];
 
         masApps = {
-          "Things 3" = 904280696;
+          # "Things 3" = 904280696;
         };
 
         onActivation.cleanup = "zap";
