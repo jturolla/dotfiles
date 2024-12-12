@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -euo pipefail
-set -x
 
 echo "Checking current shell..."
 if [ "$SHELL" != "/bin/bash" ]; then
@@ -69,9 +68,6 @@ fi
 
 echo "TODO: edit ~/.personalgitconfig and ~/.nugitconfig with your information."
 
-echo "Setting up 1password ssh agent..."
-
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Setting up macOS..."
     mkdir -p ~/.config/nix-darwin
@@ -126,6 +122,5 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 defaults write -g com.apple.mouse.scaling -float 10.0
-
 
 echo "All done, reload the terminal and reboot your macbook for keyboard configurations to take effect."
