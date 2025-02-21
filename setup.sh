@@ -70,7 +70,6 @@ echo "TODO: edit ~/.personalgitconfig and ~/.nugitconfig with your information."
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Setting up macOS..."
-    mkdir -p ~/.config/nix-darwin
 
     echo "Checking if Xcode Command Line Tools are installed..."
     if ! xcode-select -p &> /dev/null; then
