@@ -24,3 +24,5 @@ export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
+
+export GOPATH="$(go env GOPATH)"

@@ -1,11 +1,14 @@
 #!/bin/bash
 
 kubernetes_context() {
-  if command -v kubectl &> /dev/null && kubectl config current-context &> /dev/null; then
-    echo " k8s: $(kubectl config current-context) @ $(kubens -c)"
-  else
-    echo ""
-  fi
+    if command -v kubectl &> /dev/null && context=$(kubectl config current-context 2> /dev/null); then
+        if [[ "$context" == */* ]]; then
+            context=${context##*/}
+        fi
+        echo "k8s: ${context} @ $(kubens -c)"
+    else
+        echo ""
+    fi
 }
 
 git_branch() {

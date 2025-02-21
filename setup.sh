@@ -48,7 +48,7 @@ fi
 
 echo "Installing applications (this may take a while)..."
 brew doctor || true
-#brew bundle || true
+brew bundle || true
 brew upgrade
 
 echo "Setting up vim: Plug...."
