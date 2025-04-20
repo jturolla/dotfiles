@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+# GitHub user for authorized_keys download (override with env var GITHUB_USER if needed)
+GITHUB_USER=${GITHUB_USER:-jturolla}
+
 echo "Checking current shell..."
 if [ "$SHELL" != "/bin/bash" ]; then
       echo "Current shell is not bash. Changing shell to bash..."
@@ -96,9 +99,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 
-echo "Downloading authorized keys from GitHub user jturolla..."
-curl -sfLo ~/.ssh/authorized_keys https://github.com/jturolla.keys
 echo "Authorized keys downloaded and added."
+echo "Downloading authorized keys from GitHub user ${GITHUB_USER}..."
+curl -sfLo ~/.ssh/authorized_keys "https://github.com/${GITHUB_USER}.keys"
+echo "Authorized keys for ${GITHUB_USER} downloaded and saved to ~/.ssh/authorized_keys."
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
       echo "Setting up SSH server on Linux..."

@@ -1,17 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail 
 
-if [ -z "$1" && "$1" = "-h" ]; then
+if [ $# -eq 0 ] || [ "$1" = "-h" ]; then
     echo "Usage: win <path>"
     exit 1
 fi
 
-if [ -z "$1" ]; then
-    readonly open_path="~/"
+if [ $# -eq 0 ]; then
+    readonly open_path="$HOME"
     readonly win_name="new-window"
 else
-    readonly open_path=~/dev/$1
+    readonly open_path="$HOME/dev/$1"
     readonly win_name="$1"
 fi
 
