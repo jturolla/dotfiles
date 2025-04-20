@@ -1,8 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-unlink ~/.vimrc
-unlink ~/.tmux.conf
-unlink ~/.gitignore
-unlink ~/.gitconfig
-unlink ~/.bash_profile
-unlink ~/.config/nvim/init.vim
+# List of dotfiles symlinks to remove
+files=(
+  "$HOME/.vimrc"
+  "$HOME/.tmux.conf"
+  "$HOME/.gitignore"
+  "$HOME/.gitconfig"
+  "$HOME/.bash_profile"
+  "$HOME/.ssh/config"
+)
+
+for file in "${files[@]}"; do
+  if [ -L "$file" ]; then
+    unlink "$file"
+    echo "Unlinked $file"
+  else
+    echo "Skipping $file (not a symlink)"
+  fi
+done

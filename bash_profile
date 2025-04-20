@@ -11,10 +11,10 @@ source $DOTFILES/completion.sh
 source $DOTFILES/history.sh
 
 # Private Env
-source $HOME/.env
+[ -f "$HOME/.env" ] && source "$HOME/.env"
 
 # Work related
-source $HOME/.nurc
+[ -f "$HOME/.nurc" ] && source "$HOME/.nurc"
 
 # Completion
 for file in /opt/homebrew/etc/bash_completion.d/*; do
