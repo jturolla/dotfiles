@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set editing-mode vi
+
 export DOTFILES=$HOME/dev/dotfiles
 
 source $DOTFILES/env.sh

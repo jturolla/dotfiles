@@ -98,32 +98,41 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 fi
 
+setup_github_keys() {
+    if [ -z "$GITHUB_USER" ]; then
+        echo "Error: GITHUB_USER environment variable is not set."
+        return 1
+    }
 
-echo "Authorized keys downloaded and added."
-echo "Downloading authorized keys from GitHub user ${GITHUB_USER}..."
-curl -sfLo ~/.ssh/authorized_keys "https://github.com/${GITHUB_USER}.keys"
-echo "Authorized keys for ${GITHUB_USER} downloaded and saved to ~/.ssh/authorized_keys."
+    echo "Setting up SSH authorized keys..."
+    mkdir -p ~/.ssh
+    chmod 700 ~/.ssh
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      echo "Setting up SSH server on Linux..."
-      if ! systemctl is-active --quiet ssh; then
-            echo "SSH server is not active. Installing, enabling, and starting SSH server..."
-            sudo apt-get update
-            sudo apt-get install -y openssh-server
-            sudo systemctl enable ssh
-            sudo systemctl start ssh
-      else
-            echo "SSH server is already active. Skipping."
-      fi
-fi
+    echo "Downloading authorized keys from GitHub user ${GITHUB_USER}..."
+    if curl -sfLo ~/.ssh/authorized_keys "https://github.com/${GITHUB_USER}.keys"; then
+        chmod 600 ~/.ssh/authorized_keys
+        echo "Authorized keys downloaded and configured successfully."
+    else
+        echo "Error: Failed to download authorized keys from GitHub."
+        return 1
+    fi
+}
 
-# apple configs
-echo "Applying apple Keyboard and Mouse configuration..."
+# Determine OS and run appropriate setup
+case "$OSTYPE" in
+    darwin*)
+        source "$DOTFILES/setup-darwin.sh"
+        ;;
+    linux-gnu*)
+        source "$DOTFILES/setup-linux.sh"
+        ;;
+    *)
+        echo "Unsupported operating system: $OSTYPE"
+        exit 1
+        ;;
+esac
 
-defaults write com.apple.dock persistent-apps x
-defaults write -g ApplePressAndHoldEnabled -bool false
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 12
-defaults write -g com.apple.mouse.scaling -float 10.0
+# Common setup tasks
+setup_github_keys
 
 echo "All done, reload the terminal and reboot your macbook for keyboard configurations to take effect."

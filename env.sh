@@ -18,10 +18,6 @@ export LC_ALL="en_US.UTF-8"
 export GPG_TTY="$(tty)"
 export PINENTRY_USER_DATA="USE_CURSES=1"
 
-export KUBECTL_EXTERNAL_DIFF="dyff between --color=on --omit-header --set-exit-code --output human --no-table-style"
-
-#export SSH_AUTH_SOCK=~/.1password/agent.sock
-
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 
