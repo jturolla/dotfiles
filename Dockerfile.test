@@ -1,0 +1,14 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y     curl     git     vim     sudo     bash     && rm -rf /var/lib/apt/lists/*
+
+# Create test user
+RUN useradd -m -s /bin/bash testuser &&     echo "testuser ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/testuser
+
+USER testuser
+WORKDIR /home/testuser
+
+# Copy dotfiles and setup configuration
+COPY --chown=testuser:testuser . /home/testuser/dev/dotfiles/
+
+CMD ["/bin/bash", "-c", "cd /home/testuser/dev/dotfiles && ./setup.sh && bash"]

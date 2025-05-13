@@ -1,0 +1,19 @@
+# Git files
+../.git
+../.gitignore
+../.gitconfig
+
+# Editor files
+**/*.swp
+**/*~
+
+# macOS files
+.DS_Store
+
+# Test files that shouldn't be copied
+Dockerfile
+.dockerignore
+
+# Temporary files
+**/*.tmp
+**/*.bak

@@ -1,5 +1,20 @@
 #!/bin/bash
 
+setup_homebrew() {
+    echo "Checking if Homebrew is installed..."
+    if ! command -v brew &> /dev/null; then
+        echo "Homebrew is not installed. Installing..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+        echo "Homebrew is already installed. Skipping installation."
+    fi
+
+    echo "Installing applications (this may take a while)..."
+    brew doctor || true
+    brew bundle || true
+    brew upgrade
+}
+
 setup_xcode_tools() {
     echo "Checking if Xcode Command Line Tools are installed..."
     if ! xcode-select -p &> /dev/null; then
@@ -22,13 +37,12 @@ setup_rosetta() {
 
 setup_1password_ssh() {
     echo "Setting up 1Password SSH agent..."
-    local agent_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-
-    if [ ! -S "$agent_sock" ]; then
-        echo "Warning: 1Password SSH agent socket not found at $agent_sock"
-        echo "Please ensure 1Password is installed and SSH agent is enabled"
+    mkdir -p ~/.1password
+    if [ ! -L ~/.1password/agent.sock ]; then
+        ln -s "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ~/.1password/agent.sock
+        echo "1password ssh agent link created."
     else
-        echo "1Password SSH agent socket found."
+        echo "1password ssh agent link already exists. Skipping."
     fi
 }
 
@@ -50,6 +64,7 @@ configure_keyboard_and_mouse() {
 
 main() {
     echo "Setting up macOS environment..."
+    setup_homebrew
     setup_xcode_tools
     setup_rosetta
     setup_1password_ssh

@@ -1,0 +1,18 @@
+# Test configuration for dotfiles setup
+# This is used by the test-linux-setup.sh script
+
+# GitHub username for SSH key setup (used for downloading authorized_keys)
+GITHUB_USER="testuser"
+
+# Git configuration for testing
+GIT_NAME="Test User"
+GIT_EMAIL="test@example.com"
+
+# Additional test packages to install (space-separated)
+EXTRA_PACKAGES=""
+
+# Vim configuration for testing
+VIM_COLORSCHEME="default"
+
+# SSH configuration for testing
+SSH_PORT=22
