@@ -40,6 +40,7 @@ echo "Setting up folders..."
 mkdir -p ~/dev
 mkdir -p ~/.ssh
 mkdir -p ~/Desktop/Screenshots
+mkdir -p tmp
 touch ~/.env
 
 DOTFILES="$HOME/dev/dotfiles"
@@ -68,4 +69,8 @@ source "$DOTFILES/setup/setup-vim.sh"
 # Setup Git
 source "$DOTFILES/setup/setup-git.sh"
 
+# Setup Fonts
+source "$DOTFILES/setup/setup-fonts.sh"
+
 echo "All done! Please restart your terminal for all changes to take effect."
+echo "NOTE: Make sure to set your terminal font to a Powerline font (e.g., 'Meslo LG M for Powerline') in your terminal preferences."
