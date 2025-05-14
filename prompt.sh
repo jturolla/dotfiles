@@ -75,8 +75,8 @@ prompt_command() {
     # Run pre-command to get git info
     __prompt_precmd
 
-    # Username segment (dark text on soft pink)
-    prompt+="\[\e[30;48;5;218m\] \u "
+    # Username segment (bold dark gray text on soft pink)
+    prompt+="\[\e[1;38;5;238;48;5;218m\] \u "
 
     # Directory segment (bright text on dark gray)
     prompt+="\[\e[38;5;218;48;5;238m\]${RIGHT_SEP}\[\e[97m\] \w "
