@@ -44,12 +44,12 @@ git_branch() {
     branch=$(git symbolic-ref --short HEAD 2> /dev/null || git rev-parse --short HEAD 2> /dev/null)
     if [ -n "$branch" ]; then
         # Check if there are any changes
-        if ! git diff --quiet || ! git diff --cached --quiet; then
+        if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null || [ -n "$(git ls-files --others --exclude-standard)" ]; then
             __git_status="dirty"
         else
             __git_status="clean"
         fi
-        echo -n " ${GIT_SYMBOL} ${branch} "
+        echo -n " ${branch} "
     fi
 }
 
@@ -57,6 +57,14 @@ git_branch() {
 __prompt_precmd() {
     __git_branch="$(git_branch)"
     __git_status=${__git_status:-clean}
+    # Force evaluation of git status
+    if [ -n "$__git_branch" ]; then
+        if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            __git_status="dirty"
+        else
+            __git_status="clean"
+        fi
+    fi
 }
 
 # Builds and sets the prompt string
@@ -73,14 +81,16 @@ prompt_command() {
     # Directory segment (bright text on dark gray)
     prompt+="\[\e[38;5;218;48;5;238m\]${RIGHT_SEP}\[\e[97m\] \w "
 
-    # Git branch segment (white text on red/green depending on status)
+    # Git branch segment (colored text on dark grey depending on status)
     if [ -n "$__git_branch" ]; then
+        # Add separator with dark grey background
+        prompt+="\[\e[38;5;238;48;5;238m\]${RIGHT_SEP}"
+        # Add git branch with appropriate color based on status
         if [ "$__git_status" = "dirty" ]; then
-            prompt+="\[\e[38;5;238;48;5;238m\]${RIGHT_SEP}\[\e[1;38;5;203m\]"  # Bold light red text on dark grey
+            prompt+="\[\e[1;38;5;203m\]${GIT_SYMBOL}${__git_branch}"  # Bold light red for dirty
         else
-            prompt+="\[\e[38;5;238;48;5;238m\]${RIGHT_SEP}\[\e[1;38;5;120m\]"   # Bold light green text on dark grey
+            prompt+="\[\e[1;38;5;120m\]${GIT_SYMBOL}${__git_branch}"  # Bold light green for clean
         fi
-        prompt+="$__git_branch"
     fi
 
     # Kubernetes context segment (white text on blue)
@@ -105,8 +115,8 @@ prompt_command() {
         prompt+="\n\[\e[97;48;5;196m\] ✘ ${exit} \[\e[0m\]\[\e[38;5;196m\]${RIGHT_SEP}\[\e[0m\]"
     fi
 
-    # Add final prompt character on new line (soft blue)
-    prompt+="\n\[\e[38;5;33m\]${RIGHT_ARROW}\[\e[0m\] "
+    # Add final prompt character on new line (light gray)
+    prompt+="\n\[\e[38;5;246m\]$\[\e[0m\] "
 
     PS1="${prompt}"
 }
