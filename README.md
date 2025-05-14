@@ -1,28 +1,29 @@
 # Dotfiles
 
-A comprehensive collection of dotfiles and system configuration for macOS and Linux environments, featuring customized configurations for bash, vim, tmux, git, and more.
+System configuration files and setup scripts for macOS and Linux systems. Includes configurations for bash, vim, tmux, git, and other development tools.
 
 ## Features
 
-- 🚀 Cross-platform support (macOS and Linux)
-- 🔧 Automated setup scripts
-- 📦 Homebrew package management (macOS)
-- 🎨 Custom prompt with git and kubernetes context information
-- ⌨️  Vim configuration with plugins
-- 🖥️  iTerm2 color schemes
-- 🔄 Tmux configuration with custom keybindings
-- 🔑 1Password SSH agent integration
-- 🐙 Git configuration with multiple profile support
+- Works on macOS and Linux
+- Automated setup process
+- Package management with Homebrew (macOS)
+- Custom shell prompt with git and kubernetes info
+- Vim configuration and plugins
+- iTerm2 color schemes
+- Tmux configuration
+- SSH agent integration with 1Password
+- Git configuration with multiple profiles
 
-## Prerequisites
+## Requirements
 
-- For macOS:
-  - Xcode Command Line Tools
-  - [Homebrew](https://brew.sh)
-  - [1Password](https://1password.com) (for SSH agent)
-- For Linux:
-  - Basic build tools
-  - OpenSSH server
+macOS:
+- Xcode Command Line Tools
+- Homebrew
+- 1Password (for SSH)
+
+Linux:
+- Build tools
+- OpenSSH server
 
 ## Installation
 
@@ -31,101 +32,91 @@ A comprehensive collection of dotfiles and system configuration for macOS and Li
 git clone https://github.com/jturolla/dotfiles.git ~/dev/dotfiles
 ```
 
-2. Run the setup script:
+2. Run setup:
 ```bash
 cd ~/dev/dotfiles
 ./setup.sh
 ```
 
-The setup script will:
-- Install required packages via Homebrew (macOS) or apt (Linux)
-- Create necessary directories
-- Set up symbolic links for configuration files
-- Configure git, vim, and tmux
-- Set up SSH configuration
+The setup will:
+- Install required packages
+- Create directories
+- Set up configuration files
+- Configure development tools
 - Install Vim plugins
 
-## Configuration Files
+## Main Configuration Files
 
-- `bash_profile`: Main bash configuration file
-- `aliases.sh`: Custom shell aliases
+- `bash_profile`: Main shell settings
+- `aliases.sh`: Command shortcuts
 - `env.sh`: Environment variables
-- `path.sh`: PATH configuration
-- `prompt.sh`: Custom shell prompt with git and kubernetes info
-- `colors.sh`: Terminal color settings
-- `completion.sh`: Command completion settings
-- `history.sh`: Shell history configuration
-- `vimrc`: Vim editor configuration
-- `tmux.conf`: Tmux terminal multiplexer settings
-- `gitconfig`: Git configuration
-- `ssh_config`: SSH client configuration
+- `path.sh`: PATH settings
+- `prompt.sh`: Shell prompt customization
+- `colors.sh`: Terminal colors
+- `completion.sh`: Command completion
+- `history.sh`: Shell history
+- `vimrc`: Vim settings
+- `tmux.conf`: Tmux settings
+- `gitconfig`: Git settings
+- `ssh_config`: SSH settings
 
-## Homebrew Packages (macOS)
+## Package Management
 
-The `Brewfile` includes a curated selection of useful tools and applications:
-
-- Development tools (git, vim, tmux)
-- Cloud tools (aws-cli, kubernetes-cli)
-- System utilities (htop, tree, ripgrep)
-- Applications (iTerm2, Visual Studio Code, Docker)
+The `Brewfile` includes common development tools:
+- Git, Vim, Tmux
+- AWS and Kubernetes CLI
+- System tools (htop, tree, ripgrep)
+- Applications (iTerm2, VS Code, Docker)
 
 ## Customization
 
-### Git Configuration
+### Git Setup
+Two profile options:
+- Personal: `~/.personalgitconfig`
+- Work: `~/.nugitconfig`
 
-The setup supports multiple Git profiles through the following files:
-- `~/.personalgitconfig`: Personal Git configuration
-- `~/.nugitconfig`: Work-related Git configuration
-
-Edit these files with your information after installation.
+Update these files with your information after install.
 
 ### Shell Prompt
-
-The custom prompt (`prompt.sh`) displays:
-- Current user
-- Working directory
+Shows:
+- Username
+- Current directory
 - Git branch
-- Kubernetes context and namespace
-- Exit status of last command
+- Kubernetes context
+- Command status
 
-### Vim Configuration
+### Vim Settings
+Includes:
+- Plugin manager (vim-plug)
+- Custom keys
+- Code formatting
+- File browser (NERDTree)
 
-The `vimrc` includes:
-- Plugin management with vim-plug
-- Custom keybindings
-- Code formatting settings
-- File type specific configurations
-- NERDTree file explorer
-
-### Tmux Configuration
-
-The `tmux.conf` includes:
-- Custom prefix (Ctrl+a)
-- Pane management shortcuts
+### Tmux Settings
+Features:
+- Ctrl+a prefix key
+- Window management shortcuts
 - Mouse support
-- Status bar customization
-- Copy/paste integration
+- Status bar
+- Copy/paste settings
 
-## Utility Scripts
+## Scripts
 
-The `bin/` directory contains useful scripts:
-- `set-hostname`: Set system hostname
-- `win`: Create new tmux window with split panes
+The `bin` directory has utility scripts:
+- `set-hostname`: Change system hostname
+- `win`: Create tmux windows with splits
 
-## Uninstalling
+## Removal
 
-To remove the dotfiles configuration:
-
+To remove configurations:
 ```bash
 ./unlink.sh
 ```
 
-This will remove all symbolic links created during setup.
-
 ## License
 
-This project is licensed under the terms of the LICENSE file included in the repository.
+See LICENSE file in repository.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions welcome through Pull Requests.
