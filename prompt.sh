@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Define some useful symbols
-ARROW_SYMBOL="➜"
-FOLDER_SYMBOL="📁"
-GIT_SYMBOL="⎇"
-KUBE_SYMBOL="☸️"
-ERROR_SYMBOL="✗"
 
 # Returns the current kubernetes context and namespace if kubectl is available
 kubernetes_context() {

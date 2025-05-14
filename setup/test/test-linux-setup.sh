@@ -11,11 +11,13 @@ if [ ! -f setup/test/.setupconf ]; then
     cp setup/.setupconf.template setup/test/.setupconf
 fi
 
-# Make sure setup scripts are executable
-chmod +x setup/setup*.sh
-
+# Build Docker image
 echo "Building Docker image..."
 docker build -t dotfiles-test -f setup/test/Dockerfile .
 
+# Run Docker container with dotfiles mounted
 echo "Starting Docker container..."
-docker run -it --rm dotfiles-test
+docker run -it --rm \
+    -v "$(pwd):/home/testuser/dev/dotfiles" \
+    -v "$(pwd)/setup/test/.setupconf:/home/testuser/dev/dotfiles/.setupconf" \
+    dotfiles-test

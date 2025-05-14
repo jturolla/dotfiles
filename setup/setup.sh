@@ -2,6 +2,22 @@
 
 set -euo pipefail
 
+###############################################################################
+# Setup dotfiles environment.
+#
+# Usage:
+#   setup.sh [options]
+#   setup.sh -h | --help
+#
+# Options:
+#   -h --help      Show this help message
+#   --skip-brew    Skip Homebrew installation and package setup
+###############################################################################
+
+# Initialize command line argument parsing
+source "$(dirname "$0")/../lib/helpers/init.sh"
+init_cli "$0" "" "$@"
+
 # Change to the parent directory of setup script
 cd "$(dirname "$0")/.."
 
@@ -34,7 +50,8 @@ source "$DOTFILES/setup/setup-link.sh"
 # Run OS-specific setup
 case "$OSTYPE" in
     darwin*)
-        source "$DOTFILES/setup/setup-darwin.sh"
+        skip_brew=${skip_brew:-false}
+        SKIP_BREW=$skip_brew source "$DOTFILES/setup/setup-darwin.sh"
         ;;
     linux-gnu*)
         source "$DOTFILES/setup/setup-linux.sh"

@@ -64,7 +64,12 @@ configure_keyboard_and_mouse() {
 
 main() {
     echo "Setting up macOS environment..."
-    setup_homebrew
+    # Skip Homebrew setup if flag is set
+    if [ "${SKIP_BREW:-false}" = "true" ]; then
+        echo "Skipping Homebrew setup as requested..."
+    else
+        setup_homebrew
+    fi
     setup_xcode_tools
     setup_rosetta
     setup_1password_ssh

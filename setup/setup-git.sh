@@ -15,6 +15,21 @@ setup_git_config() {
     fi
 }
 
+setup_github_keys() {
+    # Only download keys on Linux, as macOS uses 1Password
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "Setting up GitHub authorized keys..."
+        if [ -n "${GITHUB_USER:-}" ]; then
+            mkdir -p ~/.ssh
+            curl -s "https://github.com/${GITHUB_USER}.keys" > ~/.ssh/authorized_keys
+            chmod 600 ~/.ssh/authorized_keys
+            echo "Downloaded authorized keys from GitHub user ${GITHUB_USER}"
+        else
+            echo "GITHUB_USER not set, skipping authorized keys setup"
+        fi
+    fi
+}
+
 main() {
     setup_git_config
     setup_github_keys
