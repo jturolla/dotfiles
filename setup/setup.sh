@@ -15,14 +15,14 @@ set -euo pipefail
 ###############################################################################
 
 # Initialize command line argument parsing
-source "$(dirname "$0")/../lib/helpers/init.sh"
+source "$(dirname "$0")/lib/helpers/init.sh"
 init_cli "$0" "" "$@"
 
-# Change to the parent directory of setup script
-cd "$(dirname "$0")/.."
+# Change to the directory of setup script
+cd "$(dirname "$0")"
 
 # Load configuration
-source "$(dirname "$0")/setup-config.sh"
+source "$(dirname "$0")/setup/setup-config.sh"
 
 
 echo "Checking current shell..."
