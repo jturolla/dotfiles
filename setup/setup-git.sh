@@ -129,6 +129,73 @@ setup_github_keys() {
     fi
 }
 
+setup_git_remotes() {
+    log_step "Setting up Git remotes for dotfiles repository"
+    
+    # Only run this if we're in the dotfiles repository
+    if [[ ! -d "$DOTFILES_ROOT/.git" ]]; then
+        log_info "Not in a git repository, skipping remote setup"
+        return 0
+    fi
+    
+    # Change to dotfiles root directory
+    local current_dir
+    current_dir=$(pwd)
+    cd "$DOTFILES_ROOT" || {
+        log_warning "Failed to change to dotfiles directory"
+        return 1
+    }
+    
+    # Get current origin URL
+    local current_origin
+    if current_origin=$(git remote get-url origin 2>/dev/null); then
+        log_info "Current origin URL: $current_origin"
+        
+        # Check if origin is already SSH
+        if [[ "$current_origin" == git@github.com:* ]]; then
+            log_info "Origin is already using SSH, no changes needed"
+            cd "$current_dir"
+            return 0
+        fi
+        
+        # Check if origin is HTTP/HTTPS GitHub URL
+        if [[ "$current_origin" == https://github.com/jturolla/dotfiles* ]] || [[ "$current_origin" == http://github.com/jturolla/dotfiles* ]]; then
+            log_info "Converting origin from HTTP to SSH"
+            
+            # Add the current HTTP URL as originhttp remote (for debugging)
+            if git remote get-url originhttp >/dev/null 2>&1; then
+                log_info "originhttp remote already exists"
+            else
+                log_info "Adding originhttp remote: $current_origin"
+                git remote add originhttp "$current_origin" || {
+                    log_warning "Failed to add originhttp remote"
+                }
+            fi
+            
+            # Change origin to SSH
+            local ssh_url="git@github.com:jturolla/dotfiles.git"
+            log_info "Setting origin to SSH: $ssh_url"
+            git remote set-url origin "$ssh_url" || {
+                log_warning "Failed to set SSH origin URL"
+                cd "$current_dir"
+                return 1
+            }
+            
+            log_success "Successfully switched origin to SSH"
+            log_info "Available remotes:"
+            git remote -v | while read -r line; do
+                log_info "  $line"
+            done
+        else
+            log_info "Origin URL doesn't match expected GitHub HTTP format, leaving unchanged"
+        fi
+    else
+        log_warning "No origin remote found"
+    fi
+    
+    cd "$current_dir"
+}
+
 verify_git_setup() {
     log_step "Verifying Git setup"
     
@@ -167,6 +234,7 @@ main() {
     check_git_installation
     setup_git_config
     setup_github_keys
+    setup_git_remotes
     verify_git_setup
     
     print_footer "Git setup completed!"
