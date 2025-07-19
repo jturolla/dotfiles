@@ -1,26 +1,26 @@
 #!/bin/bash
 
+# Bash Profile Configuration
+# Main entry point for shell customization
+
+# Enable vi editing mode
 set editing-mode vi
 
+# Set dotfiles directory
 export DOTFILES=$HOME/dev/dotfiles
 
-source $DOTFILES/env.sh
-source $DOTFILES/path.sh
-source $DOTFILES/prompt.sh
-source $DOTFILES/aliases.sh
-source $DOTFILES/colors.sh
-source $DOTFILES/completion.sh
-source $DOTFILES/history.sh
+# Core shell configuration (order matters)
+source $DOTFILES/env.sh          # Environment variables
+source $DOTFILES/path.sh         # PATH configuration
+source $DOTFILES/colors.sh       # Color definitions
+source $DOTFILES/aliases.sh      # Command aliases
+source $DOTFILES/prompt.sh       # PS1 prompt configuration
+source $DOTFILES/history.sh      # History settings
+source $DOTFILES/completion.sh   # Completion for all tools
 
-# Private Env
+# External configuration files
+# Private environment variables (not tracked in git)
 [ -f "$HOME/.env" ] && source "$HOME/.env"
 
-# Work related
+# Work-related configuration (not tracked in git)
 [ -f "$HOME/.nurc" ] && source "$HOME/.nurc"
-
-# Completion
-for file in /opt/homebrew/etc/bash_completion.d/*; do
-    [ -r "$file" ] && source "$file"
-done
-
-## The following lines should be empty... but sometimes a program writes here :)

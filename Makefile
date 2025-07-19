@@ -21,23 +21,40 @@ SHELL_SCRIPTS := $(shell find . -name "*.sh" -type f | grep -v ".git")
 .PHONY: setup
 setup: validate-env ## Run the complete dotfiles setup
 	@echo -e "$(CYAN)🚀 Starting dotfiles setup...$(RESET)"
-	@./setup.sh
+	@MAKE_CONTROLLED=true ./setup.sh
+
+.PHONY: setup-test
+setup-test: validate-env ## Run setup with test configuration
+	@echo -e "$(CYAN)🧪 Running dotfiles setup in test mode...$(RESET)"
+	@if [ ! -f setup/.setupconf.template ]; then \
+		echo -e "$(RED)❌ Template file not found: setup/.setupconf.template$(RESET)"; \
+		exit 1; \
+	fi
+	@cp setup/.setupconf.template .setupconf.test
+	@echo -e "$(YELLOW)ℹ️  Using test configuration (.setupconf.test)$(RESET)"
+	@MAKE_CONTROLLED=true SETUPCONF_FILE=.setupconf.test ./setup.sh
+	@rm -f .setupconf.test
+
+.PHONY: setup-dry-run
+setup-dry-run: validate-env ## Show what setup would do without making changes
+	@echo -e "$(CYAN)🔍 Dry run - showing what setup would do...$(RESET)"
+	@MAKE_CONTROLLED=true DRY_RUN=true ./setup.sh
 
 .PHONY: setup-darwin
 setup-darwin: validate-env ## Run macOS-specific setup only
 	@echo -e "$(CYAN)🍎 Running macOS setup...$(RESET)"
-	@cd setup && ./setup-darwin.sh
+	@MAKE_CONTROLLED=true cd setup && ./setup-darwin.sh
 
 .PHONY: setup-linux
 setup-linux: validate-env ## Run Linux-specific setup only
 	@echo -e "$(CYAN)🐧 Running Linux setup...$(RESET)"
-	@cd setup && ./setup-linux.sh
+	@MAKE_CONTROLLED=true cd setup && ./setup-linux.sh
 
 .PHONY: setup-1password-ssh
 setup-1password-ssh: ## Enable SSH from 1Password (run after main setup)
 	@echo -e "$(CYAN)🔐 Setting up 1Password SSH integration...$(RESET)"
 	@if [[ "$$OSTYPE" == "darwin"* ]]; then \
-		./after-setup-use-ssh-from-1password.sh; \
+		MAKE_CONTROLLED=true ./after-setup-use-ssh-from-1password.sh; \
 	else \
 		echo -e "$(YELLOW)⚠️  1Password SSH setup is only available on macOS$(RESET)"; \
 	fi
@@ -73,7 +90,7 @@ lint: ## Run shellcheck on all shell scripts (installs shellcheck if needed)
 	fi; \
 	for script in $(SHELL_SCRIPTS); do \
 		echo -e "$(CYAN)Checking $$script$(RESET)"; \
-		if [[ "$$script" == ./setup/* ]] || [[ "$$script" == ./after-setup-use-ssh-from-1password.sh ]] || [[ "$$script" == ./lib/* ]]; then \
+		if [[ "$$script" == ./setup.sh ]] || [[ "$$script" == ./unlink.sh ]] || [[ "$$script" == ./setup/* ]] || [[ "$$script" == ./after-setup-use-ssh-from-1password.sh ]] || [[ "$$script" == ./lib/* ]]; then \
 			$$SHELLCHECK_CMD -e SC1091 "$$script" || exit 1; \
 		elif [[ "$$script" == ./completion.sh ]]; then \
 			$$SHELLCHECK_CMD -e SC1091 -e SC1090 "$$script" || exit 1; \
@@ -82,20 +99,6 @@ lint: ## Run shellcheck on all shell scripts (installs shellcheck if needed)
 		fi; \
 	done
 	@echo -e "$(GREEN)✅ All shell scripts passed linting$(RESET)"
-
-.PHONY: lint-if-available
-lint-if-available: ## Run shellcheck only if already installed
-	@if command -v shellcheck >/dev/null 2>&1; then \
-		echo -e "$(YELLOW)🔍 Linting shell scripts...$(RESET)"; \
-		for script in $(SHELL_SCRIPTS); do \
-			echo -e "$(CYAN)Checking $$script$(RESET)"; \
-			shellcheck "$$script" || exit 1; \
-		done; \
-		echo -e "$(GREEN)✅ All shell scripts passed linting$(RESET)"; \
-	else \
-		echo -e "$(YELLOW)⚠️  shellcheck not available, skipping linting$(RESET)"; \
-		echo -e "$(YELLOW)ℹ️  Run 'make install-shellcheck' to enable linting$(RESET)"; \
-	fi
 
 .PHONY: fix-permissions
 fix-permissions: ## Fix permissions on shell scripts
@@ -166,7 +169,12 @@ backup: ## Create a backup of current configurations
 .PHONY: unlink
 unlink: ## Unlink all dotfiles
 	@echo -e "$(RED)⚠️  Unlinking dotfiles...$(RESET)"
-	@./unlink.sh
+	@MAKE_CONTROLLED=true ./unlink.sh
+
+.PHONY: unlink-dry-run
+unlink-dry-run: ## Show what unlink would do without making changes
+	@echo -e "$(CYAN)🔍 Dry run - showing what unlink would do...$(RESET)"
+	@MAKE_CONTROLLED=true ./unlink.sh --dry-run
 
 .PHONY: help
 help: ## Display this help

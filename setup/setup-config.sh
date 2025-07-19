@@ -15,15 +15,20 @@ source "$DOTFILES_ROOT/lib/setup-utils.sh"
 print_header "Loading Setup Configuration"
 
 load_configuration() {
-    local config_file="$DOTFILES_ROOT/.setupconf"
+    # Use custom config file if specified (for testing), otherwise use default
+    local config_file="$DOTFILES_ROOT/${SETUPCONF_FILE:-.setupconf}"
     
     if [[ -f "$config_file" ]]; then
-        log_info "Loading configuration from .setupconf"
+        log_info "Loading configuration from $(basename "$config_file")"
         # shellcheck source=/dev/null
         source "$config_file"
     else
-        log_warning "No .setupconf found"
-        log_info "Please copy setup/.setupconf.template to .setupconf and customize it"
+        log_warning "No $(basename "$config_file") found"
+        if [[ "$config_file" == *".setupconf.test" ]]; then
+            log_info "Test configuration file not found - this is normal for test mode"
+        else
+            log_info "Please copy setup/.setupconf.template to .setupconf and customize it"
+        fi
         log_info "Using default values for now..."
     fi
     
@@ -46,6 +51,11 @@ load_configuration() {
     
     if [[ -n "$EXTRA_PACKAGES" ]]; then
         log_info "  EXTRA_PACKAGES: $EXTRA_PACKAGES"
+    fi
+    
+    # Show which config file was used
+    if [[ "$config_file" != "$DOTFILES_ROOT/.setupconf" ]]; then
+        log_info "  CONFIG_FILE: $(basename "$config_file")"
     fi
 }
 
@@ -82,11 +92,14 @@ create_default_config() {
     local template_file="$SCRIPT_DIR/.setupconf.template"
     local config_file="$DOTFILES_ROOT/.setupconf"
     
-    if [[ ! -f "$config_file" && -f "$template_file" ]]; then
-        log_step "Creating default .setupconf from template"
-        cp "$template_file" "$config_file"
-        log_success "Created .setupconf from template"
-        log_info "Please edit .setupconf to customize your setup"
+    # Only create default config if we're using the standard .setupconf file
+    if [[ "${SETUPCONF_FILE:-.setupconf}" == ".setupconf" ]]; then
+        if [[ ! -f "$config_file" && -f "$template_file" ]]; then
+            log_step "Creating default .setupconf from template"
+            cp "$template_file" "$config_file"
+            log_success "Created .setupconf from template"
+            log_info "Please edit .setupconf to customize your setup"
+        fi
     fi
 }
 
