@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# Shell aliases for dotfiles
+
 alias l='ls -lah'
 
 alias cd..='cd ..'

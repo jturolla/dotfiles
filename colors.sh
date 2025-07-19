@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Colors
 end="\033[0m"
 black="\033[0;30m"

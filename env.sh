@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export EDITOR='vim'
 export CLICOLOR='auto'
 
@@ -15,13 +17,15 @@ export LC_NUMERIC="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-export GPG_TTY="$(tty)"
+GPG_TTY="$(tty)"
+export GPG_TTY
 export PINENTRY_USER_DATA="USE_CURSES=1"
 
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-export GOPATH="$(go env GOPATH)"
+GOPATH="$(go env GOPATH)"
+export GOPATH
 
 # Set 1Password SSH agent
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock

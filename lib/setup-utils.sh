@@ -81,7 +81,8 @@ ensure_dir() {
 backup_file() {
     local file="$1"
     if [[ -f "$file" ]]; then
-        local backup="${file}.backup.$(date +%Y%m%d-%H%M%S)"
+        local backup
+        backup="${file}.backup.$(date +%Y%m%d-%H%M%S)"
         log_step "Backing up existing file: $file -> $backup"
         cp "$file" "$backup" || fail_fast "Failed to backup file: $file"
     fi

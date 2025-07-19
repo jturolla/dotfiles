@@ -1,10 +1,12 @@
+#!/bin/bash
+
 # Load bash completion if available
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
 # Load custom completions
-. $DOTFILES/lib/git-completion.bash
-. $DOTFILES/lib/kustomize-completion.bash # gen by running: `kustomize completion bash`
-. $DOTFILES/lib/win-completion.bash
+. "$DOTFILES"/lib/git-completion.bash
+. "$DOTFILES"/lib/kustomize-completion.bash # gen by running: `kustomize completion bash`
+. "$DOTFILES"/lib/win-completion.bash
 
 # Enable programmable completion features
 if ! shopt -oq posix; then

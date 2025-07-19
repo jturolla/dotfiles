@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export HISTSIZE=5000000
 export HISTFILESIZE=100000000
 export HISTCONTROL=ignoredups:erasedups

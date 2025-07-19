@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Special symbols for prompt segments
-RIGHT_ARROW=$'\uE0B0'  # Unicode symbol for right-pointing triangle
+export RIGHT_ARROW=$'\uE0B0'  # Unicode symbol for right-pointing triangle
 RIGHT_SEP=$'\uE0B0'    # Unicode symbol for right separator
-LEFT_SEP=$'\uE0B2'     # Unicode symbol for left separator
+export LEFT_SEP=$'\uE0B2'     # Unicode symbol for left separator
 GIT_SYMBOL=$'\uE0A0'   # Git branch symbol
 KUBERNETES_SYMBOL='⎈'   # Kubernetes symbol
 

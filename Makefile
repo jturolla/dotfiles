@@ -53,7 +53,14 @@ setup-1password-ssh: ## Enable SSH from 1Password (run after main setup)
 .PHONY: lint
 lint: ## Run shellcheck on all shell scripts (installs shellcheck if needed)
 	@echo -e "$(YELLOW)🔍 Linting shell scripts...$(RESET)"
-	@if ! command -v shellcheck >/dev/null 2>&1; then \
+	@SHELLCHECK_CMD=""; \
+	if command -v shellcheck >/dev/null 2>&1; then \
+		SHELLCHECK_CMD="shellcheck"; \
+	elif [ -x "/opt/homebrew/bin/shellcheck" ]; then \
+		SHELLCHECK_CMD="/opt/homebrew/bin/shellcheck"; \
+	elif [ -x "/usr/local/bin/shellcheck" ]; then \
+		SHELLCHECK_CMD="/usr/local/bin/shellcheck"; \
+	else \
 		echo -e "$(YELLOW)📦 shellcheck not found, attempting to install...$(RESET)"; \
 		$(MAKE) install-shellcheck || { \
 			echo -e "$(RED)❌ shellcheck installation failed$(RESET)"; \
@@ -62,10 +69,23 @@ lint: ## Run shellcheck on all shell scripts (installs shellcheck if needed)
 			echo -e "$(YELLOW)   - Linux: sudo apt-get install shellcheck$(RESET)"; \
 			exit 1; \
 		}; \
-	fi
-	@for script in $(SHELL_SCRIPTS); do \
+		if command -v shellcheck >/dev/null 2>&1; then \
+			SHELLCHECK_CMD="shellcheck"; \
+		elif [ -x "/opt/homebrew/bin/shellcheck" ]; then \
+			SHELLCHECK_CMD="/opt/homebrew/bin/shellcheck"; \
+		elif [ -x "/usr/local/bin/shellcheck" ]; then \
+			SHELLCHECK_CMD="/usr/local/bin/shellcheck"; \
+		fi; \
+	fi; \
+	for script in $(SHELL_SCRIPTS); do \
 		echo -e "$(CYAN)Checking $$script$(RESET)"; \
-		shellcheck "$$script" || exit 1; \
+		if [[ "$$script" == ./setup/* ]] || [[ "$$script" == ./after-setup-use-ssh-from-1password.sh ]] || [[ "$$script" == ./lib/* ]]; then \
+			$$SHELLCHECK_CMD -e SC1091 "$$script" || exit 1; \
+		elif [[ "$$script" == ./completion.sh ]]; then \
+			$$SHELLCHECK_CMD -e SC1091 -e SC1090 "$$script" || exit 1; \
+		else \
+			$$SHELLCHECK_CMD "$$script" || exit 1; \
+		fi; \
 	done
 	@echo -e "$(GREEN)✅ All shell scripts passed linting$(RESET)"
 
@@ -109,6 +129,10 @@ install-shellcheck: ## Install shellcheck for linting
 	@echo -e "$(YELLOW)📦 Installing shellcheck...$(RESET)"
 	@if command -v brew >/dev/null 2>&1; then \
 		brew install shellcheck && echo -e "$(GREEN)✅ shellcheck installed via Homebrew$(RESET)"; \
+	elif [ -x "/opt/homebrew/bin/brew" ]; then \
+		/opt/homebrew/bin/brew install shellcheck && echo -e "$(GREEN)✅ shellcheck installed via Homebrew (Apple Silicon)$(RESET)"; \
+	elif [ -x "/usr/local/bin/brew" ]; then \
+		/usr/local/bin/brew install shellcheck && echo -e "$(GREEN)✅ shellcheck installed via Homebrew (Intel)$(RESET)"; \
 	elif command -v apt-get >/dev/null 2>&1; then \
 		sudo apt-get update && sudo apt-get install -y shellcheck && echo -e "$(GREEN)✅ shellcheck installed via apt$(RESET)"; \
 	elif command -v yum >/dev/null 2>&1; then \
