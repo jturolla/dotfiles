@@ -1,18 +1,48 @@
-# Test configuration for dotfiles setup
-# This is used by the test-linux-setup.sh script
+# Dotfiles Setup Configuration
+# Copy this file to .setupconf in the root directory and customize as needed
 
-# GitHub username for SSH key setup (used for downloading authorized_keys)
-GITHUB_USER="testuser"
+###############################################################################
+# Git Configuration
+###############################################################################
+# Your name for git commits (leave empty to use current git config)
+GIT_NAME=""
 
-# Git configuration for testing
-GIT_NAME="Test User"
-GIT_EMAIL="test@example.com"
+# Your email for git commits (leave empty to use current git config)  
+GIT_EMAIL=""
 
-# Additional test packages to install (space-separated)
+###############################################################################
+# GitHub Configuration
+###############################################################################
+# GitHub username for SSH key setup (required on Linux for authorized_keys)
+# On macOS, this is only used for identification
+GITHUB_USER="jturolla"
+
+###############################################################################
+# Package Management
+###############################################################################
+# Skip Homebrew installation and package setup (true/false)
+SKIP_BREW="false"
+
+# Additional packages to install (space-separated list)
+# These will be installed via brew on macOS or apt on Linux
 EXTRA_PACKAGES=""
 
-# Vim configuration for testing
-VIM_COLORSCHEME="default"
+###############################################################################
+# Application Configuration
+###############################################################################
+# Vim colorscheme to use
+VIM_COLORSCHEME="monokai"
 
-# SSH configuration for testing
+# SSH port for server configuration (Linux only)
 SSH_PORT=22
+
+###############################################################################
+# Setup Behavior
+###############################################################################
+# Log level: DEBUG, INFO, WARNING, ERROR
+LOG_LEVEL="INFO"
+
+# Skip specific setup steps (true/false)
+SKIP_FONTS="false"
+SKIP_VIM="false"
+SKIP_GIT="false"

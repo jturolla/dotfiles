@@ -19,7 +19,7 @@
 [init]
 	defaultBranch = main
 [url "git@github.com:"]
-	insteadOf = https://github.com/
+	insteadOf = https://github.com/nubank/
 [user]
 	name = Julio Turolla
 	email = j@julioturolla.com

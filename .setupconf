@@ -1,0 +1,48 @@
+# Dotfiles Setup Configuration
+# Copy this file to .setupconf in the root directory and customize as needed
+
+###############################################################################
+# Git Configuration
+###############################################################################
+# Your name for git commits (leave empty to use current git config)
+GIT_NAME=""
+
+# Your email for git commits (leave empty to use current git config)  
+GIT_EMAIL=""
+
+###############################################################################
+# GitHub Configuration
+###############################################################################
+# GitHub username for SSH key setup (required on Linux for authorized_keys)
+# On macOS, this is only used for identification
+GITHUB_USER="jturolla"
+
+###############################################################################
+# Package Management
+###############################################################################
+# Skip Homebrew installation and package setup (true/false)
+SKIP_BREW="false"
+
+# Additional packages to install (space-separated list)
+# These will be installed via brew on macOS or apt on Linux
+EXTRA_PACKAGES=""
+
+###############################################################################
+# Application Configuration
+###############################################################################
+# Vim colorscheme to use
+VIM_COLORSCHEME="monokai"
+
+# SSH port for server configuration (Linux only)
+SSH_PORT=22
+
+###############################################################################
+# Setup Behavior
+###############################################################################
+# Log level: DEBUG, INFO, WARNING, ERROR
+LOG_LEVEL="INFO"
+
+# Skip specific setup steps (true/false)
+SKIP_FONTS="false"
+SKIP_VIM="false"
+SKIP_GIT="false"

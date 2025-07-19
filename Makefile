@@ -1,0 +1,155 @@
+# Dotfiles Makefile
+SHELL := /bin/bash
+.DEFAULT_GOAL := help
+
+# Colors for output
+CYAN := \033[36m
+GREEN := \033[32m
+YELLOW := \033[33m
+RED := \033[31m
+RESET := \033[0m
+
+# Directories
+SETUP_DIR := setup
+LIB_DIR := lib
+
+# Find all shell scripts
+SHELL_SCRIPTS := $(shell find . -name "*.sh" -type f | grep -v ".git")
+
+##@ Setup Commands
+
+.PHONY: setup
+setup: validate-env ## Run the complete dotfiles setup
+	@echo -e "$(CYAN)🚀 Starting dotfiles setup...$(RESET)"
+	@./setup.sh
+
+.PHONY: setup-test
+setup-test: validate-env ## Run setup with test configuration
+	@echo -e "$(CYAN)🧪 Running setup with test configuration...$(RESET)"
+	@cp setup/.setupconf.template .setupconf
+	@./setup.sh
+
+.PHONY: setup-darwin
+setup-darwin: validate-env ## Run macOS-specific setup only
+	@echo -e "$(CYAN)🍎 Running macOS setup...$(RESET)"
+	@cd setup && ./setup-darwin.sh
+
+.PHONY: setup-linux
+setup-linux: validate-env ## Run Linux-specific setup only
+	@echo -e "$(CYAN)🐧 Running Linux setup...$(RESET)"
+	@cd setup && ./setup-linux.sh
+
+.PHONY: setup-1password-ssh
+setup-1password-ssh: ## Enable SSH from 1Password (run after main setup)
+	@echo -e "$(CYAN)🔐 Setting up 1Password SSH integration...$(RESET)"
+	@if [[ "$$OSTYPE" == "darwin"* ]]; then \
+		./after-setup-use-ssh-from-1password.sh; \
+	else \
+		echo -e "$(YELLOW)⚠️  1Password SSH setup is only available on macOS$(RESET)"; \
+	fi
+
+##@ Development Commands
+
+.PHONY: lint
+lint: ## Run shellcheck on all shell scripts (installs shellcheck if needed)
+	@echo -e "$(YELLOW)🔍 Linting shell scripts...$(RESET)"
+	@if ! command -v shellcheck >/dev/null 2>&1; then \
+		echo -e "$(YELLOW)📦 shellcheck not found, attempting to install...$(RESET)"; \
+		$(MAKE) install-shellcheck || { \
+			echo -e "$(RED)❌ shellcheck installation failed$(RESET)"; \
+			echo -e "$(YELLOW)ℹ️  Please install shellcheck manually:$(RESET)"; \
+			echo -e "$(YELLOW)   - macOS: brew install shellcheck$(RESET)"; \
+			echo -e "$(YELLOW)   - Linux: sudo apt-get install shellcheck$(RESET)"; \
+			exit 1; \
+		}; \
+	fi
+	@for script in $(SHELL_SCRIPTS); do \
+		echo -e "$(CYAN)Checking $$script$(RESET)"; \
+		shellcheck "$$script" || exit 1; \
+	done
+	@echo -e "$(GREEN)✅ All shell scripts passed linting$(RESET)"
+
+.PHONY: lint-if-available
+lint-if-available: ## Run shellcheck only if already installed
+	@if command -v shellcheck >/dev/null 2>&1; then \
+		echo -e "$(YELLOW)🔍 Linting shell scripts...$(RESET)"; \
+		for script in $(SHELL_SCRIPTS); do \
+			echo -e "$(CYAN)Checking $$script$(RESET)"; \
+			shellcheck "$$script" || exit 1; \
+		done; \
+		echo -e "$(GREEN)✅ All shell scripts passed linting$(RESET)"; \
+	else \
+		echo -e "$(YELLOW)⚠️  shellcheck not available, skipping linting$(RESET)"; \
+		echo -e "$(YELLOW)ℹ️  Run 'make install-shellcheck' to enable linting$(RESET)"; \
+	fi
+
+.PHONY: fix-permissions
+fix-permissions: ## Fix permissions on shell scripts
+	@echo -e "$(YELLOW)🔧 Fixing script permissions...$(RESET)"
+	@find . -name "*.sh" -type f -exec chmod +x {} \;
+	@echo -e "$(GREEN)✅ Script permissions fixed$(RESET)"
+
+.PHONY: validate-env
+validate-env: ## Validate environment and dependencies
+	@echo -e "$(YELLOW)🔍 Validating environment...$(RESET)"
+	@if [ ! -f .setupconf ]; then \
+		echo -e "$(RED)❌ .setupconf not found. Copy from setup/.setupconf.template$(RESET)"; \
+		exit 1; \
+	fi
+	@echo -e "$(GREEN)✅ Environment validated$(RESET)"
+
+##@ Installation Commands
+
+.PHONY: install-shellcheck
+install-shellcheck: ## Install shellcheck for linting
+	@if command -v shellcheck >/dev/null 2>&1; then \
+		echo -e "$(GREEN)✅ shellcheck already installed$(RESET)"; \
+		exit 0; \
+	fi
+	@echo -e "$(YELLOW)📦 Installing shellcheck...$(RESET)"
+	@if command -v brew >/dev/null 2>&1; then \
+		brew install shellcheck && echo -e "$(GREEN)✅ shellcheck installed via Homebrew$(RESET)"; \
+	elif command -v apt-get >/dev/null 2>&1; then \
+		sudo apt-get update && sudo apt-get install -y shellcheck && echo -e "$(GREEN)✅ shellcheck installed via apt$(RESET)"; \
+	elif command -v yum >/dev/null 2>&1; then \
+		sudo yum install -y ShellCheck && echo -e "$(GREEN)✅ shellcheck installed via yum$(RESET)"; \
+	elif command -v dnf >/dev/null 2>&1; then \
+		sudo dnf install -y ShellCheck && echo -e "$(GREEN)✅ shellcheck installed via dnf$(RESET)"; \
+	elif command -v pacman >/dev/null 2>&1; then \
+		sudo pacman -S --noconfirm shellcheck && echo -e "$(GREEN)✅ shellcheck installed via pacman$(RESET)"; \
+	else \
+		echo -e "$(RED)❌ No supported package manager found$(RESET)"; \
+		echo -e "$(YELLOW)ℹ️  Please install shellcheck manually:$(RESET)"; \
+		echo -e "$(YELLOW)   - Download from: https://github.com/koalaman/shellcheck$(RESET)"; \
+		echo -e "$(YELLOW)   - Or use your system's package manager$(RESET)"; \
+		exit 1; \
+	fi
+
+##@ Utility Commands
+
+.PHONY: clean
+clean: ## Clean temporary files and directories
+	@echo -e "$(YELLOW)🧹 Cleaning temporary files...$(RESET)"
+	@rm -rf tmp/
+	@mkdir -p tmp
+	@echo -e "$(GREEN)✅ Cleanup complete$(RESET)"
+
+.PHONY: backup
+backup: ## Create a backup of current configurations
+	@echo -e "$(YELLOW)💾 Creating backup...$(RESET)"
+	@mkdir -p backups
+	@tar -czf "backups/dotfiles-backup-$$(date +%Y%m%d-%H%M%S).tar.gz" \
+		--exclude='.git' \
+		--exclude='tmp' \
+		--exclude='backups' \
+		.
+	@echo -e "$(GREEN)✅ Backup created in backups/$(RESET)"
+
+.PHONY: unlink
+unlink: ## Unlink all dotfiles
+	@echo -e "$(RED)⚠️  Unlinking dotfiles...$(RESET)"
+	@./unlink.sh
+
+.PHONY: help
+help: ## Display this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST) 

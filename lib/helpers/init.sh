@@ -13,7 +13,7 @@ init_cli() {
     local help_text="${2:-}"
 
     # Source docopts installation function
-    source "$(dirname "$script_path")/../lib/docopts.sh"
+    source "$(dirname "$script_path")/lib/docopts.sh"
 
     # Ensure docopts is installed
     ensure_docopts
