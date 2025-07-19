@@ -23,12 +23,6 @@ setup: validate-env ## Run the complete dotfiles setup
 	@echo -e "$(CYAN)🚀 Starting dotfiles setup...$(RESET)"
 	@./setup.sh
 
-.PHONY: setup-test
-setup-test: validate-env ## Run setup with test configuration
-	@echo -e "$(CYAN)🧪 Running setup with test configuration...$(RESET)"
-	@cp setup/.setupconf.template .setupconf
-	@./setup.sh
-
 .PHONY: setup-darwin
 setup-darwin: validate-env ## Run macOS-specific setup only
 	@echo -e "$(CYAN)🍎 Running macOS setup...$(RESET)"
