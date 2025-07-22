@@ -24,3 +24,4 @@ for file in /opt/homebrew/etc/bash_completion.d/*; do
 done
 
 ## The following lines should be empty... but sometimes a program writes here :)
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
