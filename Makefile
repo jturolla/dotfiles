@@ -21,7 +21,7 @@ SHELL_SCRIPTS := $(shell find . -name "*.sh" -type f | grep -v ".git")
 .PHONY: setup
 setup: validate-env ## Run the complete dotfiles setup
 	@echo -e "$(CYAN)🚀 Starting dotfiles setup...$(RESET)"
-	@./setup.sh
+	@cd setup && ./setup.sh
 
 .PHONY: setup-darwin
 setup-darwin: validate-env ## Run macOS-specific setup only
