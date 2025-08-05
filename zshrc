@@ -50,11 +50,6 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
 
-# AWS CLI Completion
-if command -v aws_completer &>/dev/null; then
-  complete -C '/opt/homebrew/bin/aws_completer' aws
-fi
-
 # Enable kubectl completion if available
 if command -v kubectl >/dev/null 2>&1; then
   source <(kubectl completion zsh)
