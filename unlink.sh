@@ -8,6 +8,7 @@ files=(
   "$HOME/.gitignore"
   "$HOME/.gitconfig"
   "$HOME/.bash_profile"
+  "$HOME/.zshrc"
   "$HOME/.ssh/config"
 )
 

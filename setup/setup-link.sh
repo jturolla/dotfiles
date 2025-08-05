@@ -34,6 +34,7 @@ link_dotfiles() {
         "gitconfig:.gitconfig"
         "gitignore:.gitignore"
         "bash_profile:.bash_profile"
+        "zshrc:.zshrc"
         "ssh_config:.ssh/config"
     )
     
@@ -77,6 +78,7 @@ validate_links() {
         "$HOME/.gitconfig"
         "$HOME/.gitignore"
         "$HOME/.bash_profile"
+        "$HOME/.zshrc"
         "$HOME/.ssh/config"
     )
     
