@@ -10,16 +10,8 @@
 	gpgsign = true
 [pull]
 	ff = only
-[includeIf "gitdir:/Users/ju/dev/"]
-  path = /Users/ju/.personalgitconfig
-[includeIf "gitdir:/Users/ju/go/"]
-  path = /Users/ju/.personalgitconfig
-[includeIf "gitdir:/Users/ju/dev/nu/"]
-	path = /Users/ju/.nugitconfig
 [init]
 	defaultBranch = main
-[url "git@github.com:"]
-	insteadOf = https://github.com/nubank/
 [user]
 	name = Julio Turolla
 	email = j@julioturolla.com
@@ -30,3 +22,5 @@
 	format = ssh
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[url "ssh://git@golang.nuinfra.net/"]
+	insteadOf = https://golang.nuinfra.net/
