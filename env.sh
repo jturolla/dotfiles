@@ -24,8 +24,11 @@ export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 export GOPATH="$(go env GOPATH)"
-#export GOPRIVATE="golang.nuinfra.net"
-go env -w GOPRIVATE=github.com/nubank/*,golang.nuinfra.net/*
+# Keep GOPRIVATE in the environment and (optionally) persist to Go toolchain
+export GOPRIVATE='github.com/nubank/*,golang.nuinfra.net/*'
+if command -v go >/dev/null 2>&1; then
+    go env -w GOPRIVATE='github.com/nubank/*,golang.nuinfra.net/*' >/dev/null 2>&1 || true
+fi
 
 # Set 1Password SSH agent
 export SSH_AUTH_SOCK="/Users/julio.turolla/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"

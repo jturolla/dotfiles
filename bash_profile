@@ -18,10 +18,12 @@ source $DOTFILES/history.sh
 # Work related
 [ -f "$HOME/.nurc" ] && source "$HOME/.nurc"
 
-# Completion
-for file in /opt/homebrew/etc/bash_completion.d/*; do
-    [ -r "$file" ] && source "$file"
-done
+# Additional Homebrew completion snippets (Bash >= 4 only)
+if [ "${BASH_VERSINFO:-0}" -ge 4 ]; then
+    for file in /opt/homebrew/etc/bash_completion.d/*; do
+        [ -r "$file" ] && source "$file"
+    done
+fi
 
 ## The following lines should be empty... but sometimes a program writes here :)
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
