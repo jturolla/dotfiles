@@ -144,7 +144,18 @@ configure_macos_settings() {
     # Set mouse scaling (speed)
     log_info "Configuring mouse settings"
     defaults write -g com.apple.mouse.scaling -float 10.0
-    
+
+    # Disable Force Click
+    log_info "Disabling Force Click"
+    defaults write -g com.apple.trackpad.forceClick -bool false
+    defaults write com.apple.AppleMultitouchTrackpad ForceSuppressed -bool true
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad ForceSuppressed -bool true
+
+    # Disable Look Up gesture (three-finger tap)
+    log_info "Disabling Look Up gesture"
+    defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerTapGesture -int 0
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerTapGesture -int 0
+
     # Show hidden files in Finder
     log_info "Configuring Finder settings"
     defaults write com.apple.finder AppleShowAllFiles -bool true
@@ -159,6 +170,7 @@ configure_macos_settings() {
     log_info "Restarting affected applications"
     killall Dock 2>/dev/null || true
     killall Finder 2>/dev/null || true
+    killall SystemUIServer 2>/dev/null || true
     
     log_success "macOS settings configured"
     log_info "Some changes will take effect after restart"
