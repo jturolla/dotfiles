@@ -60,6 +60,32 @@ setup_vim_plug() {
     fi
 }
 
+setup_neovim_plug() {
+    log_step "Setting up vim-plug for Neovim"
+    
+    local nvim_plug_file="$HOME/.config/nvim/autoload/plug.vim"
+    
+    if [[ -f "$nvim_plug_file" ]]; then
+        log_info "vim-plug for Neovim is already installed"
+        return 0
+    fi
+    
+    if ! command_exists curl; then
+        fail_fast "curl is required to install vim-plug for Neovim"
+    fi
+    
+    log_info "Installing vim-plug for Neovim"
+    # Use the exact command requested to ensure directories are created
+    curl -fLo "$nvim_plug_file" --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || fail_fast "Failed to install vim-plug for Neovim"
+    
+    if [[ -f "$nvim_plug_file" ]]; then
+        log_success "vim-plug for Neovim installed successfully"
+    else
+        fail_fast "Failed to install vim-plug for Neovim"
+    fi
+}
+
 install_vim_plugins() {
     log_step "Installing Vim plugins"
     
@@ -144,12 +170,21 @@ verify_vim_setup() {
         log_info "No plugins directory found (normal if no plugins are configured)"
     fi
     
+    # Check Neovim vim-plug
+    local nvim_plug_file="$HOME/.config/nvim/autoload/plug.vim"
+    if [[ -f "$nvim_plug_file" ]]; then
+        log_info "vim-plug for Neovim is installed"
+    else
+        log_warning "vim-plug for Neovim is not installed"
+    fi
+    
     log_success "Vim setup verification completed"
 }
 
 main() {
     check_vim_installation
     setup_vim_plug
+    setup_neovim_plug
     install_vim_plugins
     configure_vim_colorscheme
     verify_vim_setup
