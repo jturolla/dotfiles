@@ -31,7 +31,7 @@ link_dotfiles() {
     local files_to_link=(
         "tmux.conf:.tmux.conf"
         "vimrc:.vimrc"
-        "vimrc:.config/nvim/init.vim"
+        "nvim/init.lua:.config/nvim/init.lua"
         "gitconfig:.gitconfig"
         "gitignore:.gitignore"
         "bash_profile:.bash_profile"
@@ -81,7 +81,7 @@ validate_links() {
         "$HOME/.bash_profile"
         "$HOME/.zshrc"
         "$HOME/.ssh/config"
-        "$HOME/.config/nvim/init.vim"
+        "$HOME/.config/nvim/init.lua"
     )
 
     for link in "${expected_links[@]}"; do

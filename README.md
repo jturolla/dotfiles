@@ -93,7 +93,8 @@ SKIP_GIT="false"
 
 ### All Platforms
 - Powerline fonts for terminal
-- Vim with vim-plug and plugins
+- Neovim with lazy.nvim plugin manager
+- Vim configuration (shared with Neovim)
 - Git configuration templates
 - SSH configuration
 - Custom shell configurations
@@ -113,6 +114,26 @@ cd setup
 ./setup-vim.sh         # Vim setup
 ./setup-fonts.sh       # Font installation
 ```
+
+## Neovim Plugin Installation
+
+After running the setup, install Neovim plugins using lazy.nvim:
+
+```bash
+# Open Neovim - lazy.nvim will auto-bootstrap on first launch
+nvim
+
+# Plugins will install automatically, or manually trigger with:
+:Lazy sync
+```
+
+**lazy.nvim commands:**
+- `:Lazy` - Open the lazy.nvim UI
+- `:Lazy sync` - Install/update/clean plugins
+- `:Lazy update` - Update plugins
+- `:Lazy clean` - Remove unused plugins
+
+The configuration uses lazy.nvim for Neovim plugins while keeping all Vim settings in the standard `vimrc` file.
 
 ## 1Password SSH Integration
 

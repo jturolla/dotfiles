@@ -3,16 +3,6 @@ set history=5000
 filetype plugin on
 filetype indent on
 
-call plug#begin('~/.vim/plugged')
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'godlygeek/tabular'
-Plug 'bhurlow/vim-parinfer'
-Plug 'hashivim/vim-terraform'
-Plug 'mrk21/yaml-vim'
-Plug 'Yggdroot/indentLine'
-Plug 'preservim/nerdtree'
-call plug#end()
-
 let mapleader = ","
 
 set autoread

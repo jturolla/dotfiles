@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ###############################################################################
-# Vim Setup Script
-# Installs and configures Vim with plugins
+# Vim/Neovim Setup Script
+# Installs and configures Vim/Neovim with plugins
 ###############################################################################
 
 set -euo pipefail
@@ -15,7 +15,7 @@ if ! command -v log_info >/dev/null 2>&1; then
     source "$DOTFILES_ROOT/setup/setup-config.sh"
 fi
 
-print_header "Vim Configuration Setup"
+print_header "Vim/Neovim Configuration Setup"
 
 check_vim_installation() {
     log_step "Checking Vim installation"
@@ -87,29 +87,31 @@ setup_neovim_plug() {
 }
 
 install_vim_plugins() {
-    log_step "Installing Vim plugins"
+    log_step "Installing Neovim plugins"
     
-    # Check if .vimrc exists and has plugins
-    local vimrc="$HOME/.vimrc"
-    if [[ ! -f "$vimrc" ]]; then
-        log_warning ".vimrc not found, skipping plugin installation"
+    # Check if Neovim is installed
+    if ! command_exists nvim; then
+        log_warning "Neovim not found, skipping plugin installation"
+        log_info "Install Neovim to use lazy.nvim plugin manager"
         return 0
     fi
     
-    if ! grep -q "call plug#" "$vimrc"; then
-        log_info "No vim-plug configuration found in .vimrc"
+    # Check if init.lua exists
+    local init_lua="$HOME/.config/nvim/init.lua"
+    if [[ ! -f "$init_lua" ]]; then
+        log_warning "Neovim init.lua not found, skipping plugin installation"
         return 0
     fi
     
-    log_info "Installing/updating Vim plugins (this may take a moment)"
+    log_info "Installing/updating Neovim plugins with lazy.nvim (this may take a moment)"
     
-    # Install plugins in non-interactive mode
-    vim +PlugInstall +qall < /dev/null || {
+    # Install plugins in non-interactive mode using lazy.nvim
+    nvim --headless "+Lazy! sync" +qa || {
         log_warning "Plugin installation may have failed or been incomplete"
-        log_info "You can run ':PlugInstall' manually in Vim later"
+        log_info "You can run ':Lazy sync' manually in Neovim later"
     }
     
-    log_success "Vim plugins installation completed"
+    log_success "Neovim plugins installation completed"
 }
 
 configure_vim_colorscheme() {
@@ -137,7 +139,7 @@ configure_vim_colorscheme() {
 }
 
 verify_vim_setup() {
-    log_step "Verifying Vim setup"
+    log_step "Verifying Vim/Neovim setup"
     
     # Check Vim configuration
     local vimrc="$HOME/.vimrc"
@@ -151,34 +153,30 @@ verify_vim_setup() {
         log_warning "Vim config not found: $vimrc"
     fi
     
-    # Check vim-plug
-    local plug_file="$HOME/.vim/autoload/plug.vim"
-    if [[ -f "$plug_file" ]]; then
-        log_info "vim-plug is installed"
+    # Check Neovim configuration
+    local init_lua="$HOME/.config/nvim/init.lua"
+    if [[ -L "$init_lua" ]]; then
+        local target
+        target=$(readlink "$init_lua")
+        log_info "Neovim config linked: $init_lua -> $target"
+    elif [[ -f "$init_lua" ]]; then
+        log_info "Neovim config exists: $init_lua"
     else
-        log_warning "vim-plug is not installed"
+        log_warning "Neovim config not found: $init_lua"
     fi
     
-    # Check for plugins directory
-    local plugin_dir="$HOME/.vim/plugged"
-    if [[ -d "$plugin_dir" ]]; then
+    # Check for lazy.nvim plugins directory
+    local lazy_dir="$HOME/.local/share/nvim/lazy"
+    if [[ -d "$lazy_dir" ]]; then
         local plugin_count
-        plugin_count=$(find "$plugin_dir" -maxdepth 1 -type d | wc -l)
+        plugin_count=$(find "$lazy_dir" -maxdepth 1 -type d | wc -l)
         plugin_count=$((plugin_count - 1))  # Subtract 1 for the parent directory
-        log_info "Found $plugin_count installed plugin(s)"
+        log_info "Found $plugin_count lazy.nvim plugin(s)"
     else
-        log_info "No plugins directory found (normal if no plugins are configured)"
+        log_info "No lazy.nvim plugins directory found (will be created on first nvim launch)"
     fi
     
-    # Check Neovim vim-plug
-    local nvim_plug_file="$HOME/.config/nvim/autoload/plug.vim"
-    if [[ -f "$nvim_plug_file" ]]; then
-        log_info "vim-plug for Neovim is installed"
-    else
-        log_warning "vim-plug for Neovim is not installed"
-    fi
-    
-    log_success "Vim setup verification completed"
+    log_success "Vim/Neovim setup verification completed"
 }
 
 main() {
@@ -189,7 +187,7 @@ main() {
     configure_vim_colorscheme
     verify_vim_setup
     
-    print_footer "Vim setup completed!"
+    print_footer "Vim/Neovim setup completed!"
 }
 
 # Only run main if script is executed directly
