@@ -10,6 +10,8 @@ files=(
   "$HOME/.bash_profile"
   "$HOME/.zshrc"
   "$HOME/.ssh/config"
+  "$HOME/.config/helix/config.toml"
+  "$HOME/.config/helix/languages.toml"
 )
 
 for file in "${files[@]}"; do

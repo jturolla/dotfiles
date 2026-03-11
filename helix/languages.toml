@@ -1,0 +1,11 @@
+[[language]]
+name = "clojure"
+auto-format = true
+
+[[grammar]]
+name = "clojure"
+source = { git = "https://github.com/sogaiu/tree-sitter-clojure", rev = "master" }
+
+[language-server.clojure-lsp-proxy]
+command = "lsp-proxy"
+args = ["clojure-lsp"]

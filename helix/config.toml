@@ -1,0 +1,112 @@
+theme = "catppuccin_macchiato"
+
+[editor]
+line-number = "relative"
+bufferline = "multiple"
+# true-color = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.indent-guides]
+render = true
+
+[editor.lsp]
+display-messages = true
+
+[editor.statusline]
+left = ["read-only-indicator", "mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "position-percentage", "file-encoding"]
+separator = "|"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.soft-wrap]
+enable = true
+
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+C-o = "expand_selection"
+# TODO: find a way to fix this in iterm2
+# C-i = "shrink_selection"
+C-l = "save_selection"
+C-p = "jump_backward"
+C-n = "jump_forward"
+C-s = ":w"
+C-r = ":reload-all"
+C-q = ":bclose"
+C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+esc = ["collapse_selection", "keep_primary_selection"]
+# C-g = [
+#     ":write-all", 
+#     ":new", 
+#     ":insert-output lazygit", 
+#     ":set mouse false",
+#     ":set mouse true",
+#     ":buffer-close!", 
+#     ":redraw", 
+#     ":reload-all"
+# ]
+# C-g = [":sh tmux display-popup -E -w 95%% -h 95%% -d '#{pane_current_path}' lazygit"]
+C-b = [":sh git blame -L %{selection_line_start},+1 %{buffer_name}"]
+C-x = [
+  """:sh printf '%{selection}' |
+      rg -v '^[[:space:]]*$' |
+      lein repl :connect 5555 |
+      rg -U '^([[:word:]\\.-]+=>)(?s)(.+)^(?:[[:word:]\\.-]+=>.+)' -r '$1$2'
+  """
+]
+# g = { i = [":sh tmux if-shell 'tmux has-session -t :.1' '' 'split-window -h -l 60 viu %{selection}'"] }
+
+[keys.normal.space]
+n = ":new"
+q = ":quit"
+Q = ":quit!"
+O = ":sh open %{buffer_name}"
+
+[keys.normal.space.x]
+t = [":pipe sc test -r"]
+e = [":sh echo $'%{selection}' | sc 'Explain this code'"]
+r = [":pipe sc refactor"]
+x = [
+  # ":sh tmux if-shell 'tmux has-session -t :.1' '' 'split-window -h -l 60 %{language}'",
+  ":sh tmux if-shell 'tmux has-session -t :.1' '' 'split-window -h -l 60 lein repl'",
+  ":sh echo $'(clojure.tools.namespace.repl/refresh)' > /tmp/repl",
+  ":pipe-to sh -c 'rg -v \"^[[:space:]]*;+\" >> /tmp/repl'",
+  ":sh tmux send-keys -t right \"$(cat /tmp/repl)\n\" && tmux last-pane",
+  "goto_first_nonwhitespace",
+  "collapse_selection"
+]
+
+[keys.select]
+C-x = [
+  """:sh printf '%{selection}' |
+      rg -v '^[[:space:]]*$' |
+      lein repl :connect 5555 |
+      rg -U '^([[:word:]\\.-]+=>)(?s)(.+)^(?:[[:word:]\\.-]+=>.+)' -r '$1$2'
+  """
+]
+
+[keys.select.space.x]
+t = [":pipe sc test"]
+r = [":pipe sc refactor"]
+x = [
+  # ":sh tmux if-shell 'tmux has-session -t :.1' '' 'split-window -h -l 60 %{language}'",
+  ":sh tmux if-shell 'tmux has-session -t :.1' '' 'split-window -h -l 60 lein repl'",
+  ":sh echo $'(clojure.tools.namespace.repl/refresh)' > /tmp/repl",
+  ":pipe-to sh -c 'rg -v \"^[[:space:]]*;+\" >> /tmp/repl'",
+  ":sh tmux send-keys -t right \"$(cat /tmp/repl)\n\" && tmux last-pane",
+  "goto_first_nonwhitespace",
+  "collapse_selection"
+]
+
+[keys.insert]
+C-s = [":w", "normal_mode"]
+C-space = "completion"

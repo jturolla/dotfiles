@@ -32,6 +32,8 @@ link_dotfiles() {
         "tmux.conf:.tmux.conf"
         "vimrc:.vimrc"
         "nvim/init.lua:.config/nvim/init.lua"
+        "helix/config.toml:.config/helix/config.toml"
+        "helix/languages.toml:.config/helix/languages.toml"
         "gitconfig:.gitconfig"
         "gitignore:.gitignore"
         "bash_profile:.bash_profile"
@@ -82,6 +84,8 @@ validate_links() {
         "$HOME/.zshrc"
         "$HOME/.ssh/config"
         "$HOME/.config/nvim/init.lua"
+        "$HOME/.config/helix/config.toml"
+        "$HOME/.config/helix/languages.toml"
     )
 
     for link in "${expected_links[@]}"; do
