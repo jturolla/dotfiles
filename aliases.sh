@@ -20,3 +20,18 @@ alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %
 
 alias aws-local="aws --profile local-minio --endpoint-url http://192.168.1.217:9000"
 alias vim=nvim
+
+killport() {
+  if [ -z "$1" ]; then
+    echo "Usage: killport <port>" >&2
+    return 1
+  fi
+  local pid
+  pid=$(lsof -ti :"$1" 2>/dev/null)
+  if [ -z "$pid" ]; then
+    echo "No process found on port $1"
+    return 1
+  fi
+  echo "$pid" | xargs kill -9
+  echo "Killed process(es) $pid on port $1"
+}

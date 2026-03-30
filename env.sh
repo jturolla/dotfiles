@@ -30,5 +30,7 @@ if command -v go >/dev/null 2>&1; then
     go env -w GOPRIVATE='github.com/nubank/*,golang.nuinfra.net/*' >/dev/null 2>&1 || true
 fi
 
+export AWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT="true"
+
 # Set 1Password SSH agent
 export SSH_AUTH_SOCK="/Users/julio.turolla/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
