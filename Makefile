@@ -47,6 +47,28 @@ setup-1password-ssh: ## Enable SSH from 1Password (run after main setup)
 		echo -e "$(YELLOW)⚠️  1Password SSH setup is only available on macOS$(RESET)"; \
 	fi
 
+.PHONY: enable-sudo-touchid
+enable-sudo-touchid: ## Enable Touch ID for sudo (must run from root shell: sudo -s)
+	@echo -e "$(CYAN)👆 Enabling Touch ID for sudo...$(RESET)"
+	@if [[ "$$OSTYPE" == "darwin"* ]]; then \
+		./setup/enable-sudo-touchid.sh; \
+	else \
+		echo -e "$(RED)❌ enable-sudo-touchid is only available on macOS$(RESET)"; \
+		exit 1; \
+	fi
+
+.PHONY: revert-sudo-touchid disable-sudo-touchid
+revert-sudo-touchid: ## Revert Touch ID sudo config (must run from root shell: sudo -s)
+	@echo -e "$(CYAN)↩️  Reverting Touch ID for sudo...$(RESET)"
+	@if [[ "$$OSTYPE" == "darwin"* ]]; then \
+		./setup/enable-sudo-touchid.sh --disable; \
+	else \
+		echo -e "$(RED)❌ revert-sudo-touchid is only available on macOS$(RESET)"; \
+		exit 1; \
+	fi
+
+disable-sudo-touchid: revert-sudo-touchid ## Alias for revert-sudo-touchid
+
 ##@ Development Commands
 
 .PHONY: lint
