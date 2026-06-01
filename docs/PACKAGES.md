@@ -75,6 +75,26 @@ Neovim also has Claude Code integration via `claudecode.nvim` in `nvim/init.lua`
 
 See `Brewfile` in the repo root for the full formula list (network tools, imagemagick, ledger, etc.).
 
+## Local LLM (optional — `make llm`)
+
+Not in `Brewfile`. Run `make llm` to install Ollama and pull models.
+
+| Component | What it does |
+|-----------|----------------|
+| `ollama` (Homebrew on macOS) | Run LLMs locally with Metal/MLX on Apple Silicon |
+| `OLLAMA_MODELS` in `.setupconf` | Set by fzf during `make llm`, or override manually |
+| `config/llm.env` | Deterministic ports (`11434` Ollama/OpenAI `/v1`; `8080`/`1234` reserved) |
+| `setup/llm-models.catalog` | Model list with RAM requirements for compatibility scoring |
+
+| Make target | Description |
+|-------------|-------------|
+| `make llm` | Install Ollama, fzf picker (compatibility labels), pull models, write `config/llm.env` |
+| `make llm-select` | fzf picker only — updates `OLLAMA_MODELS` |
+| `make llm-pull` | Pull/update saved models |
+| `make llm-install` | Install + ports + fzf; no downloads |
+
+API: `http://127.0.0.1:11434` (OpenAI-compatible at `/v1`). Chat: `ollama run <model>`.
+
 ## macOS — work only (`Brewfile.work`)
 
 Run: `make work-installation`

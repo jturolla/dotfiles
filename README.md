@@ -34,6 +34,7 @@ Equivalent: `cd setup && ./setup.sh`
 | Cursor | Open from Applications; sign in |
 | Terminal font | iTerm2 → Powerline font (e.g. Meslo LG M for Powerline) |
 | Work packages | `make work-installation` (EKS, Tekton, GnuPG pinentry) |
+| Local LLM | `make llm` (Ollama + default models; see below) |
 | 1Password SSH | `make setup-1password-ssh` (optional) |
 | Touch ID sudo | `sudo -s` then `make enable-sudo-touchid` (requires root shell) |
 | Neovim plugins | `nvim` then `:Lazy sync` |
@@ -57,6 +58,10 @@ Run `make help` for the full list.
 | `make setup-darwin` | macOS only (Homebrew + Brewfile) |
 | `make setup-linux` | Linux only (apt + Docker + AWS CLI) |
 | `make work-installation` | Work-only Brewfile (`aws-iam-authenticator`, Tekton, pinentry) |
+| `make llm` | Install Ollama, **fzf** model picker (with RAM compatibility), pull models |
+| `make llm-select` | Re-run fzf model picker, update `OLLAMA_MODELS` |
+| `make llm-pull` | Re-pull models listed in `OLLAMA_MODELS` |
+| `make llm-install` | Install Ollama + fixed ports; fzf picker; skip downloads |
 | `make change-shell-to-bash` | Set login shell to bash (`chsh`) |
 | `make setup-1password-ssh` | Use 1Password as SSH agent (macOS) |
 | `make enable-sudo-touchid` | Touch ID for sudo — run from a root shell (`sudo -s` first) |
@@ -124,6 +129,23 @@ make work-installation
 ```
 
 `aws-iam-authenticator`, `pinentry-mac`, `tektoncd-cli`.
+
+### Local LLM (optional — `make llm`)
+
+Not part of default `make setup`. Installs [Ollama](https://ollama.com) (MLX on Apple Silicon), opens an **fzf** picker showing each model’s RAM fit for your machine (● excellent → ✗ unsuitable), then pulls your choices. API is pinned to **`127.0.0.1:11434`** (`config/llm.env`).
+
+```bash
+make llm          # install + fzf picker + pull
+make llm-select   # change models without reinstalling
+make llm-pull     # download saved models only
+llm chat              # fzf pick model, then chat
+llm ask "explain make" -m qwen2.5:14b
+llm api               # env for Cursor / OpenAI clients
+```
+
+**One URL, many models:** every model is served from `http://127.0.0.1:11434/v1`; the client passes `"model": "qwen2.5:14b"` (same as OpenAI cloud). Use the `llm` command instead of calling `ollama run` directly.
+
+On a Mac Studio with **36 GB** unified memory (M4 Max), you can comfortably run **8B–14B** models at full speed, **32B** quantized models for heavier tasks, and keep a small **3B** model for quick prompts. Avoid **70B** unless heavily quantized — they exceed practical RAM headroom on 36 GB.
 
 ### Linux
 

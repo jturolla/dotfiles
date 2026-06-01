@@ -38,6 +38,23 @@ change-shell-to-bash: ## Set login shell to bash (runs chsh; may prompt for pass
 	@echo -e "$(CYAN)🐚 Changing login shell to bash...$(RESET)"
 	@cd setup && ./change-shell-to-bash.sh
 
+.PHONY: llm llm-pull llm-install llm-select
+llm: ## Install Ollama, fzf model picker, pull selected models
+	@echo -e "$(CYAN)🤖 Setting up local LLM (Ollama)...$(RESET)"
+	@cd setup && ./setup-llm.sh
+
+llm-select: ## Interactive fzf model picker (updates OLLAMA_MODELS)
+	@echo -e "$(CYAN)🎯 Select Ollama models...$(RESET)"
+	@cd setup && ./setup-llm.sh --select-only
+
+llm-pull: ## Pull or update Ollama models from OLLAMA_MODELS (.setupconf)
+	@echo -e "$(CYAN)📥 Pulling Ollama models...$(RESET)"
+	@cd setup && ./setup-llm.sh --pull-only
+
+llm-install: ## Install Ollama + ports; fzf picker; no model downloads
+	@echo -e "$(CYAN)📦 Installing Ollama...$(RESET)"
+	@cd setup && ./setup-llm.sh --install-only
+
 .PHONY: work-installation
 work-installation: ## Install work-only Homebrew packages from Brewfile.work (macOS)
 	@if [[ "$$OSTYPE" != "darwin"* ]]; then \

@@ -17,6 +17,16 @@ dotfiles/
 │   ├── setup-git.sh      # Git identity and keys
 │   ├── setup-vim.sh      # Neovim / Vim deps
 │   ├── setup-fonts.sh    # Powerline fonts
+│   ├── setup-llm.sh      # Ollama + local models (make llm)
+│   ├── setup-llm-select.sh
+│   ├── llm.defaults.sh   # Ports + paths
+│   ├── llm-models.catalog
+│   ├── llm-fzf-preview.sh
+├── config/llm.env        # Deterministic LLM ports (sourced from env.sh)
+├── bin/llm               # Canonical CLI (one API URL, model per request)
+├── docs/LLM.md           # Ollama vs Hugging Face patterns
+├── lib/llm-hardware.sh
+├── lib/llm-compat.sh
 │   └── change-shell-to-bash.sh
 ├── lib/setup-utils.sh    # Logging, symlinks, OS helpers
 └── docs/                 # PACKAGES.md, STRUCTURE.md
