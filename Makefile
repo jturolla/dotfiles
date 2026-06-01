@@ -33,6 +33,11 @@ setup-linux: validate-env ## Run Linux-specific setup only
 	@echo -e "$(CYAN)🐧 Running Linux setup...$(RESET)"
 	@cd setup && ./setup-linux.sh
 
+.PHONY: change-shell-to-bash
+change-shell-to-bash: ## Set login shell to bash (runs chsh; may prompt for password)
+	@echo -e "$(CYAN)🐚 Changing login shell to bash...$(RESET)"
+	@cd setup && ./change-shell-to-bash.sh
+
 .PHONY: setup-1password-ssh
 setup-1password-ssh: ## Enable SSH from 1Password (run after main setup)
 	@echo -e "$(CYAN)🔐 Setting up 1Password SSH integration...$(RESET)"

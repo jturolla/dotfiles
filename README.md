@@ -39,6 +39,7 @@ Run `make help` to see all available commands:
 - `make setup-darwin` - Run macOS-specific setup only
 - `make setup-linux` - Run Linux-specific setup only
 - `make setup-1password-ssh` - Enable SSH from 1Password (run after main setup)
+- `make change-shell-to-bash` - Set login shell to bash (`chsh`; may prompt for password)
 
 ### Development Commands
 - `make lint` - Run shellcheck on all shell scripts (installs shellcheck if needed)

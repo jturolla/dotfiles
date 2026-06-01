@@ -62,22 +62,6 @@ check_prerequisites() {
     log_success "Prerequisites check completed"
 }
 
-setup_shell() {
-    log_step "Configuring shell environment"
-
-    local current_shell
-    current_shell=$(basename "$SHELL")
-
-    if [[ "$current_shell" != "bash" ]]; then
-        log_info "Current shell is $current_shell; setup links .zshrc and .bash_profile"
-        log_info "To use bash as login shell (optional): chsh -s /bin/bash"
-    else
-        log_info "Current shell is already bash"
-    fi
-
-    log_success "Shell hint completed"
-}
-
 run_link_dotfiles() {
     log_step "Linking dotfiles"
     bash "$DOTFILES_ROOT/setup/setup-link.sh"
@@ -147,10 +131,10 @@ main() {
     validate_configuration
 
     check_prerequisites
-    setup_shell
     run_link_dotfiles
     run_platform_setup
     run_application_setup
+    bash "$DOTFILES_ROOT/setup/change-shell-to-bash.sh"
 
     show_completion_message
 }
