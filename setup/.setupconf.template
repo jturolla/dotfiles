@@ -46,3 +46,16 @@ LOG_LEVEL="INFO"
 SKIP_FONTS="false"
 SKIP_VIM="false"
 SKIP_GIT="false"
+
+###############################################################################
+# Local LLM (Ollama) — optional: make llm
+###############################################################################
+# Set by make llm (fzf) or override manually; use make llm-select to re-pick
+OLLAMA_MODELS="qwen2.5:14b llama3.2:3b"
+
+# Deterministic ports (defaults match config/llm.env)
+LLM_OLLAMA_HOST="127.0.0.1"
+LLM_OLLAMA_PORT="11434"
+
+# Set true to install Ollama without downloading models
+SKIP_LLM_PULL="false"

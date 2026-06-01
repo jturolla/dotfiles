@@ -1,0 +1,17 @@
+# Ollama model catalog for make llm (tab-separated)
+# tag	param_b	ram_min_gb	ram_comfort_gb	category	description
+llama3.2:1b	1	2	3	fast	Tiny model for quick prompts
+llama3.2:3b	3	3	4	fast	Fast everyday chat
+phi3:mini	4	4	5	fast	Microsoft Phi-3 Mini
+gemma2:2b	2	3	4	fast	Google Gemma 2 small
+llama3.1:8b	8	6	8	general	Strong 8B general model
+mistral:7b	7	5	7	general	Mistral 7B
+qwen2.5:7b	7	5	7	general	Qwen 2.5 7B
+deepseek-r1:7b	7	5	7	reasoning	DeepSeek R1 distilled 7B
+qwen2.5:14b	14	10	12	general	Qwen 2.5 14B — balanced default
+qwen2.5-coder:14b	14	10	12	coding	Qwen 2.5 Coder 14B
+deepseek-r1:14b	14	10	12	reasoning	DeepSeek R1 14B reasoning
+llama3.1:70b	70	40	48	general	Llama 3.1 70B (needs lots of RAM)
+qwen2.5:32b	32	20	24	general	Qwen 2.5 32B — strong, large
+codellama:13b	13	9	11	coding	Meta CodeLlama 13B
+nomic-embed-text	0	1	2	embeddings	Embedding model (small footprint)

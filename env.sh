@@ -32,5 +32,11 @@ fi
 
 export AWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT="true"
 
+# Local LLM (Ollama) — deterministic ports after make llm
+if [[ -n "${DOTFILES:-}" ]]; then
+    [[ -f "$DOTFILES/config/llm.env" ]] && source "$DOTFILES/config/llm.env"
+fi
+[[ -f "${HOME}/.config/dotfiles/llm.env" ]] && source "${HOME}/.config/dotfiles/llm.env"
+
 # Set 1Password SSH agent
 export SSH_AUTH_SOCK="/Users/julio.turolla/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
