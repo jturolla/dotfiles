@@ -115,14 +115,18 @@ show_completion_message() {
     echo
     log_info "Next steps:"
     echo "  1. Restart your terminal for all changes to take effect"
-    echo "  2. Set your terminal font to a Powerline font (e.g., Meslo LG M for Powerline)"
+    echo "  2. Set iTerm2 font to a Powerline font (e.g., Meslo LG M for Powerline)"
 
     if is_macos; then
-        echo "  3. Optionally run: make setup-1password-ssh"
+        echo "  3. Containers: colima start"
+        echo "  4. AI tools: open Cursor; run 'claude' in a project (Claude Code)"
+        echo "  5. Work machine: make work-installation"
+        echo "  6. Optional: make setup-1password-ssh"
     fi
 
     echo
-    log_info "Useful commands: make help, make lint, ./setup/setup-link.sh (link only)"
+    log_info "Docs: README.md, docs/PACKAGES.md, docs/STRUCTURE.md"
+    log_info "Useful commands: make help, make lint, killport <port>"
     echo
 }
 

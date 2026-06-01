@@ -1,259 +1,214 @@
 # Dotfiles
 
-Personal dotfiles for macOS and Linux environments with a robust, colorful setup system.
+Personal dotfiles for **macOS** and **Linux**: shell, editors (Neovim, Helix, Vim), Git, SSH, and a scripted bootstrap with Homebrew or apt.
 
 ## Features
 
-- 🎨 **Colorful setup experience** with clear progress indicators
-- 🔒 **Robust error handling** with `set -euo pipefail` guardrails
-- 🔄 **Idempotent setup** - run multiple times safely
-- 🛠️ **Modular scripts** - each component works independently
-- ✅ **Built-in validation** and verification
-- 📦 **Makefile integration** with shellcheck linting
-- 🔧 **Automatic backups** of existing configurations
-- 🌍 **Cross-platform support** for macOS and Linux
+- Colorful, idempotent setup with `make setup`
+- Modular scripts under `setup/` (run individually or all at once)
+- macOS: [Brewfile](Brewfile) + optional [Brewfile.work](Brewfile.work) for work machines
+- Linux: apt packages, Docker CE, AWS CLI v2, Kubernetes tools
+- Symlinks with automatic backups of existing files
+- `make lint` with shellcheck
 
-## Quick Start
-
-1. **Clone and setup:**
-   ```bash
-   git clone https://github.com/jturolla/dotfiles.git ~/dev/dotfiles
-   cd ~/dev/dotfiles
-   cp setup/.setupconf.template .setupconf
-   # Edit .setupconf with your preferences
-   make setup
-   ```
-
-2. **Or use the all-in-one setup:**
-   ```bash
-   ./setup.sh
-   ```
-
-## Available Commands
-
-Run `make help` to see all available commands:
-
-### Setup Commands
-- `make setup` - Run the complete dotfiles setup
-- `make setup-test` - Run setup with test configuration  
-- `make setup-darwin` - Run macOS-specific setup only
-- `make setup-linux` - Run Linux-specific setup only
-- `make setup-1password-ssh` - Enable SSH from 1Password (run after main setup)
-- `make change-shell-to-bash` - Set login shell to bash (`chsh`; may prompt for password)
-- `make enable-sudo-touchid` - Touch ID for sudo (run from root shell: `sudo -s` first)
-- `make revert-sudo-touchid` - Revert Touch ID sudo config (run from root shell)
-- `make disable-sudo-touchid` - Alias for `revert-sudo-touchid`
-
-### Development Commands
-- `make lint` - Run shellcheck on all shell scripts (installs shellcheck if needed)
-- `make lint-if-available` - Run shellcheck only if already installed
-- `make fix-permissions` - Fix permissions on shell scripts
-- `make validate-env` - Validate environment and dependencies
-
-### Utility Commands
-- `make clean` - Clean temporary files and directories
-- `make backup` - Create a backup of current configurations
-- `make unlink` - Unlink all dotfiles
-
-## Configuration
-
-Copy `setup/.setupconf.template` to `.setupconf` and customize:
+## Quick start
 
 ```bash
-# Git configuration
+git clone https://github.com/jturolla/dotfiles.git ~/dev/dotfiles
+cd ~/dev/dotfiles
+cp setup/.setupconf.template .setupconf
+# Edit .setupconf (git name, email, …)
+make setup
+```
+
+Equivalent: `cd setup && ./setup.sh`
+
+### After setup (macOS)
+
+| Step | Command / action |
+|------|------------------|
+| New shell | Restart terminal (or `reload!` if already sourced) |
+| Login shell | Setup runs `chsh` to bash; open a new session if prompted |
+| Containers | `colima start` |
+| Claude Code | `claude` in a project directory (sign in on first run) |
+| Cursor | Open from Applications; sign in |
+| Terminal font | iTerm2 → Powerline font (e.g. Meslo LG M for Powerline) |
+| Work packages | `make work-installation` (EKS, Tekton, GnuPG pinentry) |
+| 1Password SSH | `make setup-1password-ssh` (optional) |
+| Touch ID sudo | `sudo -s` then `make enable-sudo-touchid` (requires root shell) |
+| Neovim plugins | `nvim` then `:Lazy sync` |
+
+## Documentation
+
+| Doc | Contents |
+|-----|----------|
+| [docs/STRUCTURE.md](docs/STRUCTURE.md) | Repo layout, setup flow, symlink map |
+| [docs/PACKAGES.md](docs/PACKAGES.md) | What each Brewfile / apt package does |
+
+## Make targets
+
+Run `make help` for the full list.
+
+### Setup
+
+| Target | Description |
+|--------|-------------|
+| `make setup` | Full bootstrap (link dotfiles, OS setup, apps, bash login shell) |
+| `make setup-darwin` | macOS only (Homebrew + Brewfile) |
+| `make setup-linux` | Linux only (apt + Docker + AWS CLI) |
+| `make work-installation` | Work-only Brewfile (`aws-iam-authenticator`, Tekton, pinentry) |
+| `make change-shell-to-bash` | Set login shell to bash (`chsh`) |
+| `make setup-1password-ssh` | Use 1Password as SSH agent (macOS) |
+| `make enable-sudo-touchid` | Touch ID for sudo — run from a root shell (`sudo -s` first) |
+| `make revert-sudo-touchid` | Revert Touch ID sudo config — run from a root shell |
+| `make disable-sudo-touchid` | Alias for `revert-sudo-touchid` |
+
+### Development & maintenance
+
+| Target | Description |
+|--------|-------------|
+| `make lint` | shellcheck all `*.sh` (installs shellcheck if needed) |
+| `make lint-if-available` | shellcheck only when already installed |
+| `make fix-permissions` | `chmod +x` on shell scripts |
+| `make validate-env` | Check `.setupconf` exists |
+| `make backup` | Tarball backup of the repo (excludes `.git`) |
+| `make unlink` | Remove dotfile symlinks |
+| `make clean` | Reset `tmp/` |
+
+## Configuration (`.setupconf`)
+
+Copy `setup/.setupconf.template` → `.setupconf`:
+
+```bash
 GIT_NAME="Your Name"
-GIT_EMAIL="your.email@example.com"
+GIT_EMAIL="you@example.com"
+GITHUB_USER="your-github-username"   # Linux SSH key hints
 
-# GitHub username for SSH key setup (Linux only)
-GITHUB_USER="your-github-username"
+SKIP_BREW="false"                    # macOS: skip Homebrew entirely
+EXTRA_PACKAGES="formula1 formula2"   # Extra brew installs after Brewfile
 
-# Package management
-SKIP_BREW="false"
-EXTRA_PACKAGES="package1 package2"
-
-# Application settings
 VIM_COLORSCHEME="monokai"
 LOG_LEVEL="INFO"
 
-# Skip specific setup steps
 SKIP_FONTS="false"
 SKIP_VIM="false"
 SKIP_GIT="false"
 ```
 
-## What Gets Installed
+## What gets installed
 
-### macOS (via Homebrew)
-- Development tools and languages (Go, Node.js, Python, etc.)
-- CLI utilities (fzf, ripgrep, jq, etc.)
-- Applications from Brewfile
+### macOS (default `Brewfile`)
 
-### Linux (via apt)
-- Essential packages and build tools
-- Development languages and runtimes
-- Docker and container tools
-- AWS CLI v2
-- Kubernetes tools
+Installed by `setup-darwin.sh` via `brew bundle`.
 
-### All Platforms
-- Powerline fonts for terminal
-- Neovim with lazy.nvim plugin manager
-- Vim configuration (shared with Neovim)
-- Git configuration templates
-- SSH configuration
-- Custom shell configurations
+**Editors & AI**
 
-## Individual Script Usage
+- **Cursor** — IDE (`cask "cursor"`)
+- **Claude Code** — terminal assistant (`cask "claude-code"`, CLI: `claude`)
+- iTerm2, Neovim/Vim config from this repo
 
-Each setup script can be run independently:
+**Dev & ops**
+
+- Colima + Docker CLI, `kubectl`, `kustomize`, `kubectx`, AWS CLI, `gh`, Git, Go, Node, Python, Rust, …
+
+**Apps**
+
+- 1Password (+ CLI), Stats (menu bar), UTM (VMs), xbar, Spotify
+
+Details: [docs/PACKAGES.md](docs/PACKAGES.md).
+
+### macOS (work — `Brewfile.work`)
 
 ```bash
-# Run specific setup components
-cd setup
-./setup-config.sh      # Load and validate configuration
-./setup-link.sh        # Link dotfiles
-./setup-darwin.sh      # macOS-specific setup
-./setup-linux.sh       # Linux-specific setup  
-./setup-git.sh         # Git configuration
-./setup-vim.sh         # Vim setup
-./setup-fonts.sh       # Font installation
+make work-installation
 ```
 
-## Neovim Plugin Installation
+`aws-iam-authenticator`, `pinentry-mac`, `tektoncd-cli`.
 
-After running the setup, install Neovim plugins using lazy.nvim:
+### Linux
+
+`setup-linux.sh`: build tools, shells, `fzf`, `ripgrep`, `kubectl`, Docker CE, AWS CLI v2, OpenJDK, and more. See [docs/PACKAGES.md](docs/PACKAGES.md) for Cursor/Claude on Linux (manual install).
+
+### All platforms
+
+- Symlinked shell, Git, SSH, tmux, Neovim, Helix
+- Powerline fonts (`setup-fonts.sh`)
+- Git config from template (`setup-git.sh`)
+
+## Shell helpers
+
+Loaded from `aliases.sh` (via `bash_profile` / `zshrc`):
+
+| Command | Description |
+|---------|-------------|
+| `killport 3000` | Kill process(es) listening on a port |
+| `reload!` | Re-source `~/.bash_profile` |
+| `l` | `ls -lah` |
+| `s` | `git status` |
+| `vim` | Opens `nvim` |
+
+Requires `DOTFILES=$HOME/dev/dotfiles` (set in `bash_profile`).
+
+## Individual setup scripts
 
 ```bash
-# Open Neovim - lazy.nvim will auto-bootstrap on first launch
+cd ~/dev/dotfiles/setup
+./setup-link.sh        # Symlinks only
+./setup-darwin.sh      # Homebrew + Brewfile
+./setup-linux.sh       # apt + Docker + AWS
+./setup-git.sh
+./setup-vim.sh
+./setup-fonts.sh
+./change-shell-to-bash.sh
+```
+
+Flags for `./setup.sh`: `--skip-brew`, `--debug`, `--help`.
+
+## Neovim
+
+First launch installs plugins via lazy.nvim:
+
+```bash
 nvim
-
-# Plugins will install automatically, or manually trigger with:
-:Lazy sync
+# or
+nvim +'Lazy sync'
 ```
 
-**lazy.nvim commands:**
-- `:Lazy` - Open the lazy.nvim UI
-- `:Lazy sync` - Install/update/clean plugins
-- `:Lazy update` - Update plugins
-- `:Lazy clean` - Remove unused plugins
-
-The configuration uses lazy.nvim for Neovim plugins while keeping all Vim settings in the standard `vimrc` file.
-
-## 1Password SSH Integration
-
-For enhanced security on macOS, set up 1Password SSH agent after main setup:
-
-```bash
-make setup-1password-ssh
-```
-
-This configures SSH to use 1Password as the SSH agent, providing secure key management. The script will:
-- Detect if 1Password is installed
-- Configure SSH to use 1Password's SSH agent
-- Provide helpful setup instructions
-- Gracefully handle missing installations
-
-## Safety Features
-
-- ✅ **Automatic backups** - Existing files are backed up before modification
-- 🔍 **Validation checks** - Configuration and dependencies are validated
-- 🛡️ **Error handling** - Scripts fail fast with clear error messages  
-- 🔄 **Idempotent** - Safe to run multiple times
-- 📊 **Progress tracking** - Clear visual progress indicators
-- 🧪 **Test mode** - `make setup-test` uses test configuration
+Claude in Neovim: leader keys under `<leader>a*` (see `nvim/init.lua`); requires Claude Code CLI and plugin deps.
 
 ## Customization
 
-### Adding New Packages
+**New macOS package (everyone):** edit [Brewfile](Brewfile), run `brew bundle` or `make setup-darwin`.
 
-**macOS**: Add to `Brewfile`
-```ruby
-brew "new-package"
-cask "new-application"
-```
+**Work-only:** edit [Brewfile.work](Brewfile.work), run `make work-installation`.
 
-**Linux**: Add to `EXTRA_PACKAGES` in `.setupconf`
-```bash
-EXTRA_PACKAGES="package1 package2 new-package"
-```
+**Linux:** add to `EXTRA_PACKAGES` in `.setupconf` or edit `setup-linux.sh`.
 
-### Extending Setup
-
-Create new setup scripts in the `setup/` directory following the pattern:
-- Include proper error handling with `set -euo pipefail`
-- Source utilities: `source "$DOTFILES_ROOT/lib/setup-utils.sh"`
-- Use logging functions: `log_info`, `log_success`, `log_warning`, `log_error`
-- Make scripts work independently and as part of main setup
-
-## Development
-
-### Linting
-The Makefile provides multiple linting options:
-
-```bash
-make install-shellcheck  # Install shellcheck (supports multiple package managers)
-make lint                # Run shellcheck (auto-installs if possible)
-make lint-if-available   # Run shellcheck only if already installed
-```
-
-**Supported package managers for shellcheck:**
-- Homebrew (macOS)
-- apt-get (Debian/Ubuntu)
-- yum (RHEL/CentOS)
-- dnf (Fedora)
-- pacman (Arch Linux)
-
-### Testing
-```bash
-make setup-test          # Run with test configuration
-make validate-env        # Validate environment
-```
+**New setup step:** add `setup/setup-foo.sh`, source `lib/setup-utils.sh`, call from `setup/setup.sh`.
 
 ## Troubleshooting
 
-### Common Issues
+| Problem | Fix |
+|---------|-----|
+| Scripts not executable | `make fix-permissions` |
+| Missing `.setupconf` | `cp setup/.setupconf.template .setupconf` |
+| Homebrew / bundle errors | `brew doctor`; run `make setup-darwin` again |
+| Docker not running (macOS) | `colima start` |
+| Port in use | `killport <port>` |
+| Broken symlinks | Re-run `setup/setup-link.sh` |
+| Lint | `make lint-if-available` |
 
-**Scripts not executable:**
+Verbose setup: `cd setup && ./setup.sh --debug`
+
+## Development
+
 ```bash
-make fix-permissions
+make install-shellcheck
+make lint
 ```
 
-**Configuration issues:**
-```bash
-make validate-env
-```
-
-**Linting without package manager:**
-```bash
-make lint-if-available   # Gracefully skips if shellcheck not available
-```
-
-**1Password SSH setup fails:**
-- Script detects missing 1Password and provides installation instructions
-- Allows continuation for manual setup
-- Provides detailed next steps
-
-**Setup failures:**
-- Check `.setupconf` configuration
-- Run individual scripts for detailed error output
-- Use `--debug` flag for verbose logging
-
-### Getting Help
-
-1. Run `make help` for available commands
-2. Check individual script help: `./setup.sh --help`
-3. Review logs for specific error messages
-4. Use `make lint-if-available` for optional linting
-5. Ensure all required dependencies are installed
-
-### Manual Installation
-
-If package managers aren't available:
-
-**shellcheck**: Download from [GitHub releases](https://github.com/koalaman/shellcheck)
-
-**1Password**: Download from [1password.com](https://1password.com/downloads/)
+CI runs lint on push (`.github/workflows/lint.yml`).
 
 ## License
 
-MIT License - see LICENSE file for details.
+MIT — see [LICENSE](LICENSE).

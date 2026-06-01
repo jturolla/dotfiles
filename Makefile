@@ -38,6 +38,23 @@ change-shell-to-bash: ## Set login shell to bash (runs chsh; may prompt for pass
 	@echo -e "$(CYAN)🐚 Changing login shell to bash...$(RESET)"
 	@cd setup && ./change-shell-to-bash.sh
 
+.PHONY: work-installation
+work-installation: ## Install work-only Homebrew packages from Brewfile.work (macOS)
+	@if [[ "$$OSTYPE" != "darwin"* ]]; then \
+		echo -e "$(RED)❌ work-installation is only available on macOS$(RESET)"; \
+		exit 1; \
+	fi
+	@if ! command -v brew >/dev/null 2>&1; then \
+		echo -e "$(RED)❌ Homebrew is required. Run make setup-darwin first.$(RESET)"; \
+		exit 1; \
+	fi
+	@echo -e "$(CYAN)💼 Installing work packages from Brewfile.work...$(RESET)"
+	@brew bundle --file="Brewfile.work" || { \
+		echo -e "$(RED)❌ Some work packages failed to install$(RESET)"; \
+		exit 1; \
+	}
+	@echo -e "$(GREEN)✅ Work packages installed$(RESET)"
+
 .PHONY: setup-1password-ssh
 setup-1password-ssh: ## Enable SSH from 1Password (run after main setup)
 	@echo -e "$(CYAN)🔐 Setting up 1Password SSH integration...$(RESET)"
