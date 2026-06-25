@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# jucli — ukiyo-datacenter homelab CLI (bash, via dotfiles)
+set -euo pipefail
+
+ROOT="${DOTFILES:-$HOME/dev/dotfiles}"
+# shellcheck source=lib/jucli.sh
+source "$ROOT/lib/jucli.sh"
+
+main() {
+  local cmd="${1:-status}"
+  shift || true
+
+  case "$cmd" in
+    status|st)
+      jucli_cmd_status
+      ;;
+    start)
+      jucli_cmd_start "$@"
+      ;;
+    stop)
+      jucli_cmd_stop "$@"
+      ;;
+    restart)
+      jucli_cmd_restart "$@"
+      ;;
+    logs)
+      local follow="" tail_n="50" svc=""
+      while [[ $# -gt 0 ]]; do
+        case "$1" in
+          -f|--follow) follow=1; shift ;;
+          -n|--tail) tail_n="$2"; shift 2 ;;
+          *)
+            svc="$1"
+            shift
+            ;;
+        esac
+      done
+      [[ -n "$svc" ]] || { echo "jucli logs: service required" >&2; jucli_usage >&2; exit 1; }
+      if [[ -n "$follow" ]]; then
+        jucli_cmd_logs -f -n "$tail_n" "$svc"
+      else
+        jucli_cmd_logs -n "$tail_n" "$svc"
+      fi
+      ;;
+    runners)
+      jucli_cmd_runners
+      ;;
+    urls)
+      jucli_cmd_urls
+      ;;
+    doctor)
+      jucli_cmd_doctor
+      exit $?
+      ;;
+    help|-h|--help)
+      jucli_usage
+      ;;
+    *)
+      echo "jucli: unknown command: $cmd" >&2
+      jucli_usage >&2
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
