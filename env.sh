@@ -17,26 +17,15 @@ export LC_NUMERIC="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-export GPG_TTY="$(tty)"
+GPG_TTY="$(tty)"
+export GPG_TTY
 export PINENTRY_USER_DATA="USE_CURSES=1"
 
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-export GOPATH="$(go env GOPATH)"
-# Keep GOPRIVATE in the environment and (optionally) persist to Go toolchain
-export GOPRIVATE='github.com/nubank/*,golang.nuinfra.net/*'
-if command -v go >/dev/null 2>&1; then
-    go env -w GOPRIVATE='github.com/nubank/*,golang.nuinfra.net/*' >/dev/null 2>&1 || true
-fi
-
+GOPATH="$(go env GOPATH)"
+export GOPATH
 export AWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT="true"
 
-# Local LLM (Ollama) — deterministic ports after make llm
-if [[ -n "${DOTFILES:-}" ]]; then
-    [[ -f "$DOTFILES/config/llm.env" ]] && source "$DOTFILES/config/llm.env"
-fi
-[[ -f "${HOME}/.config/dotfiles/llm.env" ]] && source "${HOME}/.config/dotfiles/llm.env"
-
-# Set 1Password SSH agent
-export SSH_AUTH_SOCK="/Users/julio.turolla/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+# Private identity, network, homelab, LLM — dotfiles-private/load.sh (sourced from bash_profile)

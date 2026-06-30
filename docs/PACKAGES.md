@@ -12,6 +12,7 @@ What `make setup` installs on each platform. macOS uses [Homebrew Bundle](https:
 | `1password-cli` | `op` CLI for vault access in scripts |
 | `claude-code` | Terminal AI coding assistant (`claude` CLI) |
 | `cursor` | Cursor IDE (VS Code–based editor with AI) |
+| `google-chrome` | Google Chrome web browser |
 | `iterm2` | Terminal emulator |
 | `spotify` | Music streaming |
 | `stats` | Open-source menu bar CPU/RAM/disk/network monitor |
@@ -77,23 +78,7 @@ See `Brewfile` in the repo root for the full formula list (network tools, imagem
 
 ## Local LLM (optional — `make llm`)
 
-Not in `Brewfile`. Run `make llm` to install Ollama and pull models.
-
-| Component | What it does |
-|-----------|----------------|
-| `ollama` (Homebrew on macOS) | Run LLMs locally with Metal/MLX on Apple Silicon |
-| `OLLAMA_MODELS` in `.setupconf` | Set by fzf during `make llm`, or override manually |
-| `config/llm.env` | Deterministic ports (`11434` Ollama/OpenAI `/v1`; `8080`/`1234` reserved) |
-| `setup/llm-models.catalog` | Model list with RAM requirements for compatibility scoring |
-
-| Make target | Description |
-|-------------|-------------|
-| `make llm` | Install Ollama, fzf picker (compatibility labels), pull models, write `config/llm.env` |
-| `make llm-select` | fzf picker only — updates `OLLAMA_MODELS` |
-| `make llm-pull` | Pull/update saved models |
-| `make llm-install` | Install + ports + fzf; no downloads |
-
-API: `http://127.0.0.1:11434` (OpenAI-compatible at `/v1`). Chat: `ollama run <model>`.
+See [docs/LLM.md](LLM.md). Installs `ollama`, preset picker, API at `http://127.0.0.1:11434/v1`. Cursor is configured via its app database (all instances, any launch method).
 
 ## macOS — work only (`Brewfile.work`)
 
@@ -107,7 +92,7 @@ Run: `make work-installation`
 
 ## Linux (`setup/setup-linux.sh`)
 
-Ubuntu/Debian packages via `apt`, plus Docker CE, AWS CLI v2, `kubectl`, and `yq` (snap). See the `packages=(...)` array in `setup-linux.sh`.
+Ubuntu/Debian packages via `apt`, plus Google Chrome (Google apt repo), Docker CE, AWS CLI v2, `kubectl`, and `yq` (snap). See the `packages=(...)` array in `setup-linux.sh`.
 
 **Cursor & Claude Code on Linux** (not in apt setup): install from vendor sites or:
 

@@ -267,6 +267,47 @@ setup_ssh_server() {
     fi
 }
 
+install_google_chrome() {
+    log_step "Installing Google Chrome"
+
+    if command_exists google-chrome || command_exists google-chrome-stable; then
+        log_info "Google Chrome is already installed"
+        return 0
+    fi
+
+    if package_installed google-chrome-stable; then
+        log_info "Google Chrome is already installed"
+        return 0
+    fi
+
+    local arch
+    arch=$(dpkg --print-architecture)
+    if [[ "$arch" != "amd64" && "$arch" != "arm64" ]]; then
+        log_info "Skipping Google Chrome (unsupported architecture: $arch)"
+        return 0
+    fi
+
+    local keyring="/etc/apt/keyrings/google-chrome.gpg"
+    if [[ ! -f "$keyring" ]]; then
+        log_info "Adding Google Chrome apt repository"
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o "$keyring" || {
+            log_warning "Failed to add Google Chrome signing key"
+            return 0
+        }
+        echo "deb [arch=$arch signed-by=$keyring] https://dl.google.com/linux/chrome/deb/ stable main" | \
+            sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+        sudo apt-get update || log_warning "Failed to update package lists after adding Chrome repo"
+    fi
+
+    log_info "Installing google-chrome-stable"
+    if sudo apt-get install -y google-chrome-stable; then
+        log_success "Google Chrome installed"
+    else
+        log_warning "Failed to install Google Chrome"
+    fi
+}
+
 setup_docker() {
     log_step "Setting up Docker"
     
@@ -334,6 +375,7 @@ main() {
     install_main_packages
     install_extra_packages
     setup_ssh_server
+    install_google_chrome
     setup_docker
     
     print_footer "Linux setup completed!"

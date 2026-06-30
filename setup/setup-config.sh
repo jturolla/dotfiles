@@ -16,8 +16,13 @@ print_header "Loading Setup Configuration"
 
 load_configuration() {
     local config_file="$DOTFILES_ROOT/.setupconf"
-    
-    if [[ -f "$config_file" ]]; then
+    local private_config="${DOTFILES_PRIVATE:-$HOME/dev/dotfiles-private}/.setupconf"
+
+    if [[ -f "$private_config" ]]; then
+        log_info "Loading configuration from dotfiles-private/.setupconf"
+        # shellcheck source=/dev/null
+        source "$private_config"
+    elif [[ -f "$config_file" ]]; then
         log_info "Loading configuration from .setupconf"
         # shellcheck source=/dev/null
         source "$config_file"

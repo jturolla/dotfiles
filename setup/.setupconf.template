@@ -48,9 +48,9 @@ SKIP_VIM="false"
 SKIP_GIT="false"
 
 ###############################################################################
-# Local LLM (Ollama) — optional: make llm
+# Local LLM (Ollama) — optional: make llm-install, then jullm
 ###############################################################################
-# Set by make llm (fzf) or override manually; use make llm-select to re-pick
+# Set by jullm select (fzf) or override manually; use jullm select to re-pick
 OLLAMA_MODELS="qwen2.5:14b llama3.2:3b"
 
 # Deterministic ports (defaults match config/llm.env)

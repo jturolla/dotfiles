@@ -1,4 +1,0 @@
-# Work-only packages (install with: make work-installation)
-brew "aws-iam-authenticator"
-brew "pinentry-mac"
-brew "tektoncd-cli"

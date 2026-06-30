@@ -34,11 +34,9 @@ link_dotfiles() {
         "nvim/init.lua:.config/nvim/init.lua"
         "helix/config.toml:.config/helix/config.toml"
         "helix/languages.toml:.config/helix/languages.toml"
-        "gitconfig:.gitconfig"
         "gitignore:.gitignore"
         "bash_profile:.bash_profile"
         "zshrc:.zshrc"
-        "ssh_config:.ssh/config"
     )
 
     # Create .ssh directory if it doesn't exist
@@ -78,11 +76,9 @@ validate_links() {
     local expected_links=(
         "$HOME/.tmux.conf"
         "$HOME/.vimrc"
-        "$HOME/.gitconfig"
         "$HOME/.gitignore"
         "$HOME/.bash_profile"
         "$HOME/.zshrc"
-        "$HOME/.ssh/config"
         "$HOME/.config/nvim/init.lua"
         "$HOME/.config/helix/config.toml"
         "$HOME/.config/helix/languages.toml"

@@ -18,7 +18,12 @@ alias flushdns='sudo killall -HUP mDNSResponder'
 
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
-alias aws-local="aws --profile local-minio --endpoint-url http://192.168.1.217:9000"
 alias vim=nvim
 
-alias killport='f(){ [ -z "$1" ] && { echo "Usage: killport <port>" >&2; return 1; }; local p; p=$(lsof -ti :"$1" 2>/dev/null) || true; [ -z "$p" ] && { echo "No process found on port $1"; return 1; }; echo "$p" | xargs kill -9 && echo "Killed process(es) $p on port $1"; }; f'
+killport() {
+  [ -z "$1" ] && { echo "Usage: killport <port>" >&2; return 1; }
+  local p
+  p=$(lsof -ti :"$1" 2>/dev/null) || true
+  [ -z "$p" ] && { echo "No process found on port $1"; return 1; }
+  echo "$p" | xargs kill -9 && echo "Killed process(es) $p on port $1"
+}
