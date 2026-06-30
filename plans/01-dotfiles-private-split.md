@@ -25,7 +25,7 @@ Keep editor and shell configs public; move git identity, SSH, LAN, homelab, and 
 
 ```bash
 git clone git@github.com:jturolla/dotfiles.git ~/dev/dotfiles
-git clone git@github.com:ruabage/dotfiles-private.git ~/dev/dotfiles-private
+git clone git@github.com:jturolla/dotfiles-private.git ~/dev/dotfiles-private
 cd ~/dev/dotfiles && make setup
 ```
 

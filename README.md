@@ -22,7 +22,7 @@ make setup
 **Private layer** (git identity, SSH, homelab, LLM — not in this repo):
 
 ```bash
-git clone git@github.com:ruabage/dotfiles-private.git ~/dev/dotfiles-private
+git clone git@github.com:jturolla/dotfiles-private.git ~/dev/dotfiles-private
 make setup-private   # or re-run make setup
 ```
 
