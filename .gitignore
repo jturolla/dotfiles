@@ -4,3 +4,7 @@
 *.itermcolors
 *.tmp
 test/.setupconf
+.setupconf
+config/llm.env
+lib/__pycache__/
+tests/**/__pycache__/

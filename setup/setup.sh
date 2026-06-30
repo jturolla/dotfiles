@@ -120,8 +120,9 @@ show_completion_message() {
     if is_macos; then
         echo "  3. Containers: colima start"
         echo "  4. AI tools: open Cursor; run 'claude' in a project (Claude Code)"
-        echo "  5. Work machine: make work-installation"
-        echo "  6. Optional: make setup-1password-ssh"
+        echo "  5. Private: clone ~/dev/dotfiles-private then make setup-private"
+        echo "  6. Work machine: make work-installation (requires dotfiles-private)"
+        echo "  7. Optional: make setup-1password-ssh (requires dotfiles-private)"
     fi
 
     echo
@@ -139,6 +140,12 @@ main() {
     run_platform_setup
     run_application_setup
     bash "$DOTFILES_ROOT/setup/change-shell-to-bash.sh"
+
+    if [[ -f "${DOTFILES_PRIVATE:-$HOME/dev/dotfiles-private}/setup/setup.sh" ]]; then
+        bash "${DOTFILES_PRIVATE:-$HOME/dev/dotfiles-private}/setup/setup.sh"
+    else
+        log_info "No dotfiles-private — skip private setup (git/SSH/homelab)"
+    fi
 
     show_completion_message
 }

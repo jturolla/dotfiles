@@ -7,6 +7,7 @@
 set -o vi
 
 export DOTFILES=$HOME/dev/dotfiles
+export DOTFILES_PRIVATE="${DOTFILES_PRIVATE:-$HOME/dev/dotfiles-private}"
 
 # Load environment variables
 source $DOTFILES/env.sh
@@ -16,6 +17,9 @@ source $DOTFILES/path.sh
 
 # Load aliases with zsh-specific adjustments
 source $DOTFILES/aliases.sh
+
+# Private dotfiles (git identity, SSH, homelab, LLM)
+[[ -f "$DOTFILES_PRIVATE/load.sh" ]] && source "$DOTFILES_PRIVATE/load.sh"
 
 # Update the reload alias for zsh
 alias reload!="source ~/.zshrc; echo 'Reloaded!'"
@@ -78,3 +82,8 @@ fi
 
 ## The following lines should be empty... but sometimes a program writes here :)
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/jturolla/.lmstudio/bin"
+# End of LM Studio CLI section
+

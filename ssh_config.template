@@ -1,0 +1,9 @@
+# Example SSH config — copy to dotfiles-private/ssh_config or merge locally.
+# Real hosts and LAN details belong in dotfiles-private only.
+
+Include ~/.colima/ssh_config
+
+Host github.com
+	HostName github.com
+	User git
+	IdentitiesOnly yes

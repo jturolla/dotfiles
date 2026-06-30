@@ -38,47 +38,36 @@ change-shell-to-bash: ## Set login shell to bash (runs chsh; may prompt for pass
 	@echo -e "$(CYAN)🐚 Changing login shell to bash...$(RESET)"
 	@cd setup && ./change-shell-to-bash.sh
 
-.PHONY: llm llm-pull llm-install llm-select
-llm: ## Install Ollama, fzf model picker, pull selected models
-	@echo -e "$(CYAN)🤖 Setting up local LLM (Ollama)...$(RESET)"
-	@cd setup && ./setup-llm.sh
-
-llm-select: ## Interactive fzf model picker (updates OLLAMA_MODELS)
-	@echo -e "$(CYAN)🎯 Select Ollama models...$(RESET)"
-	@cd setup && ./setup-llm.sh --select-only
-
-llm-pull: ## Pull or update Ollama models from OLLAMA_MODELS (.setupconf)
-	@echo -e "$(CYAN)📥 Pulling Ollama models...$(RESET)"
-	@cd setup && ./setup-llm.sh --pull-only
-
-llm-install: ## Install Ollama + ports; fzf picker; no model downloads
-	@echo -e "$(CYAN)📦 Installing Ollama...$(RESET)"
-	@cd setup && ./setup-llm.sh --install-only
+.PHONY: llm-install
+llm-install: ## Install Ollama + model picker (requires dotfiles-private)
+	@if [[ -f "$(HOME)/dev/dotfiles-private/Makefile" ]]; then \
+		$(MAKE) -C "$(HOME)/dev/dotfiles-private" llm-install; \
+	else \
+		echo "Clone ~/dev/dotfiles-private first"; exit 1; \
+	fi
 
 .PHONY: work-installation
-work-installation: ## Install work-only Homebrew packages from Brewfile.work (macOS)
-	@if [[ "$$OSTYPE" != "darwin"* ]]; then \
-		echo -e "$(RED)❌ work-installation is only available on macOS$(RESET)"; \
-		exit 1; \
+work-installation: ## Work Homebrew packages (requires dotfiles-private)
+	@if [[ -f "$(HOME)/dev/dotfiles-private/Makefile" ]]; then \
+		$(MAKE) -C "$(HOME)/dev/dotfiles-private" work-installation; \
+	else \
+		echo "Clone ~/dev/dotfiles-private first"; exit 1; \
 	fi
-	@if ! command -v brew >/dev/null 2>&1; then \
-		echo -e "$(RED)❌ Homebrew is required. Run make setup-darwin first.$(RESET)"; \
-		exit 1; \
-	fi
-	@echo -e "$(CYAN)💼 Installing work packages from Brewfile.work...$(RESET)"
-	@brew bundle --file="Brewfile.work" || { \
-		echo -e "$(RED)❌ Some work packages failed to install$(RESET)"; \
-		exit 1; \
-	}
-	@echo -e "$(GREEN)✅ Work packages installed$(RESET)"
 
 .PHONY: setup-1password-ssh
-setup-1password-ssh: ## Enable SSH from 1Password (run after main setup)
-	@echo -e "$(CYAN)🔐 Setting up 1Password SSH integration...$(RESET)"
-	@if [[ "$$OSTYPE" == "darwin"* ]]; then \
-		./after-setup-use-ssh-from-1password.sh; \
+setup-1password-ssh: ## 1Password SSH agent (requires dotfiles-private)
+	@if [[ -f "$(HOME)/dev/dotfiles-private/after-setup-use-ssh-from-1password.sh" ]]; then \
+		$(MAKE) -C "$(HOME)/dev/dotfiles-private" setup-1password-ssh; \
 	else \
-		echo -e "$(YELLOW)⚠️  1Password SSH setup is only available on macOS$(RESET)"; \
+		echo "Clone ~/dev/dotfiles-private first"; exit 1; \
+	fi
+
+.PHONY: setup-private
+setup-private: ## Run dotfiles-private setup only
+	@if [[ -f "$(HOME)/dev/dotfiles-private/setup/setup.sh" ]]; then \
+		cd "$(HOME)/dev/dotfiles-private/setup" && ./setup.sh; \
+	else \
+		echo "Clone ~/dev/dotfiles-private first"; exit 1; \
 	fi
 
 .PHONY: enable-sudo-touchid
@@ -105,7 +94,7 @@ disable-sudo-touchid: revert-sudo-touchid ## Alias for revert-sudo-touchid
 
 ##@ Development Commands
 
-.PHONY: lint
+.PHONY: lint test-llm
 lint: ## Run shellcheck on all shell scripts (installs shellcheck if needed)
 	@echo -e "$(YELLOW)🔍 Linting shell scripts...$(RESET)"
 	@SHELLCHECK_CMD=""; \
@@ -143,6 +132,13 @@ lint: ## Run shellcheck on all shell scripts (installs shellcheck if needed)
 		fi; \
 	done
 	@echo -e "$(GREEN)✅ All shell scripts passed linting$(RESET)"
+
+test-llm: ## Run LLM catalog tests (requires dotfiles-private)
+	@if [[ -f "$(HOME)/dev/dotfiles-private/Makefile" ]]; then \
+		$(MAKE) -C "$(HOME)/dev/dotfiles-private" test-llm; \
+	else \
+		echo "Clone ~/dev/dotfiles-private first"; exit 1; \
+	fi
 
 .PHONY: lint-if-available
 lint-if-available: ## Run shellcheck only if already installed
