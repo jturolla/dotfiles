@@ -25,7 +25,6 @@ DOTFILES_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 source "$DOTFILES_ROOT/lib/setup-utils.sh"
 
 readonly PAM_TID_LINE='auth       sufficient     pam_tid.so'
-readonly PAM_TID_MODULE='pam_tid.so'
 readonly SUDO_PAM='/etc/pam.d/sudo'
 readonly SUDO_LOCAL='/etc/pam.d/sudo_local'
 readonly SUDO_LOCAL_TEMPLATE='/etc/pam.d/sudo_local.template'
