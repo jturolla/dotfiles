@@ -123,7 +123,7 @@ lint: ## Run shellcheck on all shell scripts (installs shellcheck if needed)
 	fi; \
 	for script in $(SHELL_SCRIPTS); do \
 		echo -e "$(CYAN)Checking $$script$(RESET)"; \
-		if [[ "$$script" == ./setup/* ]] || [[ "$$script" == ./after-setup-use-ssh-from-1password.sh ]] || [[ "$$script" == ./lib/* ]]; then \
+		if [[ "$$script" == ./setup/* ]] || [[ "$$script" == ./lib/* ]]; then \
 			$$SHELLCHECK_CMD -e SC1091 "$$script" || exit 1; \
 		elif [[ "$$script" == ./completion.sh ]]; then \
 			$$SHELLCHECK_CMD -e SC1091 -e SC1090 "$$script" || exit 1; \

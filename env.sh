@@ -17,13 +17,15 @@ export LC_NUMERIC="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-export GPG_TTY="$(tty)"
+GPG_TTY="$(tty)"
+export GPG_TTY
 export PINENTRY_USER_DATA="USE_CURSES=1"
 
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-export GOPATH="$(go env GOPATH)"
+GOPATH="$(go env GOPATH)"
+export GOPATH
 export AWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT="true"
 
 # Private identity, network, homelab, LLM — dotfiles-private/load.sh (sourced from bash_profile)
