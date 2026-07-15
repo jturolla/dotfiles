@@ -108,7 +108,8 @@ prompt_command() {
     fi
 
     # apicli domain context segment (white text on purple)
-    local __apicli_domain="$(apicli_domain_context)"
+    local __apicli_domain
+    __apicli_domain="$(apicli_domain_context)"
     if [ -n "$__apicli_domain" ]; then
         local prev_bg="238"
         [ -n "$(kubernetes_context)" ] && prev_bg="33"
