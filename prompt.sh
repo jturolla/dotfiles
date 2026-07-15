@@ -30,6 +30,14 @@ kubernetes_context() {
     fi
 }
 
+# Returns the current apicli domain context, kubectx-style.
+# Reads apicli's config YAML directly — never boots the JVM/bb on the prompt path.
+# Config lives at $NU_HOME/.nu/apicli/config.yaml (NU_HOME defaults to ~).
+apicli_domain_context() {
+    local f="${NU_HOME:-$HOME}/.nu/apicli/config.yaml"
+    [ -r "$f" ] && awk -F': *' '$1 == "current-domain" && $2 != "" {print " ⬡ " $2 " "}' "$f"
+}
+
 # Returns the current git branch and status
 git_branch() {
     if ! command -v git &> /dev/null; then
@@ -99,9 +107,20 @@ prompt_command() {
         prompt+="\$(kubernetes_context)"
     fi
 
+    # apicli domain context segment (white text on purple)
+    local __apicli_domain="$(apicli_domain_context)"
+    if [ -n "$__apicli_domain" ]; then
+        local prev_bg="238"
+        [ -n "$(kubernetes_context)" ] && prev_bg="33"
+        prompt+="\[\e[38;5;${prev_bg};48;5;135m\]${RIGHT_SEP}\[\e[97m\]"
+        prompt+="${__apicli_domain}"
+    fi
+
     # End the first line with a reset separator
     local last_color
-    if [ -n "$(kubernetes_context)" ]; then
+    if [ -n "$__apicli_domain" ]; then
+        last_color="135"
+    elif [ -n "$(kubernetes_context)" ]; then
         last_color="33"
     elif [ -n "$__git_branch" ]; then
         last_color="238"
